@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomarance Football League - Il Campo Gallerone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        night: '#0b1120',
+                        nightLight: '#151e32',
+                        avio: '#94a3b8',
+                        avioLight: '#e2e8f0',
+                        topaz: '#f59e0b',
+                        topazDark: '#d97706'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Orbitron', 'Impact', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@700;900&display=swap');
+        
+        body {
+            background-color: #0b1120;
+            color: #e2e8f0;
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-glass {
+            background: rgba(21, 30, 50, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        
+        .hover-gold:hover {
+            border-color: #f59e0b;
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+        
+        .match-card {
+            background: linear-gradient(135deg, #151e32 0%, #1e293b 100%);
+            border-left: 4px solid #f59e0b;
+        }
+
+        /* Fix per tabella su mobile */
+        .table-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Nascondi scrollbar ma mantieni funzionalità */
+        .table-container::-webkit-scrollbar {
+            height: 6px;
+        }
+        .table-container::-webkit-scrollbar-track {
+            background: #0b1120;
+        }
+        .table-container::-webkit-scrollbar-thumb {
+            background: #f59e0b;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-night/95 backdrop-blur-md border-b border-avio/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-futbol text-3xl text-topaz"></i>
+                    <span class="font-display text-2xl font-black tracking-wider text-avioLight">PFL<span class="text-topaz">2026</span></span>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-avio hover:text-topaz transition-colors font-semibold">Home</a>
+                    <a href="#regolamento" class="text-avio hover:text-topaz transition-colors font-semibold">Regolamento</a>
+                    <a href="#squadre" class="text-avio hover:text-topaz transition-colors font-semibold">Squadre</a>
+                    <a href="#calendario" class="text-avio hover:text-topaz transition-colors font-semibold">Calendario</a>
+                    <a href="#classifica" class="text-avio hover:text-topaz transition-colors font-semibold">Classifica</a>
+                </div>
+
+                <button id="mobile-menu-btn" class="md:hidden text-avioLight text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-nightLight border-t border-avio/10">
+            <div class="px-4 pt-2 pb-4 space-y-2">
+                <a href="#home" class="block py-2 text-avio hover:text-topaz">Home</a>
+                <a href="#regolamento" class="block py-2 text-avio hover:text-topaz">Regolamento</a>
+                <a href="#squadre" class="block py-2 text-avio hover:text-topaz">Squadre</a>
+                <a href="#calendario" class="block py-2 text-avio hover:text-topaz">Calendario</a>
+                <a href="#classifica" class="block py-2 text-avio hover:text-topaz">Classifica</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-br from-night via-nightLight to-night opacity-90"></div>
+            <div class="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%2394a3b8\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+            <div class="mb-6 inline-block px-6 py-2 rounded-full border border-topaz/30 bg-topaz/10 text-topaz font-semibold text-sm tracking-wider uppercase animate-pulse-slow">
+                Stagione 2026 • Campo Gallerone • Finale 10 Giugno
+            </div>
+            
+            <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight">
+                <span class="block text-avioLight">POMARANCE</span>
+                <span class="block gold-gradient">FOOTBALL</span>
+                <span class="block text-avioLight">LEAGUE</span>
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-avio mb-8 max-w-2xl mx-auto">
+                Il torneo definitivo a 4 squadre • 7 giocatori • Andata e Ritorno
+            </p>
+
+            <!-- Countdown -->
+            <div class="grid grid-cols-4 gap-2 md:gap-4 max-w-3xl mx-auto mb-12">
+                <div class="card-glass rounded-lg p-3 md:p-4 border border-topaz/20">
+                    <div id="days" class="text-2xl md:text-4xl font-bold text-topaz font-display">00</div>
+                    <div class="text-xs text-avio uppercase tracking-wider">Giorni</div>
+                </div>
+                <div class="card-glass rounded-lg p-3 md:p-4 border border-topaz/20">
+                    <div id="hours" class="text-2xl md:text-4xl font-bold text-topaz font-display">00</div>
+                    <div class="text-xs text-avio uppercase tracking-wider">Ore</div>
+                </div>
+                <div class="card-glass rounded-lg p-3 md:p-4 border border-topaz/20">
+                    <div id="minutes" class="text-2xl md:text-4xl font-bold text-topaz font-display">00</div>
+                    <div class="text-xs text-avio uppercase tracking-wider">Minuti</div>
+                </div>
+                <div class="card-glass rounded-lg p-3 md:p-4 border border-topaz/20">
+                    <div id="seconds" class="text-2xl md:text-4xl font-bold text-topaz font-display">00</div>
+                    <div class="text-xs text-avio uppercase tracking-wider">Secondi</div>
+                </div>
+            </div>
+
+            <!-- Messaggio data evento -->
+            <div id="event-message" class="mb-8 text-lg font-semibold text-topaz hidden">
+                🏆 La finale è in programma per il 10 Giugno 2026!
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#calendario" class="px-8 py-4 bg-topaz hover:bg-topazDark text-night font-bold rounded-lg transition-all transform hover:scale-105 shadow-lg shadow-topaz/25">
+                    <i class="fas fa-calendar-alt mr-2"></i>Calendario
+                </a>
+                <a href="https://www.instagram.com/pomarance.football.league?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="px-8 py-4 border-2 border-avio/30 hover:border-topaz text-avioLight font-bold rounded-lg transition-all hover:bg-avio/10">
+                    <i class="fab fa-instagram mr-2"></i>Seguici su IG
+                </a>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down text-topaz text-2xl"></i>
+        </div>
+    </section>
+
+    <!-- Info/Regolamento Section -->
+    <section id="regolamento" class="py-20 bg-nightLight">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-avioLight mb-4">REGOLAMENTO & INFO</h2>
+                <div class="w-24 h-1 bg-topaz mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="card-glass rounded-xl p-8 hover-gold transition-all duration-300">
+                    <div class="w-14 h-14 bg-topaz/20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-map-marker-alt text-2xl text-topaz"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-avioLight mb-3">Location</h3>
+                    <p class="text-avio leading-relaxed">
+                        <strong class="text-topaz">Campo Gallerone</strong><br>
+                        Viale del Gallerone, 56045<br>
+                        Pomarance (PI)<br>
+                        <span class="text-sm opacity-75">Campo in sintetico professionale</span>
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card-glass rounded-xl p-8 hover-gold transition-all duration-300">
+                    <div class="w-14 h-14 bg-topaz/20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-users text-2xl text-topaz"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-avioLight mb-3">4 Squadre • 7 Giocatori</h3>
+                    <p class="text-avio leading-relaxed">
+                        Torneo ad andata e ritorno (6 giornate totali). Ogni squadra è composta da <strong class="text-avioLight">7 giocatori</strong> (6+1 portiere consigliato).
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card-glass rounded-xl p-8 hover-gold transition-all duration-300">
+                    <div class="w-14 h-14 bg-topaz/20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-calendar-week text-2xl text-topaz"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-avioLight mb-3">Cadenza Settimanale</h3>
+                    <p class="text-avio leading-relaxed">
+                        Si gioca <strong class="text-avioLight">una volta alla settimana</strong>. Le date possono essere spostate in caso di esigenze particolari, previo accordo tra le squadre.
+                    </p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="card-glass rounded-xl p-8 hover-gold transition-all duration-300">
+                    <div class="w-14 h-14 bg-topaz/20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-clipboard-list text-2xl text-topaz"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-avioLight mb-3">Formazioni</h3>
+                    <p class="text-avio leading-relaxed">
+                        Le formazioni complete vanno inviate <strong class="text-avioLight">preferibilmente il giorno prima</strong> della partita via WhatsApp o social.
+                    </p>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="card-glass rounded-xl p-8 hover-gold transition-all duration-300 border-topaz/30">
+                    <div class="w-14 h-14 bg-topaz/20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-trophy text-2xl text-topaz"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-avioLight mb-3">Premio & Iscrizione</h3>
+                    <p class="text-avio leading-relaxed">
+                        <strong class="text-topaz text-2xl block mb-1">€60</strong>
+                        Montepremi totale per la squadra vincitrice<br><br>
+                        <strong class="text-avioLight">Quota iscrizione:</strong> €15 a squadra per garantire l'eccellenza dell'evento
+                    </p>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="card-glass rounded-xl p-8 hover-gold transition-all duration-300">
+                    <div class="w-14 h-14 bg-topaz/20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-gavel text-2xl text-topaz"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-avioLight mb-3">Arbitro Ufficiale</h3>
+                    <p class="text-avio leading-relaxed">
+                        Sarà presente un <strong class="text-avioLight">arbitro ufficiale</strong> con pieno potere decisionale. Le sue decisioni sono inappellabili.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Social Coverage -->
+            <div class="mt-16 card-glass rounded-2xl p-8 border border-topaz/20 text-center">
+                <h3 class="text-2xl font-bold text-avioLight mb-4">Copertura Media Completa</h3>
+                <p class="text-avio mb-6 max-w-2xl mx-auto">
+                    Risultati, pagelle, classifiche, episodi e gol saranno documentati sui nostri canali ufficiali
+                </p>
+                <div class="flex justify-center gap-6">
+                    <a href="https://instagram.com" target="_blank" class="flex items-center gap-2 text-avioLight hover:text-topaz transition-colors text-lg">
+                        <i class="fab fa-instagram text-2xl"></i> Instagram
+                    </a>
+                    <a href="https://tiktok.com" target="_blank" class="flex items-center gap-2 text-avioLight hover:text-topaz transition-colors text-lg">
+                        <i class="fab fa-tiktok text-2xl"></i> TikTok
+                    </a>
+                    <span class="flex items-center gap-2 text-avioLight text-lg">
+                        <i class="fas fa-globe text-2xl text-topaz"></i> Sito Web
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Squadre Section -->
+    <section id="squadre" class="py-20 bg-night">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-avioLight mb-4">LE SQUADRE</h2>
+                <div class="w-24 h-1 bg-topaz mx-auto rounded-full mb-4"></div>
+                <p class="text-avio">4 squadre pronte a battagliare per il trofeo</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto" id="teams-container">
+                <!-- Teams will be populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Calendario Section -->
+    <section id="calendario" class="py-20 bg-nightLight">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-avioLight mb-4">CALENDARIO</h2>
+                <div class="w-24 h-1 bg-topaz mx-auto rounded-full mb-4"></div>
+                <p class="text-avio">Andata e Ritorno - 6 Giornate totali</p>
+            </div>
+
+            <div class="space-y-8 max-w-4xl mx-auto" id="calendar-container">
+                <!-- Matches populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Classifica Section -->
+    <section id="classifica" class="py-20 bg-night">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-avioLight mb-4">CLASSIFICA</h2>
+                <div class="w-24 h-1 bg-topaz mx-auto rounded-full mb-4"></div>
+                <button onclick="simulateResults()" class="mt-4 px-6 py-2 bg-topaz/20 text-topaz border border-topaz rounded-lg hover:bg-topaz hover:text-night transition-all">
+                    <i class="fas fa-sync-alt mr-2"></i>Simula Risultati
+                </button>
+            </div>
+
+            <div class="table-container">
+                <div class="card-glass rounded-2xl overflow-hidden border border-avio/10 min-w-[600px]">
+                    <table class="w-full text-left">
+                        <thead class="bg-nightLight border-b border-avio/10">
+                            <tr>
+                                <th class="px-4 py-4 text-topaz font-bold w-16">#</th>
+                                <th class="px-4 py-4 text-avioLight font-bold">Squadra</th>
+                                <th class="px-4 py-4 text-center text-avioLight font-bold">Pt</th>
+                                <th class="px-4 py-4 text-center text-avioLight font-bold">G</th>
+                                <th class="px-4 py-4 text-center text-avioLight font-bold">V</th>
+                                <th class="px-4 py-4 text-center text-avioLight font-bold">P</th>
+                                <th class="px-4 py-4 text-center text-avioLight font-bold">S</th>
+                                <th class="px-4 py-4 text-center text-avioLight font-bold">GF</th>
+                                <th class="px-4 py-4 text-center text-avioLight font-bold">GS</th>
+                                <th class="px-4 py-4 text-center text-avioLight font-bold">DR</th>
+                            </tr>
+                        </thead>
+                        <tbody id="standings-body" class="divide-y divide-avio/5">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Legend -->
+            <div class="mt-6 flex flex-wrap gap-4 justify-center text-sm text-avio">
+                <span class="flex items-center gap-2"><div class="w-3 h-3 bg-topaz rounded-full"></div> Campione</span>
+                <span class="flex items-center gap-2"><div class="w-3 h-3 bg-avio/30 rounded-full"></div> In corsa</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-nightLight border-t border-avio/10 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-futbol text-2xl text-topaz"></i>
+                        <span class="font-display text-xl font-bold text-avioLight">PFL 2026</span>
+                    </div>
+                    <p class="text-avio text-sm">
+                        Pomarance Football League<br>
+                        Il calcio che conta, nel cuore della Val di Cecina.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-avioLight font-bold mb-4">Contatti</h4>
+                    <p class="text-avio text-sm space-y-2">
+                        <i class="fas fa-map-marker-alt mr-2 text-topaz"></i>Campo Gallerone, Pomarance<br>
+                        <i class="fas fa-envelope mr-2 text-topaz"></i>info@pomarancefootball.it
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-avioLight font-bold mb-4">Social</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-night flex items-center justify-center text-avio hover:bg-topaz hover:text-night transition-all">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-night flex items-center justify-center text-avio hover:bg-topaz hover:text-night transition-all">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-night flex items-center justify-center text-avio hover:bg-topaz hover:text-night transition-all">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-avio/10 pt-8 text-center text-avio text-sm">
+                <p>&copy; 2026 Pomarance Football League. Tutti i diritti riservati.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data Structure
+        const teams = [
+            { id: 1, name: "FC Gallerone", color: "#f59e0b", logo: "fas fa-shield-alt" },
+            { id: 2, name: "Pomarance City", color: "#3b82f6", logo: "fas fa-city" },
+            { id: 3, name: "Val di Cecina", color: "#10b981", logo: "fas fa-mountain" },
+            { id: 4, name: "Libero", color: "#ef4444", logo: "fas fa-fire" }
+        ];
+
+        // Generate Calendar (Andata e Ritorno) - BUG FIX: distingue andata/ritorno correttamente
+        const generateCalendar = () => {
+            const andata = [
+                { day: "Giornata 1", type: "Andata", matches: [
+                    { home: "FC Gallerone", away: "Pomarance City", date: "Da definire" },
+                    { home: "Val di Cecina", away: "Libero", date: "Da definire" }
+                ]},
+                { day: "Giornata 2", type: "Andata", matches: [
+                    { home: "FC Gallerone", away: "Val di Cecina", date: "Da definire" },
+                    { home: "Pomarance City", away: "Libero", date: "Da definire" }
+                ]},
+                { day: "Giornata 3", type: "Andata", matches: [
+                    { home: "FC Gallerone", away: "Libero", date: "Da definire" },
+                    { home: "Pomarance City", away: "Val di Cecina", date: "Da definire" }
+                ]}
+            ];
+            
+            const ritorno = [
+                { day: "Giornata 4", type: "Ritorno", matches: [
+                    { home: "Pomarance City", away: "FC Gallerone", date: "Da definire" },
+                    { home: "Libero", away: "Val di Cecina", date: "Da definire" }
+                ]},
+                { day: "Giornata 5", type: "Ritorno", matches: [
+                    { home: "Val di Cecina", away: "FC Gallerone", date: "Da definire" },
+                    { home: "Libero", away: "Pomarance City", date: "Da definire" }
+                ]},
+                { day: "Giornata 6", type: "Ritorno", matches: [
+                    { home: "Libero", away: "FC Gallerone", date: "Da definire" },
+                    { home: "Val di Cecina", away: "Pomarance City", date: "Da definire" }
+                ]}
+            ];
+
+            return [...andata, ...ritorno];
+        };
+
+        const schedule = generateCalendar();
+
+        // Initialize Standings
+        let standings = teams.map(t => ({
+            ...t,
+            points: 0,
+            played: 0,
+            won: 0,
+            drawn: 0,
+            lost: 0,
+            gf: 0,
+            ga: 0
+        }));
+
+        // Render Teams
+        const renderTeams = () => {
+            const container = document.getElementById('teams-container');
+            if (!container) return;
+            
+            container.innerHTML = teams.map((team) => `
+                <div class="card-glass rounded-xl p-6 hover-gold transition-all duration-300 group cursor-pointer" onclick="showTeamDetail(${team.id})">
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 rounded-full bg-night flex items-center justify-center text-3xl flex-shrink-0" style="color: ${team.color}; border: 2px solid ${team.color}">
+                            <i class="${team.logo}"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <h3 class="text-xl font-bold text-avioLight group-hover:text-topaz transition-colors truncate">${team.name}</h3>
+                            <p class="text-sm text-avio">Rosa: 7 giocatori</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-avio/10 flex justify-between text-sm text-avio">
+                        <span>Iscritta <i class="fas fa-check text-topaz ml-1"></i></span>
+                        <span class="text-topaz font-bold">€15</span>
+                    </div>
+                </div>
+            `).join('');
+        };
+
+        // Render Calendar - BUG FIX: struttura corretta andata/ritorno
+        const renderCalendar = () => {
+            const container = document.getElementById('calendar-container');
+            if (!container) return;
+
+            let html = '';
+            schedule.forEach((giornata, gIndex) => {
+                html += `
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-topaz mb-4 font-display flex items-center gap-3">
+                            ${giornata.day} 
+                            <span class="text-sm font-sans font-normal text-avio bg-night px-3 py-1 rounded-full border border-avio/20">${giornata.type}</span>
+                        </h3>
+                        <div class="space-y-4">
+                `;
+                
+                giornata.matches.forEach((match, mIndex) => {
+                    const matchId = `${gIndex}-${mIndex}`;
+                    html += `
+                        <div class="match-card rounded-lg p-4 md:p-6 flex flex-col md:flex-row items-center justify-between gap-4 hover:border-topaz transition-all cursor-pointer" onclick="editMatch('${matchId}')">
+                            <div class="flex items-center gap-4 flex-1 w-full">
+                                <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-night flex items-center justify-center text-topaz flex-shrink-0">
+                                    <i class="fas fa-futbol"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="text-base md:text-lg font-bold text-avioLight truncate">${match.home} <span class="text-topaz mx-1">vs</span> ${match.away}</h4>
+                                    <p class="text-xs md:text-sm text-avio"><i class="far fa-clock mr-2"></i>${match.date}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button class="px-3 py-1 md:px-4 md:py-2 bg-night text-avio rounded border border-avio/20 hover:border-topaz hover:text-topaz transition-all text-xs md:text-sm whitespace-nowrap">
+                                    Inserisci
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += `</div></div>`;
+            });
+            
+            container.innerHTML = html;
+        };
+
+        // Render Standings - BUG FIX: gestione responsive migliorata
+        const renderStandings = () => {
+            const tbody = document.getElementById('standings-body');
+            if (!tbody) return;
+            
+            // Sort by points, then goal difference
+            const sorted = [...standings].sort((a, b) => {
+                if (b.points !== a.points) return b.points - a.points;
+                return (b.gf - b.ga) - (a.gf - a.ga);
+            });
+
+            tbody.innerHTML = sorted.map((team, idx) => `
+                <tr class="hover:bg-avio/5 transition-colors ${idx === 0 ? 'bg-topaz/5' : ''}">
+                    <td class="px-4 py-4">
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full ${idx < 1 ? 'bg-topaz text-night font-bold' : 'bg-nightLight text-avio'} text-sm">
+                            ${idx + 1}
+                        </span>
+                    </td>
+                    <td class="px-4 py-4 font-semibold text-avioLight">
+                        <div class="flex items-center gap-2 min-w-[120px]">
+                            <i class="${team.logo} text-sm flex-shrink-0" style="color: ${team.color}"></i>
+                            <span class="truncate">${team.name}</span>
+                        </div>
+                    </td>
+                    <td class="px-4 py-4 text-center font-bold text-topaz text-lg">${team.points}</td>
+                    <td class="px-4 py-4 text-center text-avio text-sm">${team.played}</td>
+                    <td class="px-4 py-4 text-center text-avio text-sm">${team.won}</td>
+                    <td class="px-4 py-4 text-center text-avio text-sm">${team.drawn}</td>
+                    <td class="px-4 py-4 text-center text-avio text-sm">${team.lost}</td>
+                    <td class="px-4 py-4 text-center text-avio text-sm">${team.gf}</td>
+                    <td class="px-4 py-4 text-center text-avio text-sm">${team.ga}</td>
+                    <td class="px-4 py-4 text-center font-semibold ${team.gf - team.ga > 0 ? 'text-green-400' : team.gf - team.ga < 0 ? 'text-red-400' : 'text-avio'} text-sm">
+                        ${team.gf - team.ga > 0 ? '+' : ''}${team.gf - team.ga}
+                    </td>
+                </tr>
+            `).join('');
+        };
+
+        // Simulate Results (per demo)
+        const simulateResults = () => {
+            // Reset
+            standings.forEach(t => {
+                t.points = 0; t.played = 0; t.won = 0; t.drawn = 0; t.lost = 0; t.gf = 0; t.ga = 0;
+            });
+            
+            // Simula risultati random
+            standings[0].points = 12; standings[0].played = 4; standings[0].won = 4; standings[0].gf = 15; standings[0].ga = 4;
+            standings[1].points = 7; standings[1].played = 4; standings[1].won = 2; standings[1].drawn = 1; standings[1].lost = 1; standings[1].gf = 10; standings[1].ga = 8;
+            standings[2].points = 3; standings[2].played = 4; standings[2].won = 1; standings[2].lost = 3; standings[2].gf = 6; standings[2].ga = 12;
+            standings[3].points = 1; standings[3].played = 4; standings[3].drawn = 1; standings[3].lost = 3; standings[3].gf = 5; standings[3].ga = 12;
+            
+            renderStandings();
+            
+            // Feedback visivo
+            const btn = document.querySelector('button[onclick="simulateResults()"]');
+            if (btn) {
+                const original = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check mr-2"></i>Aggiornato!';
+                btn.classList.add('bg-green-600', 'text-white', 'border-green-600');
+                setTimeout(() => {
+                    btn.innerHTML = original;
+                    btn.classList.remove('bg-green-600', 'text-white', 'border-green-600');
+                }, 2000);
+            }
+        };
+
+        // Countdown Timer - BUG FIX: Data fissa al 10 Giugno 2026
+        const startCountdown = () => {
+            // Data target: 10 Giugno 2026 ore 20:00
+            const targetDate = new Date('2026-06-10T20:00:00').getTime();
+            const eventMessage = document.getElementById('event-message');
+            
+            const update = () => {
+                const now = new Date().getTime();
+                const diff = targetDate - now;
+                
+                if (diff <= 0) {
+                    // Data passata
+                    document.getElementById('days').textContent = "00";
+                    document.getElementById('hours').textContent = "00";
+                    document.getElementById('minutes').textContent = "00";
+                    document.getElementById('seconds').textContent = "00";
+                    
+                    if (eventMessage) {
+                        eventMessage.textContent = "🏆 Il torneo è iniziato o concluso!";
+                        eventMessage.classList.remove('hidden');
+                    }
+                    return;
+                }
+                
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                const daysEl = document.getElementById('days');
+                const hoursEl = document.getElementById('hours');
+                const minutesEl = document.getElementById('minutes');
+                const secondsEl = document.getElementById('seconds');
+                
+                if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+                if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+                if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
+                if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+            };
+            
+            setInterval(update, 1000);
+            update();
+        };
+
+        // Mobile Menu Toggle - BUG FIX: Toggle corretto
+        const initMobileMenu = () => {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            
+            if (btn && menu) {
+                btn.addEventListener('click', () => {
+                    menu.classList.toggle('hidden');
+                });
+                
+                // Chiudi menu quando clicchi su un link
+                menu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        menu.classList.add('hidden');
+                    });
+                });
+            }
+        };
+
+        // Smooth scroll for anchor links
+        const initSmoothScroll = () => {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        };
+
+        // Intersection Observer per animazioni
+        const initAnimations = () => {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.classList.add('slide-in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.card-glass').forEach(el => {
+                el.style.opacity = '0';
+                observer.observe(el);
+            });
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                renderTeams();
+                renderCalendar();
+                renderStandings();
+                startCountdown();
+                initMobileMenu();
+                initSmoothScroll();
+                initAnimations();
+            } catch (e) {
+                console.error('Errore inizializzazione:', e);
+            }
+        });
+
+        // Placeholder functions
+        const showTeamDetail = (id) => {
+            const team = teams.find(t => t.id === id);
+            if (team) {
+                alert(`📋 Dettaglio ${team.name}\n\nIn una versione completa, qui ci sarebbe:\n• Rosa completa dei 7 giocatori\n• Statistiche individuali\n• Foto della squadra\n• Prossimi incontri`);
+            }
+        };
+
+        const editMatch = (matchId) => {
+            alert(`⚽ Inserimento risultato partita ID: ${matchId}\n\nFunzionalità disponibile solo per gli amministratori del torneo.\n\n(Inserire qui il sistema di autenticazione per modificare i risultati reali)`);
+        };
+    </script>
+</body>
+</html>
