@@ -29,10 +29,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@700;900&display=swap');
         
-        body {
-            background-color: #0b1120;
-            color: #e2e8f0;
-        }
+        body { background-color: #0b1120; color: #e2e8f0; }
         
         .gold-gradient {
             background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #d97706 100%);
@@ -53,41 +50,99 @@
             transition: all 0.3s ease;
         }
         
-        .animate-pulse-slow {
-            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
+        .animate-pulse-slow { animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
         
         @keyframes slideIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
-        .slide-in {
-            animation: slideIn 0.6s ease-out forwards;
-        }
+        .slide-in { animation: slideIn 0.6s ease-out forwards; }
         
         .match-card {
             background: linear-gradient(135deg, #151e32 0%, #1e293b 100%);
             border-left: 4px solid #f59e0b;
         }
 
-        /* Fix per tabella su mobile */
-        .table-container {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
+        .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .table-container::-webkit-scrollbar { height: 6px; }
+        .table-container::-webkit-scrollbar-track { background: #0b1120; }
+        .table-container::-webkit-scrollbar-thumb { background: #f59e0b; border-radius: 3px; }
+
+        /* ── TEAM CARDS ── */
+        .team-card {
+            background: rgba(21, 30, 50, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: block;
         }
-        
-        /* Nascondi scrollbar ma mantieni funzionalità */
-        .table-container::-webkit-scrollbar {
-            height: 6px;
+        .team-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 50%, rgba(245,158,11,0.07) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
-        .table-container::-webkit-scrollbar-track {
+        .team-card:hover {
+            border-color: #f59e0b;
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(245,158,11,0.18);
+        }
+        .team-card:hover::after { opacity: 1; }
+        .team-card:active { transform: translateY(-2px); }
+
+        /* ── LOGO CONTAINER ── */
+        .logo-wrap {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            flex-shrink: 0;
+        }
+        .logo-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
             background: #0b1120;
+            border: 2px solid var(--team-color);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: border-width 0.2s;
         }
-        .table-container::-webkit-scrollbar-thumb {
-            background: #f59e0b;
-            border-radius: 3px;
+        .logo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
+
+        /* upload overlay – shown on dblclick hint */
+        .upload-hint {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+        .logo-wrap:hover .upload-hint { opacity: 1; }
+
+        .team-card:hover .team-name { color: #f59e0b; }
+        .team-arrow { transition: transform 0.3s; }
+        .team-card:hover .team-arrow { transform: translateX(5px); }
     </style>
 </head>
 <body class="antialiased overflow-x-hidden">
@@ -100,7 +155,6 @@
                     <i class="fas fa-futbol text-3xl text-topaz"></i>
                     <span class="font-display text-2xl font-black tracking-wider text-avioLight">PFL<span class="text-topaz">2026</span></span>
                 </div>
-                
                 <div class="hidden md:flex space-x-8">
                     <a href="#home" class="text-avio hover:text-topaz transition-colors font-semibold">Home</a>
                     <a href="#regolamento" class="text-avio hover:text-topaz transition-colors font-semibold">Regolamento</a>
@@ -108,14 +162,11 @@
                     <a href="#calendario" class="text-avio hover:text-topaz transition-colors font-semibold">Calendario</a>
                     <a href="#classifica" class="text-avio hover:text-topaz transition-colors font-semibold">Classifica</a>
                 </div>
-
                 <button id="mobile-menu-btn" class="md:hidden text-avioLight text-2xl">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
-        
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-nightLight border-t border-avio/10">
             <div class="px-4 pt-2 pb-4 space-y-2">
                 <a href="#home" class="block py-2 text-avio hover:text-topaz">Home</a>
@@ -131,25 +182,20 @@
     <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
         <div class="absolute inset-0 z-0">
             <div class="absolute inset-0 bg-gradient-to-br from-night via-nightLight to-night opacity-90"></div>
-            <div class="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%2394a3b8\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+            <div class="absolute top-0 left-0 w-full h-full opacity-20" style="background-image:url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%2394a3b8\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')"></div>
         </div>
-
         <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
             <div class="mb-6 inline-block px-6 py-2 rounded-full border border-topaz/30 bg-topaz/10 text-topaz font-semibold text-sm tracking-wider uppercase animate-pulse-slow">
                 Stagione 2026 • Campo Gallerone • Finale 10 Giugno
             </div>
-            
             <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight">
                 <span class="block text-avioLight">POMARANCE</span>
                 <span class="block gold-gradient">FOOTBALL</span>
                 <span class="block text-avioLight">LEAGUE</span>
             </h1>
-            
             <p class="text-xl md:text-2xl text-avio mb-8 max-w-2xl mx-auto">
                 Il torneo definitivo a 4 squadre • 7 giocatori • Andata e Ritorno
             </p>
-
-            <!-- Countdown -->
             <div class="grid grid-cols-4 gap-2 md:gap-4 max-w-3xl mx-auto mb-12">
                 <div class="card-glass rounded-lg p-3 md:p-4 border border-topaz/20">
                     <div id="days" class="text-2xl md:text-4xl font-bold text-topaz font-display">00</div>
@@ -168,12 +214,9 @@
                     <div class="text-xs text-avio uppercase tracking-wider">Secondi</div>
                 </div>
             </div>
-
-            <!-- Messaggio data evento -->
             <div id="event-message" class="mb-8 text-lg font-semibold text-topaz hidden">
                 🏆 La finale è in programma per il 10 Giugno 2026!
             </div>
-
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="#calendario" class="px-8 py-4 bg-topaz hover:bg-topazDark text-night font-bold rounded-lg transition-all transform hover:scale-105 shadow-lg shadow-topaz/25">
                     <i class="fas fa-calendar-alt mr-2"></i>Calendario
@@ -183,22 +226,19 @@
                 </a>
             </div>
         </div>
-
         <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
             <i class="fas fa-chevron-down text-topaz text-2xl"></i>
         </div>
     </section>
 
-    <!-- Info/Regolamento Section -->
+    <!-- Regolamento Section -->
     <section id="regolamento" class="py-20 bg-nightLight">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="font-display text-4xl md:text-5xl font-bold text-avioLight mb-4">REGOLAMENTO & INFO</h2>
                 <div class="w-24 h-1 bg-topaz mx-auto rounded-full"></div>
             </div>
-
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Card 1 -->
                 <div class="card-glass rounded-xl p-8 hover-gold transition-all duration-300">
                     <div class="w-14 h-14 bg-topaz/20 rounded-lg flex items-center justify-center mb-6">
                         <i class="fas fa-map-marker-alt text-2xl text-topaz"></i>
@@ -211,8 +251,6 @@
                         <span class="text-sm opacity-75">Campo in sintetico professionale</span>
                     </p>
                 </div>
-
-                <!-- Card 2 -->
                 <div class="card-glass rounded-xl p-8 hover-gold transition-all duration-300">
                     <div class="w-14 h-14 bg-topaz/20 rounded-lg flex items-center justify-center mb-6">
                         <i class="fas fa-users text-2xl text-topaz"></i>
@@ -222,8 +260,6 @@
                         Torneo ad andata e ritorno (6 giornate totali). Ogni squadra è composta da <strong class="text-avioLight">7 giocatori</strong> (6+1 portiere consigliato).
                     </p>
                 </div>
-
-                <!-- Card 3 -->
                 <div class="card-glass rounded-xl p-8 hover-gold transition-all duration-300">
                     <div class="w-14 h-14 bg-topaz/20 rounded-lg flex items-center justify-center mb-6">
                         <i class="fas fa-calendar-week text-2xl text-topaz"></i>
@@ -233,8 +269,6 @@
                         Si gioca <strong class="text-avioLight">una volta alla settimana</strong>. Le date possono essere spostate in caso di esigenze particolari, previo accordo tra le squadre.
                     </p>
                 </div>
-
-                <!-- Card 4 -->
                 <div class="card-glass rounded-xl p-8 hover-gold transition-all duration-300">
                     <div class="w-14 h-14 bg-topaz/20 rounded-lg flex items-center justify-center mb-6">
                         <i class="fas fa-clipboard-list text-2xl text-topaz"></i>
@@ -244,8 +278,6 @@
                         Le formazioni complete vanno inviate <strong class="text-avioLight">preferibilmente il giorno prima</strong> della partita via WhatsApp o social.
                     </p>
                 </div>
-
-                <!-- Card 5 -->
                 <div class="card-glass rounded-xl p-8 hover-gold transition-all duration-300 border-topaz/30">
                     <div class="w-14 h-14 bg-topaz/20 rounded-lg flex items-center justify-center mb-6">
                         <i class="fas fa-trophy text-2xl text-topaz"></i>
@@ -254,11 +286,9 @@
                     <p class="text-avio leading-relaxed">
                         <strong class="text-topaz text-2xl block mb-1">€60</strong>
                         Montepremi totale per la squadra vincitrice<br><br>
-                        <strong class="text-avioLight">Quota iscrizione:</strong> €15 a squadra per garantire l'eccellenza dell'evento
+                        <strong class="text-avioLight">Quota iscrizione:</strong> €15 a squadra
                     </p>
                 </div>
-
-                <!-- Card 6 -->
                 <div class="card-glass rounded-xl p-8 hover-gold transition-all duration-300">
                     <div class="w-14 h-14 bg-topaz/20 rounded-lg flex items-center justify-center mb-6">
                         <i class="fas fa-gavel text-2xl text-topaz"></i>
@@ -269,8 +299,6 @@
                     </p>
                 </div>
             </div>
-
-            <!-- Social Coverage -->
             <div class="mt-16 card-glass rounded-2xl p-8 border border-topaz/20 text-center">
                 <h3 class="text-2xl font-bold text-avioLight mb-4">Copertura Media Completa</h3>
                 <p class="text-avio mb-6 max-w-2xl mx-auto">
@@ -291,18 +319,26 @@
         </div>
     </section>
 
-    <!-- Squadre Section -->
+    <!-- ══════════════════════════════════════════
+         SQUADRE SECTION — sezione modificata
+    ══════════════════════════════════════════ -->
     <section id="squadre" class="py-20 bg-night">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="font-display text-4xl md:text-5xl font-bold text-avioLight mb-4">LE SQUADRE</h2>
                 <div class="w-24 h-1 bg-topaz mx-auto rounded-full mb-4"></div>
-                <p class="text-avio">4 squadre pronte a battagliare per il trofeo</p>
+                <p class="text-avio">Clicca su una squadra per scoprire rosa e statistiche</p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto" id="teams-container">
-                <!-- Teams will be populated by JS -->
+                <!-- Popolato da JS -->
             </div>
+
+            <!-- Hint caricamento immagine -->
+            <p class="text-center text-avio/30 text-xs mt-10">
+                <i class="fas fa-camera mr-1"></i>
+                Doppio clic sul logo per caricare l'immagine della squadra
+            </p>
         </div>
     </section>
 
@@ -314,10 +350,7 @@
                 <div class="w-24 h-1 bg-topaz mx-auto rounded-full mb-4"></div>
                 <p class="text-avio">Andata e Ritorno - 6 Giornate totali</p>
             </div>
-
-            <div class="space-y-8 max-w-4xl mx-auto" id="calendar-container">
-                <!-- Matches populated by JS -->
-            </div>
+            <div class="space-y-8 max-w-4xl mx-auto" id="calendar-container"></div>
         </div>
     </section>
 
@@ -331,7 +364,6 @@
                     <i class="fas fa-sync-alt mr-2"></i>Simula Risultati
                 </button>
             </div>
-
             <div class="table-container">
                 <div class="card-glass rounded-2xl overflow-hidden border border-avio/10 min-w-[600px]">
                     <table class="w-full text-left">
@@ -349,14 +381,10 @@
                                 <th class="px-4 py-4 text-center text-avioLight font-bold">DR</th>
                             </tr>
                         </thead>
-                        <tbody id="standings-body" class="divide-y divide-avio/5">
-                            <!-- Populated by JS -->
-                        </tbody>
+                        <tbody id="standings-body" class="divide-y divide-avio/5"></tbody>
                     </table>
                 </div>
             </div>
-
-            <!-- Legend -->
             <div class="mt-6 flex flex-wrap gap-4 justify-center text-sm text-avio">
                 <span class="flex items-center gap-2"><div class="w-3 h-3 bg-topaz rounded-full"></div> Campione</span>
                 <span class="flex items-center gap-2"><div class="w-3 h-3 bg-avio/30 rounded-full"></div> In corsa</span>
@@ -380,7 +408,7 @@
                 </div>
                 <div>
                     <h4 class="text-avioLight font-bold mb-4">Contatti</h4>
-                    <p class="text-avio text-sm space-y-2">
+                    <p class="text-avio text-sm">
                         <i class="fas fa-map-marker-alt mr-2 text-topaz"></i>Campo Gallerone, Pomarance<br>
                         <i class="fas fa-envelope mr-2 text-topaz"></i>info@pomarancefootball.it
                     </p>
@@ -406,323 +434,345 @@
         </div>
     </footer>
 
+    <!-- Hidden file input for logo upload -->
+    <input type="file" id="logo-upload-input" accept="image/*" class="hidden">
+
     <script>
-        // Data Structure
-        const teams = [
-            { id: 1, name: "FC Gallerone", color: "#f59e0b", logo: "fas fa-shield-alt" },
-            { id: 2, name: "Pomarance City", color: "#3b82f6", logo: "fas fa-city" },
-            { id: 3, name: "Val di Cecina", color: "#10b981", logo: "fas fa-mountain" },
-            { id: 4, name: "Libero", color: "#ef4444", logo: "fas fa-fire" }
-        ];
+    // ═══════════════════════════════════════════
+    //  DATI SQUADRE
+    //  → Cambia "page" con il nome del file HTML
+    //    che crei per ogni squadra (es. "gallerone.html")
+    // ═══════════════════════════════════════════
+    const teams = [
+        {
+            id: 1,
+            name: "FC Gallerone",          // ← cambia nome squadra
+            subtitle: "I padroni del campo",
+            color: "#f59e0b",
+            icon: "fas fa-shield-alt",
+            page: "squadra1.html"           // ← cambia con nome file squadra
+        },
+        {
+            id: 2,
+            name: "BTD King League",         // ← cambia nome squadra
+            subtitle: "La città in campo",
+            color: "#3b82f6",
+            icon: "fas fa-city",
+            page: "squadra2.html"           // ← cambia con nome file squadra
+        },
+        {
+            id: 3,
+            name: "Val di Cecina",          // ← cambia nome squadra
+            subtitle: "Cuore della valle",
+            color: "#10b981",
+            icon: "fas fa-mountain",
+            page: "squadra3.html"           // ← cambia con nome file squadra
+        },
+        {
+            id: 4,
+            name: "Libero FC",              // ← cambia nome squadra
+            subtitle: "La squadra selvaggia",
+            color: "#ef4444",
+            icon: "fas fa-fire",
+            page: "squadra4.html"           // ← cambia con nome file squadra
+        }
+    ];
 
-        // Generate Calendar (Andata e Ritorno) - BUG FIX: distingue andata/ritorno correttamente
-        const generateCalendar = () => {
-            const andata = [
-                { day: "Giornata 1", type: "Andata", matches: [
-                    { home: "FC Gallerone", away: "Pomarance City", date: "Da definire" },
-                    { home: "Val di Cecina", away: "Libero", date: "Da definire" }
-                ]},
-                { day: "Giornata 2", type: "Andata", matches: [
-                    { home: "FC Gallerone", away: "Val di Cecina", date: "Da definire" },
-                    { home: "Pomarance City", away: "Libero", date: "Da definire" }
-                ]},
-                { day: "Giornata 3", type: "Andata", matches: [
-                    { home: "FC Gallerone", away: "Libero", date: "Da definire" },
-                    { home: "Pomarance City", away: "Val di Cecina", date: "Da definire" }
-                ]}
-            ];
-            
-            const ritorno = [
-                { day: "Giornata 4", type: "Ritorno", matches: [
-                    { home: "Pomarance City", away: "FC Gallerone", date: "Da definire" },
-                    { home: "Libero", away: "Val di Cecina", date: "Da definire" }
-                ]},
-                { day: "Giornata 5", type: "Ritorno", matches: [
-                    { home: "Val di Cecina", away: "FC Gallerone", date: "Da definire" },
-                    { home: "Libero", away: "Pomarance City", date: "Da definire" }
-                ]},
-                { day: "Giornata 6", type: "Ritorno", matches: [
-                    { home: "Libero", away: "FC Gallerone", date: "Da definire" },
-                    { home: "Val di Cecina", away: "Pomarance City", date: "Da definire" }
-                ]}
-            ];
+    // Calendario
+    const schedule = [
+        { day: "Giornata 1", type: "Andata", matches: [
+            { home: "FC Gallerone", away: "Pomarance City", date: "Da definire" },
+            { home: "Val di Cecina", away: "Libero FC", date: "Da definire" }
+        ]},
+        { day: "Giornata 2", type: "Andata", matches: [
+            { home: "FC Gallerone", away: "Val di Cecina", date: "Da definire" },
+            { home: "Pomarance City", away: "Libero FC", date: "Da definire" }
+        ]},
+        { day: "Giornata 3", type: "Andata", matches: [
+            { home: "FC Gallerone", away: "Libero FC", date: "Da definire" },
+            { home: "Pomarance City", away: "Val di Cecina", date: "Da definire" }
+        ]},
+        { day: "Giornata 4", type: "Ritorno", matches: [
+            { home: "Pomarance City", away: "FC Gallerone", date: "Da definire" },
+            { home: "Libero FC", away: "Val di Cecina", date: "Da definire" }
+        ]},
+        { day: "Giornata 5", type: "Ritorno", matches: [
+            { home: "Val di Cecina", away: "FC Gallerone", date: "Da definire" },
+            { home: "Libero FC", away: "Pomarance City", date: "Da definire" }
+        ]},
+        { day: "Giornata 6", type: "Ritorno", matches: [
+            { home: "Libero FC", away: "FC Gallerone", date: "Da definire" },
+            { home: "Val di Cecina", away: "Pomarance City", date: "Da definire" }
+        ]}
+    ];
 
-            return [...andata, ...ritorno];
-        };
+    let standings = teams.map(t => ({
+        ...t, points:0, played:0, won:0, drawn:0, lost:0, gf:0, ga:0
+    }));
 
-        const schedule = generateCalendar();
+    // ═══════════════════════════════════════════
+    //  LOGO STORAGE (localStorage per persistenza)
+    // ═══════════════════════════════════════════
+    const getLogoKey = (id) => `pfl_logo_team_${id}`;
 
-        // Initialize Standings
-        let standings = teams.map(t => ({
-            ...t,
-            points: 0,
-            played: 0,
-            won: 0,
-            drawn: 0,
-            lost: 0,
-            gf: 0,
-            ga: 0
-        }));
+    const saveLogo = (id, dataUrl) => {
+        try { localStorage.setItem(getLogoKey(id), dataUrl); } catch(e) {}
+    };
+    const loadLogo = (id) => {
+        try { return localStorage.getItem(getLogoKey(id)); } catch(e) { return null; }
+    };
 
-        // Render Teams
-        const renderTeams = () => {
-            const container = document.getElementById('teams-container');
-            if (!container) return;
-            
-            container.innerHTML = teams.map((team) => `
-                <div class="card-glass rounded-xl p-6 hover-gold transition-all duration-300 group cursor-pointer" onclick="showTeamDetail(${team.id})">
-                    <div class="flex items-center gap-4">
-                        <div class="w-16 h-16 rounded-full bg-night flex items-center justify-center text-3xl flex-shrink-0" style="color: ${team.color}; border: 2px solid ${team.color}">
-                            <i class="${team.logo}"></i>
+    // ═══════════════════════════════════════════
+    //  RENDER SQUADRE
+    // ═══════════════════════════════════════════
+    const renderTeams = () => {
+        const container = document.getElementById('teams-container');
+        if (!container) return;
+
+        container.innerHTML = teams.map(team => {
+            const savedLogo = loadLogo(team.id);
+            const logoContent = savedLogo
+                ? `<img src="${savedLogo}" alt="${team.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
+                : `<i class="${team.icon}" style="color:${team.color};font-size:2rem;"></i>`;
+
+            return `
+            <a href="${team.page}" class="team-card" style="--team-color:${team.color}">
+                <div class="flex items-center gap-5">
+                    <!-- Logo con doppio clic per upload -->
+                    <div class="logo-wrap" ondblclick="triggerLogoUpload(event, ${team.id})" title="Doppio clic per caricare logo">
+                        <div class="logo-circle" style="border-color:${team.color}" id="logo-circle-${team.id}">
+                            ${logoContent}
                         </div>
-                        <div class="min-w-0">
-                            <h3 class="text-xl font-bold text-avioLight group-hover:text-topaz transition-colors truncate">${team.name}</h3>
-                            <p class="text-sm text-avio">Rosa: 7 giocatori</p>
+                        <div class="upload-hint">
+                            <i class="fas fa-camera text-white text-sm"></i>
                         </div>
                     </div>
-                    <div class="mt-4 pt-4 border-t border-avio/10 flex justify-between text-sm text-avio">
-                        <span>Iscritta <i class="fas fa-check text-topaz ml-1"></i></span>
-                        <span class="text-topaz font-bold">€15</span>
+
+                    <!-- Info squadra -->
+                    <div class="flex-1 min-w-0">
+                        <h3 class="team-name text-xl font-bold text-avioLight transition-colors truncate">${team.name}</h3>
+                        <p class="text-sm text-avio mt-0.5">${team.subtitle}</p>
+                        <div class="flex items-center gap-3 mt-3">
+                            <span class="text-xs px-2 py-1 rounded-full bg-night text-avio border border-avio/20">
+                                <i class="fas fa-check text-topaz mr-1"></i>Iscritta
+                            </span>
+                            <span class="text-xs text-topaz font-bold">7 giocatori</span>
+                        </div>
+                    </div>
+
+                    <!-- Freccia -->
+                    <div class="team-arrow text-avio/40 flex-shrink-0">
+                        <i class="fas fa-chevron-right text-lg"></i>
                     </div>
                 </div>
-            `).join('');
-        };
 
-        // Render Calendar - BUG FIX: struttura corretta andata/ritorno
-        const renderCalendar = () => {
-            const container = document.getElementById('calendar-container');
-            if (!container) return;
+                <!-- Barra colore in fondo -->
+                <div class="mt-5 pt-4 border-t border-avio/10 flex items-center justify-between">
+                    <div class="flex gap-1">
+                        <div class="h-1 w-8 rounded-full" style="background:${team.color}"></div>
+                        <div class="h-1 w-4 rounded-full opacity-40" style="background:${team.color}"></div>
+                        <div class="h-1 w-2 rounded-full opacity-20" style="background:${team.color}"></div>
+                    </div>
+                    <span class="text-xs text-avio/50">Vedi profilo →</span>
+                </div>
+            </a>`;
+        }).join('');
+    };
 
-            let html = '';
-            schedule.forEach((giornata, gIndex) => {
-                html += `
-                    <div class="mb-8">
-                        <h3 class="text-2xl font-bold text-topaz mb-4 font-display flex items-center gap-3">
-                            ${giornata.day} 
-                            <span class="text-sm font-sans font-normal text-avio bg-night px-3 py-1 rounded-full border border-avio/20">${giornata.type}</span>
-                        </h3>
-                        <div class="space-y-4">
-                `;
-                
-                giornata.matches.forEach((match, mIndex) => {
-                    const matchId = `${gIndex}-${mIndex}`;
-                    html += `
-                        <div class="match-card rounded-lg p-4 md:p-6 flex flex-col md:flex-row items-center justify-between gap-4 hover:border-topaz transition-all cursor-pointer" onclick="editMatch('${matchId}')">
-                            <div class="flex items-center gap-4 flex-1 w-full">
-                                <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-night flex items-center justify-center text-topaz flex-shrink-0">
-                                    <i class="fas fa-futbol"></i>
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <h4 class="text-base md:text-lg font-bold text-avioLight truncate">${match.home} <span class="text-topaz mx-1">vs</span> ${match.away}</h4>
-                                    <p class="text-xs md:text-sm text-avio"><i class="far fa-clock mr-2"></i>${match.date}</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <button class="px-3 py-1 md:px-4 md:py-2 bg-night text-avio rounded border border-avio/20 hover:border-topaz hover:text-topaz transition-all text-xs md:text-sm whitespace-nowrap">
-                                    Inserisci
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                html += `</div></div>`;
-            });
-            
-            container.innerHTML = html;
-        };
+    // ═══════════════════════════════════════════
+    //  UPLOAD LOGO
+    // ═══════════════════════════════════════════
+    let currentUploadTeamId = null;
 
-        // Render Standings - BUG FIX: gestione responsive migliorata
-        const renderStandings = () => {
-            const tbody = document.getElementById('standings-body');
-            if (!tbody) return;
-            
-            // Sort by points, then goal difference
-            const sorted = [...standings].sort((a, b) => {
-                if (b.points !== a.points) return b.points - a.points;
-                return (b.gf - b.ga) - (a.gf - a.ga);
-            });
+    const triggerLogoUpload = (e, teamId) => {
+        e.preventDefault();   // impedisce navigazione alla pagina squadra
+        e.stopPropagation();
+        currentUploadTeamId = teamId;
+        document.getElementById('logo-upload-input').click();
+    };
 
-            tbody.innerHTML = sorted.map((team, idx) => `
-                <tr class="hover:bg-avio/5 transition-colors ${idx === 0 ? 'bg-topaz/5' : ''}">
-                    <td class="px-4 py-4">
-                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full ${idx < 1 ? 'bg-topaz text-night font-bold' : 'bg-nightLight text-avio'} text-sm">
-                            ${idx + 1}
-                        </span>
-                    </td>
-                    <td class="px-4 py-4 font-semibold text-avioLight">
-                        <div class="flex items-center gap-2 min-w-[120px]">
-                            <i class="${team.logo} text-sm flex-shrink-0" style="color: ${team.color}"></i>
-                            <span class="truncate">${team.name}</span>
-                        </div>
-                    </td>
-                    <td class="px-4 py-4 text-center font-bold text-topaz text-lg">${team.points}</td>
-                    <td class="px-4 py-4 text-center text-avio text-sm">${team.played}</td>
-                    <td class="px-4 py-4 text-center text-avio text-sm">${team.won}</td>
-                    <td class="px-4 py-4 text-center text-avio text-sm">${team.drawn}</td>
-                    <td class="px-4 py-4 text-center text-avio text-sm">${team.lost}</td>
-                    <td class="px-4 py-4 text-center text-avio text-sm">${team.gf}</td>
-                    <td class="px-4 py-4 text-center text-avio text-sm">${team.ga}</td>
-                    <td class="px-4 py-4 text-center font-semibold ${team.gf - team.ga > 0 ? 'text-green-400' : team.gf - team.ga < 0 ? 'text-red-400' : 'text-avio'} text-sm">
-                        ${team.gf - team.ga > 0 ? '+' : ''}${team.gf - team.ga}
-                    </td>
-                </tr>
-            `).join('');
-        };
+    document.addEventListener('DOMContentLoaded', () => {
+        const input = document.getElementById('logo-upload-input');
+        input.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file || !currentUploadTeamId) return;
 
-        // Simulate Results (per demo)
-        const simulateResults = () => {
-            // Reset
-            standings.forEach(t => {
-                t.points = 0; t.played = 0; t.won = 0; t.drawn = 0; t.lost = 0; t.gf = 0; t.ga = 0;
-            });
-            
-            // Simula risultati random
-            standings[0].points = 12; standings[0].played = 4; standings[0].won = 4; standings[0].gf = 15; standings[0].ga = 4;
-            standings[1].points = 7; standings[1].played = 4; standings[1].won = 2; standings[1].drawn = 1; standings[1].lost = 1; standings[1].gf = 10; standings[1].ga = 8;
-            standings[2].points = 3; standings[2].played = 4; standings[2].won = 1; standings[2].lost = 3; standings[2].gf = 6; standings[2].ga = 12;
-            standings[3].points = 1; standings[3].played = 4; standings[3].drawn = 1; standings[3].lost = 3; standings[3].gf = 5; standings[3].ga = 12;
-            
-            renderStandings();
-            
-            // Feedback visivo
-            const btn = document.querySelector('button[onclick="simulateResults()"]');
-            if (btn) {
-                const original = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-check mr-2"></i>Aggiornato!';
-                btn.classList.add('bg-green-600', 'text-white', 'border-green-600');
-                setTimeout(() => {
-                    btn.innerHTML = original;
-                    btn.classList.remove('bg-green-600', 'text-white', 'border-green-600');
-                }, 2000);
-            }
-        };
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                const dataUrl = ev.target.result;
+                saveLogo(currentUploadTeamId, dataUrl);
 
-        // Countdown Timer - BUG FIX: Data fissa al 10 Giugno 2026
-        const startCountdown = () => {
-            // Data target: 10 Giugno 2026 ore 20:00
-            const targetDate = new Date('2026-06-10T20:00:00').getTime();
-            const eventMessage = document.getElementById('event-message');
-            
-            const update = () => {
-                const now = new Date().getTime();
-                const diff = targetDate - now;
-                
-                if (diff <= 0) {
-                    // Data passata
-                    document.getElementById('days').textContent = "00";
-                    document.getElementById('hours').textContent = "00";
-                    document.getElementById('minutes').textContent = "00";
-                    document.getElementById('seconds').textContent = "00";
-                    
-                    if (eventMessage) {
-                        eventMessage.textContent = "🏆 Il torneo è iniziato o concluso!";
-                        eventMessage.classList.remove('hidden');
-                    }
-                    return;
+                // Aggiorna live senza ricaricare
+                const circle = document.getElementById(`logo-circle-${currentUploadTeamId}`);
+                if (circle) {
+                    circle.innerHTML = `<img src="${dataUrl}" alt="logo" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
                 }
-                
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                
-                const daysEl = document.getElementById('days');
-                const hoursEl = document.getElementById('hours');
-                const minutesEl = document.getElementById('minutes');
-                const secondsEl = document.getElementById('seconds');
-                
-                if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
-                if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
-                if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
-                if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+                // Reset input
+                input.value = '';
+                currentUploadTeamId = null;
             };
-            
-            setInterval(update, 1000);
-            update();
-        };
-
-        // Mobile Menu Toggle - BUG FIX: Toggle corretto
-        const initMobileMenu = () => {
-            const btn = document.getElementById('mobile-menu-btn');
-            const menu = document.getElementById('mobile-menu');
-            
-            if (btn && menu) {
-                btn.addEventListener('click', () => {
-                    menu.classList.toggle('hidden');
-                });
-                
-                // Chiudi menu quando clicchi su un link
-                menu.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        menu.classList.add('hidden');
-                    });
-                });
-            }
-        };
-
-        // Smooth scroll for anchor links
-        const initSmoothScroll = () => {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                });
-            });
-        };
-
-        // Intersection Observer per animazioni
-        const initAnimations = () => {
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.classList.add('slide-in');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.card-glass').forEach(el => {
-                el.style.opacity = '0';
-                observer.observe(el);
-            });
-        };
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            try {
-                renderTeams();
-                renderCalendar();
-                renderStandings();
-                startCountdown();
-                initMobileMenu();
-                initSmoothScroll();
-                initAnimations();
-            } catch (e) {
-                console.error('Errore inizializzazione:', e);
-            }
+            reader.readAsDataURL(file);
         });
+    });
 
-        // Placeholder functions
-        const showTeamDetail = (id) => {
-            const team = teams.find(t => t.id === id);
-            if (team) {
-                alert(`📋 Dettaglio ${team.name}\n\nIn una versione completa, qui ci sarebbe:\n• Rosa completa dei 7 giocatori\n• Statistiche individuali\n• Foto della squadra\n• Prossimi incontri`);
+    // ═══════════════════════════════════════════
+    //  RENDER CALENDARIO
+    // ═══════════════════════════════════════════
+    const renderCalendar = () => {
+        const container = document.getElementById('calendar-container');
+        if (!container) return;
+        let html = '';
+        schedule.forEach((giornata, gIndex) => {
+            html += `
+                <div class="mb-8">
+                    <h3 class="text-2xl font-bold text-topaz mb-4 font-display flex items-center gap-3">
+                        ${giornata.day}
+                        <span class="text-sm font-sans font-normal text-avio bg-night px-3 py-1 rounded-full border border-avio/20">${giornata.type}</span>
+                    </h3>
+                    <div class="space-y-4">`;
+            giornata.matches.forEach((match, mIndex) => {
+                html += `
+                    <div class="match-card rounded-lg p-4 md:p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                        <div class="flex items-center gap-4 flex-1 w-full">
+                            <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-night flex items-center justify-center text-topaz flex-shrink-0">
+                                <i class="fas fa-futbol"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-base md:text-lg font-bold text-avioLight truncate">
+                                    ${match.home} <span class="text-topaz mx-1">vs</span> ${match.away}
+                                </h4>
+                                <p class="text-xs md:text-sm text-avio"><i class="far fa-clock mr-2"></i>${match.date}</p>
+                            </div>
+                        </div>
+                        <div class="px-3 py-1 bg-night text-avio rounded border border-avio/20 text-xs whitespace-nowrap">
+                            Da giocare
+                        </div>
+                    </div>`;
+            });
+            html += `</div></div>`;
+        });
+        container.innerHTML = html;
+    };
+
+    // ═══════════════════════════════════════════
+    //  RENDER CLASSIFICA
+    // ═══════════════════════════════════════════
+    const renderStandings = () => {
+        const tbody = document.getElementById('standings-body');
+        if (!tbody) return;
+        const sorted = [...standings].sort((a, b) => {
+            if (b.points !== a.points) return b.points - a.points;
+            return (b.gf - b.ga) - (a.gf - a.ga);
+        });
+        tbody.innerHTML = sorted.map((team, idx) => `
+            <tr class="hover:bg-avio/5 transition-colors ${idx === 0 ? 'bg-topaz/5' : ''}">
+                <td class="px-4 py-4">
+                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-full ${idx < 1 ? 'bg-topaz text-night font-bold' : 'bg-nightLight text-avio'} text-sm">
+                        ${idx + 1}
+                    </span>
+                </td>
+                <td class="px-4 py-4 font-semibold text-avioLight">
+                    <div class="flex items-center gap-2 min-w-[120px]">
+                        <i class="${team.icon} text-sm flex-shrink-0" style="color:${team.color}"></i>
+                        <span class="truncate">${team.name}</span>
+                    </div>
+                </td>
+                <td class="px-4 py-4 text-center font-bold text-topaz text-lg">${team.points}</td>
+                <td class="px-4 py-4 text-center text-avio text-sm">${team.played}</td>
+                <td class="px-4 py-4 text-center text-avio text-sm">${team.won}</td>
+                <td class="px-4 py-4 text-center text-avio text-sm">${team.drawn}</td>
+                <td class="px-4 py-4 text-center text-avio text-sm">${team.lost}</td>
+                <td class="px-4 py-4 text-center text-avio text-sm">${team.gf}</td>
+                <td class="px-4 py-4 text-center text-avio text-sm">${team.ga}</td>
+                <td class="px-4 py-4 text-center font-semibold text-sm ${team.gf-team.ga > 0 ? 'text-green-400' : team.gf-team.ga < 0 ? 'text-red-400' : 'text-avio'}">
+                    ${team.gf-team.ga > 0 ? '+' : ''}${team.gf-team.ga}
+                </td>
+            </tr>`).join('');
+    };
+
+    const simulateResults = () => {
+        standings.forEach(t => { t.points=0; t.played=0; t.won=0; t.drawn=0; t.lost=0; t.gf=0; t.ga=0; });
+        standings[0].points=12; standings[0].played=4; standings[0].won=4; standings[0].gf=15; standings[0].ga=4;
+        standings[1].points=7;  standings[1].played=4; standings[1].won=2; standings[1].drawn=1; standings[1].lost=1; standings[1].gf=10; standings[1].ga=8;
+        standings[2].points=3;  standings[2].played=4; standings[2].won=1; standings[2].lost=3; standings[2].gf=6;  standings[2].ga=12;
+        standings[3].points=1;  standings[3].played=4; standings[3].drawn=1; standings[3].lost=3; standings[3].gf=5; standings[3].ga=12;
+        renderStandings();
+        const btn = document.querySelector('button[onclick="simulateResults()"]');
+        if (btn) {
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check mr-2"></i>Aggiornato!';
+            btn.classList.add('bg-green-700','text-white','border-green-700');
+            setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('bg-green-700','text-white','border-green-700'); }, 2000);
+        }
+    };
+
+    // Countdown
+    const startCountdown = () => {
+        const target = new Date('2026-06-10T20:00:00').getTime();
+        const update = () => {
+            const diff = target - Date.now();
+            if (diff <= 0) {
+                ['days','hours','minutes','seconds'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent='00'; });
+                const msg = document.getElementById('event-message');
+                if (msg) { msg.textContent='🏆 Il torneo è iniziato!'; msg.classList.remove('hidden'); }
+                return;
             }
+            const pad = n => String(Math.floor(n)).padStart(2,'0');
+            const el = id => document.getElementById(id);
+            if(el('days'))    el('days').textContent    = pad(diff/(1000*60*60*24));
+            if(el('hours'))   el('hours').textContent   = pad((diff%(1000*60*60*24))/(1000*60*60));
+            if(el('minutes')) el('minutes').textContent = pad((diff%(1000*60*60))/(1000*60));
+            if(el('seconds')) el('seconds').textContent = pad((diff%(1000*60))/1000);
         };
+        setInterval(update, 1000);
+        update();
+    };
 
-        const editMatch = (matchId) => {
-            alert(`⚽ Inserimento risultato partita ID: ${matchId}\n\nFunzionalità disponibile solo per gli amministratori del torneo.\n\n(Inserire qui il sistema di autenticazione per modificare i risultati reali)`);
-        };
+    // Mobile menu
+    const initMobileMenu = () => {
+        const btn  = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        if (btn && menu) {
+            btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+            menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.add('hidden')));
+        }
+    };
+
+    // Smooth scroll
+    const initSmoothScroll = () => {
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) { e.preventDefault(); target.scrollIntoView({ behavior:'smooth', block:'start' }); }
+            });
+        });
+    };
+
+    // Animations
+    const initAnimations = () => {
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.classList.add('slide-in');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.card-glass').forEach(el => { el.style.opacity='0'; obs.observe(el); });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        try {
+            renderTeams();
+            renderCalendar();
+            renderStandings();
+            startCountdown();
+            initMobileMenu();
+            initSmoothScroll();
+            initAnimations();
+        } catch(e) { console.error('Init error:', e); }
+    });
     </script>
 </body>
 </html>
