@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regolamento — PFL 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@700;900&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        night: '#0b1120',
+                        nightLight: '#151e32',
+                        avio: '#94a3b8',
+                        avioLight: '#e2e8f0',
+                        topaz: '#f59e0b',
+                        topazDark: '#d97706'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Orbitron', 'Impact', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* ── BASE ── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --night: #0b1120;
+            --nightLight: #151e32;
+            --avio: #94a3b8;
+            --avioLight: #e2e8f0;
+            --topaz: #f59e0b;
+            --topazDark: #d97706;
+        }
+
+        body {
+            background-color: var(--night);
+            color: var(--avioLight);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--night);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--topaz);
+            border-radius: 3px;
+        }
+
+        /* ── GOLD GRADIENT TEXT ── */
+        .gold-gradient {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── GLASS CARD ── */
+        .card-glass {
+            background: rgba(21, 30, 50, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(11, 17, 32, 0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+            height: 72px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* ── HERO BACKGROUND PATTERN ── */
+        .hero-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2394a3b8' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* ── RULE CARDS ── */
+        .rule-card {
+            background: rgba(21, 30, 50, 0.85);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rule-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--topaz);
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.3s ease;
+        }
+
+        .rule-card:hover {
+            border-color: rgba(245, 158, 11, 0.35);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.12);
+        }
+
+        .rule-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        /* ── ICON BADGE ── */
+        .icon-badge {
+            width: 56px;
+            height: 56px;
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .rule-card:hover .icon-badge {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: var(--topaz);
+        }
+
+        /* ── ACCORDION ── */
+        .accordion-item {
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .accordion-item.open {
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .accordion-btn {
+            width: 100%;
+            background: rgba(21, 30, 50, 0.85);
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            cursor: pointer;
+            border: none;
+            color: var(--avioLight);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: left;
+            transition: background 0.2s;
+        }
+
+        .accordion-btn:hover {
+            background: rgba(30, 41, 59, 0.9);
+        }
+
+        .accordion-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            color: var(--topaz);
+            font-size: 0.75rem;
+        }
+
+        .accordion-item.open .accordion-icon {
+            background: var(--topaz);
+            color: var(--night);
+            transform: rotate(45deg);
+        }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(11, 17, 32, 0.5);
+        }
+
+        .accordion-body.open {
+            max-height: 600px;
+        }
+
+        .accordion-body-inner {
+            padding: 1.25rem 1.5rem 1.5rem;
+            border-top: 1px solid rgba(148, 163, 184, 0.08);
+        }
+
+        /* ── TIMELINE ── */
+        .timeline-line {
+            position: absolute;
+            left: 19px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--topaz), rgba(245, 158, 11, 0.1));
+        }
+
+        .timeline-dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(245, 158, 11, 0.15);
+            border: 2px solid var(--topaz);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--topaz);
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── PRIZE BOX ── */
+        .prize-box {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.06) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 1.25rem;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prize-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(245, 158, 11, 0.04) 60deg, transparent 120deg);
+            animation: rotateBg 12s linear infinite;
+        }
+
+        @keyframes rotateBg {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ── SECTION DIVIDER ── */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, rgba(245, 158, 11, 0.4), transparent);
+        }
+
+        /* ── BADGE PILL ── */
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-up {
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+
+        .delay-4 {
+            animation-delay: 0.4s;
+        }
+
+        .delay-5 {
+            animation-delay: 0.5s;
+        }
+
+        .delay-6 {
+            animation-delay: 0.6s;
+        }
+
+        /* ── SCROLL REVEAL ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.55s ease, transform 0.55s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── MOBILE MENU ── */
+        #mobile-menu {
+            background: rgba(21, 30, 50, 0.98);
+            backdrop-filter: blur(12px);
+        }
+
+        /* ── BACK BUTTON ── */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            background: rgba(148, 163, 184, 0.08);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            color: var(--avio);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--topaz);
+            color: var(--topaz);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ══ NAV ══ -->
+    <nav>
+        <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left text-xs"></i> Home
+                </a>
+                <div class="hidden sm:flex items-center gap-2">
+                    <i class="fas fa-futbol text-topaz text-xl"></i>
+                    <span class="font-display text-lg font-black tracking-wider text-avioLight">PFL<span
+                            class="text-topaz">2026</span></span>
+                </div>
+            </div>
+
+            <!-- Desktop links -->
+            <div class="hidden md:flex items-center gap-6">
+                <a href="#info" class="text-avio hover:text-topaz transition-colors font-semibold text-sm">Info</a>
+                <a href="#regole" class="text-avio hover:text-topaz transition-colors font-semibold text-sm">Regole</a>
+                <a href="#svolgimento"
+                    class="text-avio hover:text-topaz transition-colors font-semibold text-sm">Svolgimento</a>
+                <a href="#premi" class="text-avio hover:text-topaz transition-colors font-semibold text-sm">Premi</a>
+            </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-avioLight text-xl p-2">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="fixed inset-x-0 top-[72px] z-50 hidden border-b border-avio/10 md:hidden">
+        <div class="px-4 py-4 space-y-1">
+            <a href="#info" class="block py-2.5 text-avio hover:text-topaz font-semibold">Info Generali</a>
+            <a href="#regole" class="block py-2.5 text-avio hover:text-topaz font-semibold">Regole di Gioco</a>
+            <a href="#svolgimento" class="block py-2.5 text-avio hover:text-topaz font-semibold">Svolgimento</a>
+            <a href="#premi" class="block py-2.5 text-avio hover:text-topaz font-semibold">Premi & Quote</a>
+        </div>
+    </div>
+
+
+    <!-- ══ HERO ══ -->
+    <section class="relative pt-[72px] min-h-[42vh] flex items-center justify-center overflow-hidden hero-pattern">
+        <div class="absolute inset-0 bg-gradient-to-br from-night via-nightLight/80 to-night"></div>
+
+        <!-- Decorative circle -->
+        <div
+            class="absolute right-[-120px] top-[-80px] w-[420px] h-[420px] rounded-full border border-topaz/8 opacity-40 pointer-events-none">
+        </div>
+        <div
+            class="absolute right-[-60px] top-[-30px] w-[260px] h-[260px] rounded-full border border-topaz/12 opacity-30 pointer-events-none">
+        </div>
+
+        <div class="relative z-10 text-center px-4 py-16 max-w-3xl mx-auto">
+            <div class="fade-in mb-5">
+                <span class="badge-pill bg-topaz/10 border border-topaz/25 text-topaz">
+                    <i class="fas fa-gavel text-xs"></i> Stagione 2026
+                </span>
+            </div>
+            <h1 class="fade-up font-display text-5xl md:text-6xl font-black mb-4 leading-tight">
+                <span class="gold-gradient">REGOLAMENTO</span>
+            </h1>
+            <p class="fade-up delay-1 text-avio text-lg md:text-xl max-w-xl mx-auto leading-relaxed">
+                ATTENZIONE: le seguenti informazioni sono parzialmente corrette e incomplete, fanno parte della
+                progettazione grafica del sito (sito in costruzione).
+            </p>
+
+            <!-- Quick stats -->
+            <div class="fade-up delay-2 mt-10 grid grid-cols-3 gap-3 max-w-sm mx-auto">
+                <div class="card-glass rounded-xl p-3 border border-topaz/15">
+                    <div class="font-display text-2xl font-bold text-topaz">4</div>
+                    <div class="text-xs text-avio mt-0.5">Squadre</div>
+                </div>
+                <div class="card-glass rounded-xl p-3 border border-topaz/15">
+                    <div class="font-display text-2xl font-bold text-topaz">7</div>
+                    <div class="text-xs text-avio mt-0.5">Giocatori</div>
+                </div>
+                <div class="card-glass rounded-xl p-3 border border-topaz/15">
+                    <div class="font-display text-2xl font-bold text-topaz">6</div>
+                    <div class="text-xs text-avio mt-0.5">Giornate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ══ INFO GENERALI ══ -->
+    <section id="info" class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="section-divider reveal">
+                <h2 class="font-display text-2xl md:text-3xl font-bold text-avioLight whitespace-nowrap">
+                    INFO GENERALI
+                </h2>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+                <!-- Location -->
+                <div class="rule-card reveal">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div class="icon-badge">
+                            <i class="fas fa-map-marker-alt text-topaz text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-avioLight font-bold text-lg mb-1">Location</h3>
+                            <span class="badge-pill bg-green-500/10 border border-green-500/20 text-green-400">
+                                <i class="fas fa-circle text-[6px]"></i> Confermata
+                            </span>
+                        </div>
+                    </div>
+                    <p class="text-avio leading-relaxed text-sm">
+                        <strong class="text-topaz text-base block mb-1">Campo Gallerone</strong>
+                        Viale del Gallerone, 56045<br>
+                        Pomarance (PI)<br>
+                        <span class="inline-block mt-2 text-xs opacity-60">
+                            <i class="fas fa-info-circle mr-1"></i>Manto in sintetico professionale
+                        </span>
+                    </p>
+                </div>
+
+                <!-- Formato -->
+                <div class="rule-card reveal delay-1">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div class="icon-badge">
+                            <i class="fas fa-users text-topaz text-xl"></i>
+                        </div>
+                        <h3 class="text-avioLight font-bold text-lg">Formato</h3>
+                    </div>
+                    <p class="text-avio leading-relaxed text-sm">
+                        Torneo <strong class="text-avioLight">andata e ritorno</strong> tra 4 squadre — 6 giornate
+                        totali.<br><br>
+                        Ogni squadra è composta da <strong class="text-avioLight">7 giocatori</strong>
+                        (6 di movimento + 1 portiere consigliato).
+                    </p>
+                </div>
+
+                <!-- Cadenza -->
+                <div class="rule-card reveal delay-2">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div class="icon-badge">
+                            <i class="fas fa-calendar-week text-topaz text-xl"></i>
+                        </div>
+                        <h3 class="text-avioLight font-bold text-lg">Cadenza</h3>
+                    </div>
+                    <p class="text-avio leading-relaxed text-sm">
+                        Si gioca <strong class="text-avioLight">una volta alla settimana</strong>.<br><br>
+                        Le date possono essere spostate in caso di esigenze, previo
+                        <strong class="text-avioLight">accordo tra le squadre</strong> coinvolte.
+                    </p>
+                </div>
+
+                <!-- Formazioni -->
+                <div class="rule-card reveal delay-1">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div class="icon-badge">
+                            <i class="fas fa-clipboard-list text-topaz text-xl"></i>
+                        </div>
+                        <h3 class="text-avioLight font-bold text-lg">Formazioni</h3>
+                    </div>
+                    <p class="text-avio leading-relaxed text-sm">
+                        Le formazioni complete vanno inviate
+                        <strong class="text-avioLight">preferibilmente il giorno prima</strong>
+                        della partita tramite WhatsApp o social ufficiali.
+                    </p>
+                </div>
+
+                <!-- Arbitro -->
+                <div class="rule-card reveal delay-2">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div class="icon-badge">
+                            <i class="fas fa-gavel text-topaz text-xl"></i>
+                        </div>
+                        <h3 class="text-avioLight font-bold text-lg">Arbitro</h3>
+                    </div>
+                    <p class="text-avio leading-relaxed text-sm">
+                        Sarà presente un <strong class="text-avioLight">arbitro ufficiale</strong>
+                        con pieno potere decisionale.<br><br>
+                        Le sue decisioni sono <strong class="text-avioLight">inappellabili</strong>.
+                    </p>
+                </div>
+
+                <!-- Media -->
+                <div class="rule-card reveal delay-3">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div class="icon-badge">
+                            <i class="fas fa-camera text-topaz text-xl"></i>
+                        </div>
+                        <h3 class="text-avioLight font-bold text-lg">Copertura Media</h3>
+                    </div>
+                    <p class="text-avio leading-relaxed text-sm">
+                        Risultati, pagelle, classifiche ed episodi salienti saranno documentati
+                        sui canali ufficiali <strong class="text-avioLight">Instagram</strong> e
+                        <strong class="text-avioLight">TikTok</strong>.
+                    </p>
+                    <div class="mt-3 flex gap-2">
+                        <a href="https://www.instagram.com/pomarance.football.league" target="_blank"
+                            class="text-xs px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/20 text-pink-400 hover:bg-pink-500/20 transition-colors">
+                            <i class="fab fa-instagram mr-1"></i>Instagram
+                        </a>
+                        <a href="https://www.tiktok.com/@pomarance.footbal" target="_blank"
+                            class="text-xs px-3 py-1 rounded-full bg-white/5 border border-white/10 text-avio hover:bg-white/10 transition-colors">
+                            <i class="fab fa-tiktok mr-1"></i>TikTok
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ══ REGOLE DI GIOCO (ACCORDION) ══ -->
+    <section id="regole" class="py-20" style="background: var(--nightLight);">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="section-divider reveal">
+                <h2 class="font-display text-2xl md:text-3xl font-bold text-avioLight whitespace-nowrap">
+                    REGOLE DI GIOCO
+                </h2>
+            </div>
+
+            <div class="space-y-3" id="accordion-container">
+
+                <!-- Regola 1 -->
+                <div class="accordion-item reveal">
+                    <button class="accordion-btn" data-accordion>
+                        <span class="flex items-center gap-3">
+                            <i class="fas fa-users text-topaz w-5 text-center"></i>
+                            Composizione Squadra
+                        </span>
+                        <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner text-avio text-sm leading-relaxed">
+                            Ogni squadra è composta da <strong class="text-avioLight">7 giocatori</strong>.
+                            Il formato consigliato è <strong class="text-avioLight">6 + 1 portiere</strong>,
+                            ma la disposizione tattica è libera. I giocatori devono essere registrati
+                            prima dell'inizio del torneo e non possono cambiare squadra a stagione in corso.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regola 2 -->
+                <div class="accordion-item reveal delay-1">
+                    <button class="accordion-btn" data-accordion>
+                        <span class="flex items-center gap-3">
+                            <i class="fas fa-exchange-alt text-topaz w-5 text-center"></i>
+                            Sostituzioni
+                        </span>
+                        <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner text-avio text-sm leading-relaxed">
+                            Le sostituzioni sono <strong class="text-avioLight">illimitate</strong> e
+                            possono essere effettuate in qualsiasi momento durante la partita,
+                            previo consenso dell'arbitro. Il giocatore sostituito può rientrare in campo.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regola 3 -->
+                <div class="accordion-item reveal delay-2">
+                    <button class="accordion-btn" data-accordion>
+                        <span class="flex items-center gap-3">
+                            <i class="fas fa-square text-yellow-400 w-5 text-center"></i>
+                            Cartellini & Disciplina
+                        </span>
+                        <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner text-avio text-sm leading-relaxed space-y-2">
+                            <p>
+                                <span class="inline-block w-4 h-4 bg-yellow-400 rounded-sm mr-2 align-middle"></span>
+                                <strong class="text-avioLight">Cartellino giallo</strong> — ammonizione.
+                                Due gialli nella stessa partita equivalgono all'espulsione.
+                            </p>
+                            <p>
+                                <span class="inline-block w-4 h-4 bg-red-500 rounded-sm mr-2 align-middle"></span>
+                                <strong class="text-avioLight">Cartellino rosso</strong> — espulsione immediata.
+                                Il giocatore salterà la partita successiva.
+                            </p>
+                            <p class="text-xs opacity-70 pt-1">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Comportamenti gravemente antisportivi possono comportare squalifiche più lunghe a
+                                discrezione dell'organizzazione.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regola 4 -->
+                <div class="accordion-item reveal delay-1">
+                    <button class="accordion-btn" data-accordion>
+                        <span class="flex items-center gap-3">
+                            <i class="fas fa-star text-topaz w-5 text-center"></i>
+                            Sistema di Punteggio
+                        </span>
+                        <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner">
+                            <div class="grid grid-cols-3 gap-3">
+                                <div class="text-center p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                                    <div class="font-display text-2xl font-bold text-green-400">3</div>
+                                    <div class="text-xs text-avio mt-1">Vittoria</div>
+                                </div>
+                                <div class="text-center p-3 rounded-lg bg-avio/10 border border-avio/20">
+                                    <div class="font-display text-2xl font-bold text-avio">1</div>
+                                    <div class="text-xs text-avio mt-1">Pareggio</div>
+                                </div>
+                                <div class="text-center p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+                                    <div class="font-display text-2xl font-bold text-red-400">0</div>
+                                    <div class="text-xs text-avio mt-1">Sconfitta</div>
+                                </div>
+                            </div>
+                            <p class="text-avio text-xs mt-3 leading-relaxed">
+                                In caso di parità di punti in classifica, si considera la
+                                <strong class="text-avioLight">differenza reti</strong>, poi i
+                                <strong class="text-avioLight">gol fatti</strong>, infine lo
+                                <strong class="text-avioLight">scontro diretto</strong>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regola 5 -->
+                <div class="accordion-item reveal delay-2">
+                    <button class="accordion-btn" data-accordion>
+                        <span class="flex items-center gap-3">
+                            <i class="fas fa-clock text-topaz w-5 text-center"></i>
+                            Durata Partite
+                        </span>
+                        <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner text-avio text-sm leading-relaxed">
+                            La durata delle partite verrà comunicata dall'organizzazione prima dell'inizio del torneo.
+                            L'arbitro ha facoltà di aggiungere <strong class="text-avioLight">recupero</strong>
+                            in caso di interruzioni di gioco significative.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regola 6 -->
+                <div class="accordion-item reveal delay-3">
+                    <button class="accordion-btn" data-accordion>
+                        <span class="flex items-center gap-3">
+                            <i class="fas fa-ban text-topaz w-5 text-center"></i>
+                            Forfeit & Rinunce
+                        </span>
+                        <span class="accordion-icon"><i class="fas fa-plus"></i></span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner text-avio text-sm leading-relaxed">
+                            Una squadra che non si presenta o non dispone del numero minimo di giocatori
+                            perde la partita per <strong class="text-avioLight">0-3 a tavolino</strong>.
+                            In caso di ritiro dal torneo, tutti i risultati della squadra ritirata
+                            vengono annullati.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ══ SVOLGIMENTO (TIMELINE) ══ -->
+    <section id="svolgimento" class="py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="section-divider reveal">
+                <h2 class="font-display text-2xl md:text-3xl font-bold text-avioLight whitespace-nowrap">
+                    SVOLGIMENTO
+                </h2>
+            </div>
+
+            <div class="relative pl-10">
+                <div class="timeline-line"></div>
+
+                <!-- Step 1 -->
+                <div class="flex gap-5 mb-10 reveal">
+                    <div class="timeline-dot">01</div>
+                    <div class="rule-card flex-1 !p-5">
+                        <h3 class="text-avioLight font-bold mb-2 flex items-center gap-2">
+                            <i class="fas fa-pen text-topaz text-sm"></i> Iscrizione Squadre
+                        </h3>
+                        <p class="text-avio text-sm leading-relaxed">
+                            Ogni squadra versa la <strong class="text-avioLight">quota di iscrizione di €15</strong>
+                            prima dell'inizio ufficiale del torneo. La quota è non rimborsabile.
+                            Consegnare lista giocatori e nome squadra all'organizzazione.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="flex gap-5 mb-10 reveal delay-1">
+                    <div class="timeline-dot">02</div>
+                    <div class="rule-card flex-1 !p-5">
+                        <h3 class="text-avioLight font-bold mb-2 flex items-center gap-2">
+                            <i class="fas fa-calendar-alt text-topaz text-sm"></i> Definizione Calendario
+                        </h3>
+                        <p class="text-avio text-sm leading-relaxed">
+                            Il calendario viene stilato prima del via. Le 4 squadre si sfidano
+                            <strong class="text-avioLight">in andata e ritorno</strong>
+                            per un totale di 6 giornate. Ogni giornata prevede 2 partite.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="flex gap-5 mb-10 reveal delay-2">
+                    <div class="timeline-dot">03</div>
+                    <div class="rule-card flex-1 !p-5">
+                        <h3 class="text-avioLight font-bold mb-2 flex items-center gap-2">
+                            <i class="fas fa-futbol text-topaz text-sm"></i> Fase Regolare
+                        </h3>
+                        <p class="text-avio text-sm leading-relaxed">
+                            Si gioca <strong class="text-avioLight">una volta a settimana</strong>
+                            al Campo Gallerone. Le formazioni vanno comunicate preferibilmente il
+                            giorno prima. I risultati vengono aggiornati in tempo reale sul sito.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="flex gap-5 mb-10 reveal delay-3">
+                    <div class="timeline-dot">04</div>
+                    <div class="rule-card flex-1 !p-5">
+                        <h3 class="text-avioLight font-bold mb-2 flex items-center gap-2">
+                            <i class="fas fa-trophy text-topaz text-sm"></i> Finale — 24 Maggio 2026
+                        </h3>
+                        <p class="text-avio text-sm leading-relaxed">
+                            Al termine delle 6 giornate, la squadra in testa alla classifica viene
+                            incoronata <strong class="text-avioLight">Campione della PFL 2026</strong>
+                            e riceve il montepremi. Cerimonia di premiazione al Campo Gallerone.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ══ PREMI & QUOTE ══ -->
+    <section id="premi" class="py-20" style="background: var(--nightLight);">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="section-divider reveal">
+                <h2 class="font-display text-2xl md:text-3xl font-bold text-avioLight whitespace-nowrap">
+                    PREMI & QUOTE
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+
+                <!-- Montepremi -->
+                <div class="prize-box reveal">
+                    <div class="relative z-10">
+                        <div
+                            class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-topaz/20 border border-topaz/30 flex items-center justify-center">
+                            <i class="fas fa-trophy text-topaz text-2xl"></i>
+                        </div>
+                        <div class="font-display text-6xl font-black text-topaz mb-1">€60</div>
+                        <div class="text-avioLight font-bold text-lg mb-3">Montepremi</div>
+                        <p class="text-avio text-sm leading-relaxed">
+                            L'intero montepremi va alla <strong class="text-avioLight">squadra vincitrice</strong>
+                            della fase regolare. Nessuna finale secca — vince chi fa più punti.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Quota iscrizione -->
+                <div class="rule-card reveal delay-1 flex flex-col justify-center">
+                    <div class="icon-badge mb-5">
+                        <i class="fas fa-ticket-alt text-topaz text-xl"></i>
+                    </div>
+                    <h3 class="text-avioLight font-bold text-xl mb-3">Quota Iscrizione</h3>
+
+                    <div class="flex items-baseline gap-2 mb-4">
+                        <span class="font-display text-4xl font-black text-topaz">€15</span>
+                        <span class="text-avio text-sm">a squadra</span>
+                    </div>
+
+                    <ul class="space-y-2 text-avio text-sm">
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-400 text-xs w-4"></i>
+                            Accesso al campo per tutte le partite
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-400 text-xs w-4"></i>
+                            Arbitro ufficiale incluso
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-400 text-xs w-4"></i>
+                            Copertura media completa
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-green-400 text-xs w-4"></i>
+                            Classifica e statistiche live sul sito
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ══ FOOTER ══ -->
+    <footer style="background: var(--nightLight); border-top: 1px solid rgba(148,163,184,0.08);" class="py-10">
+        <div
+            class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <i class="fas fa-futbol text-topaz text-2xl"></i>
+                <span class="font-display text-xl font-black text-avioLight">PFL <span
+                        class="text-topaz">2026</span></span>
+            </div>
+            <p class="text-avio text-sm text-center">
+                &copy; 2026 Pomarance Football League — Tutti i diritti riservati
+            </p>
+            <div class="flex gap-3">
+                <a href="https://www.instagram.com/pomarance.football.league" target="_blank"
+                    class="w-9 h-9 rounded-full bg-night flex items-center justify-center text-avio hover:bg-topaz hover:text-night transition-all">
+                    <i class="fab fa-instagram text-sm"></i>
+                </a>
+                <a href="https://www.tiktok.com/@pomarance.footbal" target="_blank"
+                    class="w-9 h-9 rounded-full bg-night flex items-center justify-center text-avio hover:bg-topaz hover:text-night transition-all">
+                    <i class="fab fa-tiktok text-sm"></i>
+                </a>
+                <a href="index.html"
+                    class="w-9 h-9 rounded-full bg-night flex items-center justify-center text-avio hover:bg-topaz hover:text-night transition-all">
+                    <i class="fas fa-home text-sm"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ══ JS ══ -->
+    <script>
+        // ── Mobile menu ──
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(a =>
+            a.addEventListener('click', () => mobileMenu.classList.add('hidden'))
+        );
+
+        // ── Smooth scroll ──
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    const offset = 80;
+                    const top = target.getBoundingClientRect().top + window.scrollY - offset;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ── Accordion ──
+        document.querySelectorAll('[data-accordion]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.closest('.accordion-item');
+                const body = item.querySelector('.accordion-body');
+                const isOpen = item.classList.contains('open');
+
+                // Chiudi tutti
+                document.querySelectorAll('.accordion-item').forEach(i => {
+                    i.classList.remove('open');
+                    i.querySelector('.accordion-body').classList.remove('open');
+                });
+
+                // Apri quello cliccato (se era chiuso)
+                if (!isOpen) {
+                    item.classList.add('open');
+                    body.classList.add('open');
+                }
+            });
+        });
+
+        // ── Scroll reveal ──
+        const revealObs = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    // Staggered delay basato sull'ordine nel viewport
+                    entry.target.style.transitionDelay = (i * 0.05) + 's';
+                    entry.target.classList.add('visible');
+                    revealObs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+        // ── Navbar shadow on scroll ──
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 20) {
+                nav.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)';
+            } else {
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+
+</body>
+
+</html>
