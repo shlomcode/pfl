@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario — PFL 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@700;900&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        night: '#0b1120',
+                        nightLight: '#151e32',
+                        avio: '#94a3b8',
+                        avioLight: '#e2e8f0',
+                        topaz: '#f59e0b',
+                        topazDark: '#d97706'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Orbitron', 'Impact', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --night: #0b1120;
+            --nightLight: #151e32;
+            --avio: #94a3b8;
+            --avioLight: #e2e8f0;
+            --topaz: #f59e0b;
+            --topazDark: #d97706;
+        }
+
+        body {
+            background-color: var(--night);
+            color: var(--avioLight);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--night);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--topaz);
+            border-radius: 3px;
+        }
+
+        /* ── GOLD GRADIENT ── */
+        .gold-gradient {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(11, 17, 32, 0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+            height: 72px;
+            display: flex;
+            align-items: center;
+            transition: box-shadow 0.3s;
+        }
+
+        /* ── HERO PATTERN ── */
+        .hero-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2394a3b8' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* ── BACK BTN ── */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            background: rgba(148, 163, 184, 0.08);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            color: var(--avio);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--topaz);
+            color: var(--topaz);
+        }
+
+        /* ── BADGE ── */
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* ── SECTION DIVIDER ── */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, rgba(245, 158, 11, 0.4), transparent);
+        }
+
+        /* ── FILTER TABS ── */
+        .filter-tab {
+            padding: 0.5rem 1.1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            background: rgba(21, 30, 50, 0.6);
+            color: var(--avio);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .filter-tab:hover {
+            border-color: rgba(245, 158, 11, 0.3);
+            color: var(--avioLight);
+        }
+
+        .filter-tab.active {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: var(--topaz);
+            color: var(--topaz);
+        }
+
+        /* ── GIORNATA HEADER ── */
+        .giornata-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            background: rgba(21, 30, 50, 0.9);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+            border-radius: 14px 14px 0 0;
+        }
+
+        /* ── MATCH CARD ── */
+        .match-card-wrap {
+            background: rgba(21, 30, 50, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.08);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+            margin-bottom: 1rem;
+        }
+
+        .match-card-wrap:hover {
+            border-color: rgba(245, 158, 11, 0.2);
+        }
+
+        .match-row {
+            display: flex;
+            align-items: center;
+            padding: 1.1rem 1.25rem;
+            gap: 1rem;
+            border-top: 1px solid rgba(148, 163, 184, 0.06);
+            transition: background 0.2s;
+            position: relative;
+        }
+
+        .match-row:first-child {
+            border-top: none;
+        }
+
+        .match-row:hover {
+            background: rgba(245, 158, 11, 0.03);
+        }
+
+        /* left accent */
+        .match-row::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--topaz);
+            opacity: 0;
+            transition: opacity 0.2s;
+            border-radius: 0 2px 2px 0;
+        }
+
+        .match-row:hover::before {
+            opacity: 1;
+        }
+
+        .match-row.played::before {
+            opacity: 1;
+            background: #22c55e;
+        }
+
+        /* ── TEAM NAME in match ── */
+        .team-name-match {
+            font-weight: 700;
+            color: var(--avioLight);
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .match-row:hover .team-name-match {
+            color: #fff;
+        }
+
+        /* ── SCORE BOX ── */
+        .score-box {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 90px;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .score-num {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--avioLight);
+            width: 28px;
+            text-align: center;
+            line-height: 1;
+        }
+
+        .score-sep {
+            color: var(--topaz);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1rem;
+        }
+
+        .score-badge-pending {
+            font-size: 0.7rem;
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+            background: rgba(148, 163, 184, 0.08);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            color: var(--avio);
+            white-space: nowrap;
+        }
+
+        /* winner highlight */
+        .winner {
+            color: #f59e0b !important;
+        }
+
+        /* ── LOGO SMALL ── */
+        .team-logo-sm {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--night);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.85rem;
+        }
+
+        .team-logo-sm img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* ── STATS BAR ── */
+        .stat-bar-wrap {
+            background: rgba(148, 163, 184, 0.08);
+            border-radius: 4px;
+            overflow: hidden;
+            height: 6px;
+        }
+
+        .stat-bar {
+            height: 100%;
+            border-radius: 4px;
+            background: var(--topaz);
+            transition: width 0.8s ease;
+        }
+
+        /* ── CARD GLASS ── */
+        .card-glass {
+            background: rgba(21, 30, 50, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 1rem;
+        }
+
+        /* ── STANDING TABLE ── */
+        .stand-row {
+            transition: background 0.15s;
+        }
+
+        .stand-row:hover {
+            background: rgba(245, 158, 11, 0.04);
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-up {
+            opacity: 0;
+            animation: fadeUp 0.55s ease forwards;
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.55s ease forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.08s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.16s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.24s;
+        }
+
+        .delay-4 {
+            animation-delay: 0.32s;
+        }
+
+        /* ── REVEAL ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── MOBILE MENU ── */
+        #mobile-menu {
+            background: rgba(21, 30, 50, 0.98);
+            backdrop-filter: blur(12px);
+        }
+
+        /* ── NEXT MATCH GLOW ── */
+        .next-match-glow {
+            box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.4), 0 8px 32px rgba(245, 158, 11, 0.12);
+        }
+
+        /* ── PROGRESS TRACK ── */
+        .progress-track {
+            height: 4px;
+            background: rgba(148, 163, 184, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--topaz), #fbbf24);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        /* scrollable filters on mobile */
+        .filters-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .filters-scroll::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ══ NAV ══ -->
+    <nav>
+        <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left text-xs"></i> Home
+                </a>
+                <div class="hidden sm:flex items-center gap-2">
+                    <i class="fas fa-futbol text-topaz text-xl"></i>
+                    <span class="font-display text-lg font-black tracking-wider text-avioLight">PFL<span
+                            class="text-topaz">2026</span></span>
+                </div>
+            </div>
+            <div class="hidden md:flex items-center gap-6">
+                <a href="#calendario"
+                    class="text-avio hover:text-topaz transition-colors font-semibold text-sm">Partite</a>
+                <a href="#classifica"
+                    class="text-avio hover:text-topaz transition-colors font-semibold text-sm">Classifica</a>
+                <a href="#statistiche"
+                    class="text-avio hover:text-topaz transition-colors font-semibold text-sm">Statistiche</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden text-avioLight text-xl p-2">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-x-0 top-[72px] z-50 hidden border-b border-avio/10 md:hidden">
+        <div class="px-4 py-4 space-y-1">
+            <a href="#calendario" class="block py-2.5 text-avio hover:text-topaz font-semibold">Partite</a>
+            <a href="#classifica" class="block py-2.5 text-avio hover:text-topaz font-semibold">Classifica</a>
+            <a href="#statistiche" class="block py-2.5 text-avio hover:text-topaz font-semibold">Statistiche</a>
+        </div>
+    </div>
+
+
+    <!-- ══ HERO ══ -->
+    <section class="relative pt-[72px] min-h-[38vh] flex items-center justify-center overflow-hidden hero-pattern">
+        <div class="absolute inset-0 bg-gradient-to-br from-night via-nightLight/80 to-night"></div>
+        <div
+            class="absolute left-[-100px] bottom-[-60px] w-[360px] h-[360px] rounded-full border border-topaz/6 opacity-30 pointer-events-none">
+        </div>
+        <div
+            class="absolute right-[-80px] top-[-40px] w-[280px] h-[280px] rounded-full border border-topaz/8 opacity-25 pointer-events-none">
+        </div>
+
+        <div class="relative z-10 text-center px-4 py-14 max-w-3xl mx-auto">
+            <div class="fade-in mb-4">
+                <span class="badge-pill bg-topaz/10 border border-topaz/25 text-topaz">
+                    <i class="fas fa-calendar-alt text-xs"></i> Stagione 2026
+                </span>
+            </div>
+            <h1 class="fade-up font-display text-5xl md:text-6xl font-black mb-4 leading-tight">
+                <span class="gold-gradient">CALENDARIO</span>
+            </h1>
+            <p class="fade-up delay-1 text-avio text-lg max-w-xl mx-auto">
+                ATTENZIONE: le seguenti informazioni sono parzialmente corrette e incomplete, fanno parte della
+                progettazione grafica del sito (sito in costruzione).
+            </p>
+
+            <!-- Progress torneo -->
+            <div class="fade-up delay-2 mt-8 max-w-xs mx-auto">
+                <div class="flex justify-between text-xs text-avio mb-1">
+                    <span>Avanzamento torneo</span>
+                    <span id="progress-label">0 / 6 giornate</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+                </div>
+            </div>
+
+            <!-- Quick stats -->
+            <div class="fade-up delay-3 mt-8 grid grid-cols-3 gap-3 max-w-sm mx-auto">
+                <div class="card-glass rounded-xl p-3 border border-topaz/15">
+                    <div class="font-display text-xl font-bold text-topaz" id="stat-played">0</div>
+                    <div class="text-xs text-avio mt-0.5">Giocate</div>
+                </div>
+                <div class="card-glass rounded-xl p-3 border border-topaz/15">
+                    <div class="font-display text-xl font-bold text-topaz" id="stat-goals">0</div>
+                    <div class="text-xs text-avio mt-0.5">Gol Totali</div>
+                </div>
+                <div class="card-glass rounded-xl p-3 border border-topaz/15">
+                    <div class="font-display text-xl font-bold text-topaz" id="stat-remaining">12</div>
+                    <div class="text-xs text-avio mt-0.5">Da giocare</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ══ CALENDARIO ══ -->
+    <section id="calendario" class="py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="section-divider reveal">
+                <h2 class="font-display text-2xl md:text-3xl font-bold text-avioLight whitespace-nowrap">PARTITE</h2>
+            </div>
+
+            <!-- Filtri -->
+            <div class="filters-scroll mb-8 reveal">
+                <div class="flex gap-2 pb-1" style="min-width: max-content;">
+                    <button class="filter-tab active" data-filter="all">Tutte</button>
+                    <button class="filter-tab" data-filter="played">Giocate</button>
+                    <button class="filter-tab" data-filter="pending">Da giocare</button>
+                    <button class="filter-tab" data-filter="andata">Andata</button>
+                    <button class="filter-tab" data-filter="ritorno">Ritorno</button>
+                    <button class="filter-tab" data-filter="g1">G1</button>
+                    <button class="filter-tab" data-filter="g2">G2</button>
+                    <button class="filter-tab" data-filter="g3">G3</button>
+                    <button class="filter-tab" data-filter="g4">G4</button>
+                    <button class="filter-tab" data-filter="g5">G5</button>
+                    <button class="filter-tab" data-filter="g6">G6</button>
+                </div>
+            </div>
+
+            <!-- Giornate container -->
+            <div id="calendar-container" class="space-y-6"></div>
+
+            <!-- Empty state -->
+            <div id="empty-state" class="hidden text-center py-16 text-avio/50">
+                <i class="fas fa-search text-4xl mb-4 block opacity-30"></i>
+                Nessuna partita trovata per questo filtro
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ══ CLASSIFICA ══ -->
+    <section id="classifica" class="py-16" style="background: var(--nightLight);">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="section-divider reveal">
+                <h2 class="font-display text-2xl md:text-3xl font-bold text-avioLight whitespace-nowrap">CLASSIFICA</h2>
+            </div>
+
+            <div class="card-glass rounded-2xl overflow-hidden reveal" style="overflow-x: auto;">
+                <table class="w-full text-left" style="min-width: 520px;">
+                    <thead style="background: rgba(11,17,32,0.6); border-bottom: 1px solid rgba(148,163,184,0.08);">
+                        <tr>
+                            <th class="px-4 py-3 text-topaz font-bold text-sm w-12">#</th>
+                            <th class="px-4 py-3 text-avioLight font-bold text-sm">Squadra</th>
+                            <th class="px-4 py-3 text-center text-avioLight font-bold text-sm">Pt</th>
+                            <th class="px-4 py-3 text-center text-avio font-semibold text-xs">G</th>
+                            <th class="px-4 py-3 text-center text-avio font-semibold text-xs">V</th>
+                            <th class="px-4 py-3 text-center text-avio font-semibold text-xs">P</th>
+                            <th class="px-4 py-3 text-center text-avio font-semibold text-xs">S</th>
+                            <th class="px-4 py-3 text-center text-avio font-semibold text-xs">GF</th>
+                            <th class="px-4 py-3 text-center text-avio font-semibold text-xs">GS</th>
+                            <th class="px-4 py-3 text-center text-avio font-semibold text-xs">DR</th>
+                        </tr>
+                    </thead>
+                    <tbody id="standings-body" class="divide-y divide-avio/5"></tbody>
+                </table>
+            </div>
+
+            <div class="mt-4 flex gap-4 text-xs text-avio/60">
+                <span class="flex items-center gap-1.5"><span
+                        class="w-2.5 h-2.5 bg-topaz rounded-full inline-block"></span> Campione</span>
+                <span class="flex items-center gap-1.5"><span
+                        class="w-2.5 h-2.5 bg-avio/20 rounded-full inline-block"></span> In corsa</span>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ══ STATISTICHE ══ -->
+    <section id="statistiche" class="py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="section-divider reveal">
+                <h2 class="font-display text-2xl md:text-3xl font-bold text-avioLight whitespace-nowrap">STATISTICHE
+                </h2>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-5" id="stats-container"></div>
+
+        </div>
+    </section>
+
+
+    <!-- ══ FOOTER ══ -->
+    <footer style="background: var(--nightLight); border-top: 1px solid rgba(148,163,184,0.08);" class="py-10">
+        <div
+            class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <i class="fas fa-futbol text-topaz text-2xl"></i>
+                <span class="font-display text-xl font-black text-avioLight">PFL <span
+                        class="text-topaz">2026</span></span>
+            </div>
+            <p class="text-avio text-sm text-center">&copy; 2026 Pomarance Football League — Tutti i diritti riservati
+            </p>
+            <div class="flex gap-3">
+                <a href="https://www.instagram.com/pomarance.football.league" target="_blank"
+                    class="w-9 h-9 rounded-full bg-night flex items-center justify-center text-avio hover:bg-topaz hover:text-night transition-all">
+                    <i class="fab fa-instagram text-sm"></i>
+                </a>
+                <a href="https://www.tiktok.com/@pomarance.footbal" target="_blank"
+                    class="w-9 h-9 rounded-full bg-night flex items-center justify-center text-avio hover:bg-topaz hover:text-night transition-all">
+                    <i class="fab fa-tiktok text-sm"></i>
+                </a>
+                <a href="index.html"
+                    class="w-9 h-9 rounded-full bg-night flex items-center justify-center text-avio hover:bg-topaz hover:text-night transition-all">
+                    <i class="fas fa-home text-sm"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ══ JS ══ -->
+    <script>
+
+        // ═══════════════════════════════════════════════════
+        //  DATI — modifica qui squadre e calendario
+        // ═══════════════════════════════════════════════════
+
+        const teams = [
+            { id: 1, name: "Pomarance FC", color: "#f59e0b", icon: "fas fa-shield-alt", logo: "assets/squadra1.jpg" },
+            { id: 2, name: "BTD King League", color: "#3b82f6", icon: "fas fa-city", logo: "assets/squadra2.jpg" },
+            { id: 3, name: "FC Invictus", color: "#ef4444", icon: "fas fa-mountain", logo: "assets/squadra3.jpg" },
+            { id: 4, name: "Squadra 4", color: "#10b981", icon: "fas fa-fire", logo: null }
+        ];
+
+        const schedule = [
+            {
+                day: "Giornata 1", type: "Andata", matches: [
+                    { home: "Pomarance FC", away: "BTD King League", date: "Da definire", homeScore: null, awayScore: null },
+                    { home: "FC Invictus", away: "Squadra 4", date: "Da definire", homeScore: null, awayScore: null }
+                ]
+            },
+            {
+                day: "Giornata 2", type: "Andata", matches: [
+                    { home: "Pomarance FC", away: "FC Invictus", date: "Da definire", homeScore: null, awayScore: null },
+                    { home: "BTD King League", away: "Squadra 4", date: "Da definire", homeScore: null, awayScore: null }
+                ]
+            },
+            {
+                day: "Giornata 3", type: "Andata", matches: [
+                    { home: "Pomarance FC", away: "Squadra 4", date: "Da definire", homeScore: null, awayScore: null },
+                    { home: "BTD King League", away: "FC Invictus", date: "Da definire", homeScore: null, awayScore: null }
+                ]
+            },
+            {
+                day: "Giornata 4", type: "Ritorno", matches: [
+                    { home: "BTD King League", away: "Pomarance FC", date: "Da definire", homeScore: null, awayScore: null },
+                    { home: "Squadra 4", away: "FC Invictus", date: "Da definire", homeScore: null, awayScore: null }
+                ]
+            },
+            {
+                day: "Giornata 5", type: "Ritorno", matches: [
+                    { home: "FC Invictus", away: "Pomarance FC", date: "Da definire", homeScore: null, awayScore: null },
+                    { home: "Squadra 4", away: "BTD King League", date: "Da definire", homeScore: null, awayScore: null }
+                ]
+            },
+            {
+                day: "Giornata 6", type: "Ritorno", matches: [
+                    { home: "Squadra 4", away: "Pomarance FC", date: "Da definire", homeScore: null, awayScore: null },
+                    { home: "FC Invictus", away: "BTD King League", date: "Da definire", homeScore: null, awayScore: null }
+                ]
+            }
+        ];
+
+        // ═══════════════════════════════════════════════════
+        //  UTILS
+        // ═══════════════════════════════════════════════════
+
+        const getTeam = name =>
+            teams.find(t => t.name.toLowerCase() === name.toLowerCase()) || null;
+
+        const logoHtml = (team, size = 34) => {
+            if (!team) return `<div class="team-logo-sm" style="width:${size}px;height:${size}px;"><i class="fas fa-futbol text-avio/40" style="font-size:${size * 0.4}px;"></i></div>`;
+            if (team.logo) {
+                return `<div class="team-logo-sm" style="width:${size}px;height:${size}px;border-color:${team.color}20;">
+                    <img src="${team.logo}" alt="${team.name}" onerror="this.parentElement.innerHTML='<i class=\\'${team.icon} text-xs\\'style=\\'color:${team.color}\\'></i>'">
+                </div>`;
+            }
+            return `<div class="team-logo-sm" style="width:${size}px;height:${size}px;border-color:${team.color}30;">
+                <i class="${team.icon}" style="color:${team.color};font-size:${size * 0.38}px;"></i>
+            </div>`;
+        };
+
+        // ═══════════════════════════════════════════════════
+        //  COMPUTE STATS GLOBALI
+        // ═══════════════════════════════════════════════════
+
+        const computeGlobalStats = () => {
+            let played = 0, goals = 0;
+            schedule.forEach(g => g.matches.forEach(m => {
+                if (m.homeScore !== null && m.awayScore !== null) {
+                    played++;
+                    goals += m.homeScore + m.awayScore;
+                }
+            }));
+            return { played, goals, remaining: 12 - played };
+        };
+
+        // ═══════════════════════════════════════════════════
+        //  COMPUTE CLASSIFICA
+        // ═══════════════════════════════════════════════════
+
+        const computeStandings = () => {
+            const map = {};
+            teams.forEach(t => {
+                map[t.name] = { ...t, points: 0, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 };
+            });
+            schedule.forEach(g => g.matches.forEach(m => {
+                if (m.homeScore === null || m.awayScore === null) return;
+                const h = m.homeScore, a = m.awayScore;
+                const ht = Object.values(map).find(t => t.name.toLowerCase() === m.home.toLowerCase());
+                const at = Object.values(map).find(t => t.name.toLowerCase() === m.away.toLowerCase());
+                if (ht) { ht.played++; ht.gf += h; ht.ga += a; if (h > a) { ht.won++; ht.points += 3; } else if (h === a) { ht.drawn++; ht.points += 1; } else ht.lost++; }
+                if (at) { at.played++; at.gf += a; at.ga += h; if (a > h) { at.won++; at.points += 3; } else if (a === h) { at.drawn++; at.points += 1; } else at.lost++; }
+            }));
+            return Object.values(map).sort((a, b) => {
+                if (b.points !== a.points) return b.points - a.points;
+                return (b.gf - b.ga) - (a.gf - a.ga);
+            });
+        };
+
+        // ═══════════════════════════════════════════════════
+        //  RENDER CALENDARIO
+        // ═══════════════════════════════════════════════════
+
+        let currentFilter = 'all';
+
+        const renderCalendar = (filter = 'all') => {
+            currentFilter = filter;
+            const container = document.getElementById('calendar-container');
+            const emptyState = document.getElementById('empty-state');
+            let html = '';
+            let anyVisible = false;
+
+            schedule.forEach((giornata, gi) => {
+                const gKey = `g${gi + 1}`;
+
+                // Filtra le partite
+                const filteredMatches = giornata.matches.filter(m => {
+                    const played = m.homeScore !== null && m.awayScore !== null;
+                    if (filter === 'played') return played;
+                    if (filter === 'pending') return !played;
+                    if (filter === 'andata') return giornata.type === 'Andata';
+                    if (filter === 'ritorno') return giornata.type === 'Ritorno';
+                    if (filter === gKey) return true;
+                    return true; // 'all'
+                });
+
+                if (filter !== 'all' && filter !== gKey && filter !== 'andata' && filter !== 'ritorno') {
+                    if (filter === 'played') { if (!filteredMatches.length) return; }
+                    else if (filter === 'pending') { if (!filteredMatches.length) return; }
+                }
+
+                // Nascondi giornata se nessuna partita passa il filtro
+                if (!filteredMatches.length && filter !== 'all' && filter !== gKey && filter !== 'andata' && filter !== 'ritorno') return;
+                if ((filter === 'andata' || filter === 'ritorno') && !filteredMatches.length) return;
+                if (filter === gKey && !filteredMatches.length) return;
+
+                anyVisible = true;
+
+                // Calcola se la giornata è completa, parziale o futura
+                const playedCount = giornata.matches.filter(m => m.homeScore !== null).length;
+                const total = giornata.matches.length;
+                const isComplete = playedCount === total;
+                const isPartial = playedCount > 0 && !isComplete;
+
+                const statusDot = isComplete
+                    ? `<span class="w-2 h-2 rounded-full bg-green-400 inline-block"></span>`
+                    : isPartial
+                        ? `<span class="w-2 h-2 rounded-full bg-yellow-400 inline-block"></span>`
+                        : `<span class="w-2 h-2 rounded-full bg-avio/30 inline-block"></span>`;
+
+                const typeBadge = `<span class="text-xs px-2 py-0.5 rounded-full border ${giornata.type === 'Andata' ? 'border-blue-500/25 bg-blue-500/8 text-blue-400' : 'border-orange-500/25 bg-orange-500/8 text-orange-400'}">${giornata.type}</span>`;
+
+                html += `<div class="match-card-wrap reveal" data-giornata="${gi + 1}" data-type="${giornata.type.toLowerCase()}">`;
+
+                // Header giornata
+                html += `
+                <div class="giornata-header">
+                    <div class="flex items-center gap-2 flex-1">
+                        ${statusDot}
+                        <span class="font-display text-sm font-bold text-avioLight">${giornata.day}</span>
+                        ${typeBadge}
+                    </div>
+                    <span class="text-xs text-avio/50">${playedCount}/${total} giocate</span>
+                </div>`;
+
+                // Partite
+                filteredMatches.forEach(match => {
+                    const played = match.homeScore !== null && match.awayScore !== null;
+                    const homeTeam = getTeam(match.home);
+                    const awayTeam = getTeam(match.away);
+
+                    const homeWin = played && match.homeScore > match.awayScore;
+                    const awayWin = played && match.awayScore > match.homeScore;
+
+                    const scoreBlock = played
+                        ? `<div class="score-box">
+                                <span class="score-num ${homeWin ? 'winner' : ''}">${match.homeScore}</span>
+                                <span class="score-sep">—</span>
+                                <span class="score-num ${awayWin ? 'winner' : ''}">${match.awayScore}</span>
+                           </div>`
+                        : `<div class="score-box"><span class="score-badge-pending"><i class="far fa-clock mr-1"></i>Da giocare</span></div>`;
+
+                    html += `
+                    <div class="match-row ${played ? 'played' : ''}">
+                        <!-- Home -->
+                        <div class="flex items-center gap-2 flex-1 min-w-0 justify-end">
+                            <span class="team-name-match truncate text-right ${homeWin ? 'text-topaz' : ''}">${match.home}</span>
+                            ${logoHtml(homeTeam)}
+                        </div>
+
+                        <!-- Score -->
+                        ${scoreBlock}
+
+                        <!-- Away -->
+                        <div class="flex items-center gap-2 flex-1 min-w-0">
+                            ${logoHtml(awayTeam)}
+                            <span class="team-name-match truncate ${awayWin ? 'text-topaz' : ''}">${match.away}</span>
+                        </div>
+
+                        <!-- Date -->
+                        <div class="hidden sm:block text-xs text-avio/50 whitespace-nowrap ml-2 flex-shrink-0">
+                            <i class="far fa-calendar mr-1"></i>${match.date}
+                        </div>
+                    </div>`;
+                });
+
+                html += `</div>`;
+            });
+
+            container.innerHTML = html;
+
+            if (!anyVisible) {
+                emptyState.classList.remove('hidden');
+                container.classList.add('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                container.classList.remove('hidden');
+                // Re-trigger reveal
+                setTimeout(() => {
+                    container.querySelectorAll('.reveal').forEach(el => {
+                        el.classList.add('visible');
+                    });
+                }, 50);
+            }
+        };
+
+        // ═══════════════════════════════════════════════════
+        //  RENDER CLASSIFICA
+        // ═══════════════════════════════════════════════════
+
+        const renderStandings = () => {
+            const tbody = document.getElementById('standings-body');
+            const sorted = computeStandings();
+            tbody.innerHTML = sorted.map((team, idx) => {
+                const dr = team.gf - team.ga;
+                const drStr = dr > 0 ? `+${dr}` : `${dr}`;
+                const drColor = dr > 0 ? 'text-green-400' : dr < 0 ? 'text-red-400' : 'text-avio';
+                return `
+                <tr class="stand-row ${idx === 0 ? 'bg-topaz/4' : ''}">
+                    <td class="px-4 py-3">
+                        <span class="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold
+                            ${idx === 0 ? 'bg-topaz text-night' : 'bg-nightLight text-avio'}">
+                            ${idx + 1}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3">
+                        <div class="flex items-center gap-2">
+                            ${logoHtml(team, 28)}
+                            <span class="font-semibold text-avioLight text-sm truncate">${team.name}</span>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-center font-bold text-topaz text-base">${team.points}</td>
+                    <td class="px-4 py-3 text-center text-avio text-xs">${team.played}</td>
+                    <td class="px-4 py-3 text-center text-avio text-xs">${team.won}</td>
+                    <td class="px-4 py-3 text-center text-avio text-xs">${team.drawn}</td>
+                    <td class="px-4 py-3 text-center text-avio text-xs">${team.lost}</td>
+                    <td class="px-4 py-3 text-center text-avio text-xs">${team.gf}</td>
+                    <td class="px-4 py-3 text-center text-avio text-xs">${team.ga}</td>
+                    <td class="px-4 py-3 text-center text-xs font-semibold ${drColor}">${drStr}</td>
+                </tr>`;
+            }).join('');
+        };
+
+        // ═══════════════════════════════════════════════════
+        //  RENDER STATISTICHE SQUADRE
+        // ═══════════════════════════════════════════════════
+
+        const renderStats = () => {
+            const container = document.getElementById('stats-container');
+            const sorted = computeStandings();
+            const maxGoals = Math.max(...sorted.map(t => t.gf), 1);
+            const maxPoints = Math.max(...sorted.map(t => t.points), 1);
+
+            container.innerHTML = [
+                {
+                    title: 'Gol Segnati',
+                    icon: 'fas fa-futbol',
+                    getValue: t => t.gf,
+                    max: maxGoals,
+                    format: v => `${v} gol`
+                },
+                {
+                    title: 'Punti in Classifica',
+                    icon: 'fas fa-star',
+                    getValue: t => t.points,
+                    max: maxPoints,
+                    format: v => `${v} pt`
+                }
+            ].map(stat => {
+                const rows = sorted.map(team => {
+                    const val = stat.getValue(team);
+                    const pct = stat.max > 0 ? Math.round((val / stat.max) * 100) : 0;
+                    return `
+                    <div class="flex items-center gap-3 mb-3">
+                        ${logoHtml(team, 28)}
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between mb-1">
+                                <span class="text-xs text-avioLight font-semibold truncate">${team.name}</span>
+                                <span class="text-xs text-topaz font-bold ml-2">${stat.format(val)}</span>
+                            </div>
+                            <div class="stat-bar-wrap">
+                                <div class="stat-bar" style="width:${pct}%; background:${team.color}"></div>
+                            </div>
+                        </div>
+                    </div>`;
+                }).join('');
+
+                return `
+                <div class="card-glass rounded-xl p-5 reveal">
+                    <h3 class="font-bold text-avioLight mb-4 flex items-center gap-2">
+                        <i class="${stat.icon} text-topaz text-sm"></i>${stat.title}
+                    </h3>
+                    ${rows}
+                </div>`;
+            }).join('');
+        };
+
+        // ═══════════════════════════════════════════════════
+        //  INIT HERO STATS
+        // ═══════════════════════════════════════════════════
+
+        const initHeroStats = () => {
+            const { played, goals, remaining } = computeGlobalStats();
+            document.getElementById('stat-played').textContent = played;
+            document.getElementById('stat-goals').textContent = goals;
+            document.getElementById('stat-remaining').textContent = remaining;
+
+            // Calcola giornate completate (tutte le partite giocate)
+            let giornateComplete = 0;
+            schedule.forEach(g => {
+                if (g.matches.every(m => m.homeScore !== null)) giornateComplete++;
+            });
+            document.getElementById('progress-label').textContent = `${giornateComplete} / 6 giornate`;
+            setTimeout(() => {
+                document.getElementById('progress-fill').style.width = `${(giornateComplete / 6) * 100}%`;
+            }, 300);
+        };
+
+        // ═══════════════════════════════════════════════════
+        //  FILTRI
+        // ═══════════════════════════════════════════════════
+
+        document.querySelectorAll('.filter-tab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderCalendar(btn.dataset.filter);
+            });
+        });
+
+        // ═══════════════════════════════════════════════════
+        //  MOBILE MENU
+        // ═══════════════════════════════════════════════════
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        document.querySelectorAll('#mobile-menu a').forEach(a =>
+            a.addEventListener('click', () => document.getElementById('mobile-menu').classList.add('hidden'))
+        );
+
+        // ═══════════════════════════════════════════════════
+        //  SMOOTH SCROLL
+        // ═══════════════════════════════════════════════════
+
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 88, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ═══════════════════════════════════════════════════
+        //  SCROLL REVEAL
+        // ═══════════════════════════════════════════════════
+
+        const revealObs = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+        const observeReveal = () => {
+            document.querySelectorAll('.reveal:not(.visible)').forEach(el => revealObs.observe(el));
+        };
+
+        // ═══════════════════════════════════════════════════
+        //  NAV SHADOW
+        // ═══════════════════════════════════════════════════
+
+        window.addEventListener('scroll', () => {
+            document.querySelector('nav').style.boxShadow =
+                window.scrollY > 20 ? '0 4px 24px rgba(0,0,0,0.4)' : 'none';
+        });
+
+        // ═══════════════════════════════════════════════════
+        //  BOOT
+        // ═══════════════════════════════════════════════════
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initHeroStats();
+            renderCalendar('all');
+            renderStandings();
+            renderStats();
+            setTimeout(observeReveal, 100);
+        });
+
+    </script>
+</body>
+
+</html>
