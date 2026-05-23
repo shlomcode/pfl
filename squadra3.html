@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- ← CAMBIA: titolo tab -->
-    <title>btd king league</title>
+    <title>fc invictus</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -369,7 +369,7 @@
                 <div id="hero-logo-circle" class="tglow"
                     style="width:96px;height:96px;border-radius:50%;background:#0b1120;border:2.5px solid var(--c);display:flex;align-items:center;justify-content:center;overflow:hidden;">
                     <!-- ← CAMBIA IMMAGINE LOGO: sostituisci src con il percorso della tua immagine -->
-                    <img id="hero-logo-img" src="assets/squadra2.jpg"
+                    <img id="hero-logo-img" src="assets/squadra3.jpg"
                         style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="Logo Squadra">
                 </div>
             </div>
@@ -382,8 +382,8 @@
                 </p>
                 <!-- ← CAMBIA NOME -->
                 <h1 class="font-display"
-                    style="font-size:clamp(2.2rem,6vw,3.8rem);line-height:1;color:#fff;margin-bottom:.35rem">btd king
-                    league</h1>
+                    style="font-size:clamp(2.2rem,6vw,3.8rem);line-height:1;color:#fff;margin-bottom:.35rem">fc invictus
+                </h1>
                 <!-- ← CAMBIA MOTTO -->
                 <p style="color:#94a3b8;font-size:.95rem;margin-bottom:.9rem">"testo opzionale"</p>
                 <div style="display:flex;flex-wrap:wrap;gap:.45rem">
@@ -811,6 +811,7 @@
                 if (imgEl) {
                     imgEl.src = saved;
                 } else {
+                    // fallback: replace circle content
                     const circle = document.getElementById('hero-logo-circle');
                     if (circle) {
                         circle.innerHTML = '';

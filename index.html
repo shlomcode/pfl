@@ -515,7 +515,6 @@
             {
                 id: 1,
                 name: "POMARANCE FC",          // ← nome squadra
-                subtitle: "descrizione",        // ← sottotitolo
                 color: "#f59e0b",               // ← colore squadra
                 icon: "fas fa-shield-alt",      // ← icona FontAwesome (fallback senza logo)
                 logo: "assets/squadra1.jpg",                     // ← path logo di default (null = nessuno)
@@ -524,7 +523,6 @@
             {
                 id: 2,
                 name: "BTD KING LEAGUE",        // ← nome squadra
-                subtitle: "descrizione",
                 color: "#3b82f6",
                 icon: "fas fa-city",
                 logo: "assets/squadra2.jpg",    // ← logo di default per questa squadra
@@ -533,7 +531,6 @@
             {
                 id: 3,
                 name: "FC INVICTUS",            // ← nome squadra
-                subtitle: "descrizione",
                 color: "#ef4444",
                 icon: "fas fa-mountain",
                 logo: "assets/squadra3.jpg",
@@ -541,11 +538,10 @@
             },
             {
                 id: 4,
-                name: "SQUADRA 4",              // ← nome squadra
-                subtitle: "descrizione",
+                name: "GIAGUAR KING",              // ← nome squadra
                 color: "#10b981",
                 icon: "fas fa-fire",
-                logo: null,
+                logo: "assets/squadra4.jpeg",
                 page: "squadra4.html"
             }
         ];
@@ -633,14 +629,7 @@
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <h3 class="team-name text-xl font-bold text-avioLight transition-colors truncate">${team.name}</h3>
-                            <p class="text-sm text-avio mt-0.5">${team.subtitle}</p>
-                            <div class="flex items-center gap-3 mt-3">
-                                <span class="text-xs px-2 py-1 rounded-full bg-night text-avio border border-avio/20">
-                                    <i class="fas fa-check text-topaz mr-1"></i>Iscritta
-                                </span>
-                                <span class="text-xs text-topaz font-bold">7 giocatori</span>
-                            </div>
+                            <h3 class="team-name text-2xl md:text-3xl font-display font-bold text-avioLight transition-colors truncate tracking-wide">${team.name}</h3>
                         </div>
                         <div class="team-arrow text-avio/40 flex-shrink-0">
                             <i class="fas fa-chevron-right text-lg"></i>
