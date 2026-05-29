@@ -507,15 +507,14 @@
                 <span class="gold-gradient">CALENDARIO</span>
             </h1>
             <p class="fade-up delay-1 text-avio text-lg max-w-xl mx-auto">
-                ATTENZIONE: le seguenti informazioni sono parzialmente corrette e incomplete, fanno parte della
-                progettazione grafica del sito (sito in costruzione).
+
             </p>
 
             <!-- Progress torneo -->
             <div class="fade-up delay-2 mt-8 max-w-xs mx-auto">
                 <div class="flex justify-between text-xs text-avio mb-1">
                     <span>Avanzamento torneo</span>
-                    <span id="progress-label">0 / 6 giornate</span>
+                    <span id="progress-label">1 / 6 giornate</span>
                 </div>
                 <div class="progress-track">
                     <div class="progress-fill" id="progress-fill" style="width:0%"></div>
@@ -525,7 +524,7 @@
             <!-- Quick stats -->
             <div class="fade-up delay-3 mt-8 grid grid-cols-3 gap-3 max-w-sm mx-auto">
                 <div class="card-glass rounded-xl p-3 border border-topaz/15">
-                    <div class="font-display text-xl font-bold text-topaz" id="stat-played">0</div>
+                    <div class="font-display text-xl font-bold text-topaz" id="stat-played">1</div>
                     <div class="text-xs text-avio mt-0.5">Giocate</div>
                 </div>
                 <div class="card-glass rounded-xl p-3 border border-topaz/15">
@@ -672,44 +671,47 @@
             { id: 1, name: "Pomarance FC", color: "#f59e0b", icon: "fas fa-shield-alt", logo: "assets/squadra1.jpg" },
             { id: 2, name: "BTD King League", color: "#3b82f6", icon: "fas fa-city", logo: "assets/squadra2.jpg" },
             { id: 3, name: "FC Invictus", color: "#ef4444", icon: "fas fa-mountain", logo: "assets/squadra3.jpg" },
-            { id: 4, name: "Squadra 4", color: "#10b981", icon: "fas fa-fire", logo: null }
+            { id: 4, name: "Giaguar King", color: "#10b981", icon: "fas fa-fire", logo: "assets/squadra4.jpeg" }
         ];
 
         const schedule = [
             {
+                // ⚽ COME AGGIORNARE I RISULTATI IN FUTURO:
+                // Sostituisci `null` con il numero di gol segnati (es. homeScore: 5, awayScore: 1).
+                // La classifica squadre e le statistiche (incluso il conteggio partite giocate) si aggiorneranno automaticamente!
                 day: "Giornata 1", type: "Andata", matches: [
-                    { home: "Pomarance FC", away: "BTD King League", date: "Da definire", homeScore: null, awayScore: null },
-                    { home: "FC Invictus", away: "Squadra 4", date: "Da definire", homeScore: null, awayScore: null }
+                    { home: "Pomarance FC", away: "Giaguar King", date: "23/05/2026 16:30 - 17:30", homeScore: 5, awayScore: 1 },
+                    { home: "BTD King League", away: "FC Invictus", date: "23/05/2026 17:30 - 18:30", homeScore: 0, awayScore: 3 }
                 ]
             },
             {
                 day: "Giornata 2", type: "Andata", matches: [
-                    { home: "Pomarance FC", away: "FC Invictus", date: "Da definire", homeScore: null, awayScore: null },
-                    { home: "BTD King League", away: "Squadra 4", date: "Da definire", homeScore: null, awayScore: null }
+                    { home: "FC Invictus", away: "Pomarance FC", date: "30/05/2026 16:30 - 17:30", homeScore: null, awayScore: null },
+                    { home: "Giaguar King", away: "BTD King League", date: "30/05/2026 17:30 - 18:30", homeScore: null, awayScore: null }
                 ]
             },
             {
                 day: "Giornata 3", type: "Andata", matches: [
-                    { home: "Pomarance FC", away: "Squadra 4", date: "Da definire", homeScore: null, awayScore: null },
-                    { home: "BTD King League", away: "FC Invictus", date: "Da definire", homeScore: null, awayScore: null }
+                    { home: "Pomarance FC", away: "BTD King League", date: "06/06/2026 16:30 - 17:30", homeScore: null, awayScore: null },
+                    { home: "FC Invictus", away: "Giaguar King", date: "06/06/2026 17:30 - 18:30", homeScore: null, awayScore: null }
                 ]
             },
             {
                 day: "Giornata 4", type: "Ritorno", matches: [
-                    { home: "BTD King League", away: "Pomarance FC", date: "Da definire", homeScore: null, awayScore: null },
-                    { home: "Squadra 4", away: "FC Invictus", date: "Da definire", homeScore: null, awayScore: null }
+                    { home: "Giaguar King", away: "Pomarance FC", date: "13/06/2026 16:30 - 17:30", homeScore: null, awayScore: null },
+                    { home: "FC Invictus", away: "BTD King League", date: "13/06/2026 17:30 - 18:30", homeScore: null, awayScore: null }
                 ]
             },
             {
                 day: "Giornata 5", type: "Ritorno", matches: [
-                    { home: "FC Invictus", away: "Pomarance FC", date: "Da definire", homeScore: null, awayScore: null },
-                    { home: "Squadra 4", away: "BTD King League", date: "Da definire", homeScore: null, awayScore: null }
+                    { home: "Pomarance FC", away: "FC Invictus", date: "20/06/2026 16:30 - 17:30", homeScore: null, awayScore: null },
+                    { home: "BTD King League", away: "Giaguar King", date: "20/06/2026 17:30 - 18:30", homeScore: null, awayScore: null }
                 ]
             },
             {
                 day: "Giornata 6", type: "Ritorno", matches: [
-                    { home: "Squadra 4", away: "Pomarance FC", date: "Da definire", homeScore: null, awayScore: null },
-                    { home: "FC Invictus", away: "BTD King League", date: "Da definire", homeScore: null, awayScore: null }
+                    { home: "BTD King League", away: "Pomarance FC", date: "27/06/2026 16:30 - 17:30", homeScore: null, awayScore: null },
+                    { home: "Giaguar King", away: "FC Invictus", date: "27/06/2026 17:30 - 18:30", homeScore: null, awayScore: null }
                 ]
             }
         ];
