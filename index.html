@@ -261,14 +261,7 @@
                 Il torneo definitivo a 4 squadre • 7 giocatori • Andata e Ritorno
             </p>
 
-            <div
-                class="mb-10 px-5 py-3 rounded-xl bg-topaz/10 border border-topaz/30 text-avioLight text-sm inline-block shadow-lg backdrop-blur-sm">
-                <i class="fas fa-bullhorn text-topaz mr-2 animate-pulse"></i>
-                La sezione <a href="calendario.html" class="text-topaz font-bold hover:underline">Calendario</a> è
-                aggiornata e funzionante!
-                La sezione <a href="#squadre" class="text-topaz font-bold hover:underline">Squadre</a> è momentaneamente
-                in lavorazione.
-            </div>
+
 
             <!-- COUNTDOWN — punta al 24 Maggio 2026 alle 20:00 -->
             <div class="relative max-w-3xl mx-auto mb-12">
@@ -926,6 +919,16 @@
             document.querySelectorAll('.card-glass').forEach(el => { el.style.opacity = '0'; obs.observe(el); });
         };
 
+        function closeAnnouncement() {
+            const modal = document.getElementById('announcement-modal');
+            const modalContent = modal.querySelector('.card-glass');
+            modal.classList.remove('opacity-100', 'pointer-events-auto');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            sessionStorage.setItem('announcementSeen', 'true');
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             try {
                 renderTeams();
@@ -936,9 +939,42 @@
                 initMobileMenu();
                 initSmoothScroll();
                 initAnimations();
+                
+                // Show announcement popup if not seen
+                if (!sessionStorage.getItem('announcementSeen')) {
+                    setTimeout(() => {
+                        const modal = document.getElementById('announcement-modal');
+                        if(modal) {
+                            const modalContent = modal.querySelector('.card-glass');
+                            modal.classList.remove('opacity-0', 'pointer-events-none');
+                            modal.classList.add('opacity-100', 'pointer-events-auto');
+                            modalContent.classList.remove('scale-95');
+                            modalContent.classList.add('scale-100');
+                        }
+                    }, 800);
+                }
             } catch (e) { console.error('Init error:', e); }
         });
     </script>
+
+    <!-- ANNOUNCEMENT POPUP -->
+    <div id="announcement-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300" style="background: rgba(11, 17, 32, 0.85); backdrop-filter: blur(8px);">
+        <div class="card-glass rounded-2xl border border-topaz/30 max-w-md w-full p-6 text-center transform scale-95 transition-transform duration-300 relative shadow-[0_0_40px_rgba(245,158,11,0.15)]">
+            <button onclick="closeAnnouncement()" class="absolute top-4 right-4 text-avio hover:text-topaz transition-colors">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div class="w-16 h-16 rounded-full bg-topaz/10 border border-topaz/30 flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-bullhorn text-topaz text-2xl animate-pulse"></i>
+            </div>
+            <h3 class="font-display text-2xl font-black text-avioLight mb-2">MATCHDAY <span class="text-topaz">2</span></h3>
+            <p class="text-avio mb-6">
+                La seconda giornata del torneo si gioca oggi! Non perderti neanche un aggiornamento e scopri chi porterà a casa i punti.
+            </p>
+            <a href="calendario.html" class="inline-block bg-topaz text-night font-bold py-2.5 px-6 rounded-lg hover:bg-topazDark transition-colors shadow-lg">
+                Vedi Calendario
+            </a>
+        </div>
+    </div>
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,9 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Orbitron:wght@700;900&display=swap"
+        rel="stylesheet">
 
     <style>
         /* ═══════════════════════════════════════
@@ -16,163 +19,431 @@
            ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
         ═══════════════════════════════════════ */
         :root {
-            --c:  #f59e0b;      /* colore squadra */
-            --cr: 245,158,11;   /* stesso in RGB  */
+            --c: #f59e0b;
+            /* colore squadra */
+            --cr: 245, 158, 11;
+            /* stesso in RGB  */
             /* Squadra 2 blu:   #3b82f6 / 59,130,246  */
             /* Squadra 3 verde: #10b981 / 16,185,129  */
             /* Squadra 4 rosso: #ef4444 / 239,68,68   */
         }
+
         /* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-        body { background: #0b1120; color: #e2e8f0; font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-        .font-display { font-family: 'Bebas Neue', sans-serif; letter-spacing: .04em; }
-        .font-mono    { font-family: 'Orbitron', sans-serif; }
-        .tc           { color: var(--c); }
-        .tglow        { box-shadow: 0 0 30px rgba(var(--cr),.28), 0 0 65px rgba(var(--cr),.1); }
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #0b1120;
+            color: #e2e8f0;
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-display {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: .04em;
+        }
+
+        .font-mono {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .tc {
+            color: var(--c);
+        }
+
+        .tglow {
+            box-shadow: 0 0 30px rgba(var(--cr), .28), 0 0 65px rgba(var(--cr), .1);
+        }
 
         /* NAV */
         nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            height: 56px; background: rgba(11,17,32,.95); backdrop-filter: blur(18px);
-            border-bottom: 1px solid rgba(var(--cr),.12);
-            display: flex; align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            height: 56px;
+            background: rgba(11, 17, 32, .95);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(var(--cr), .12);
+            display: flex;
+            align-items: center;
         }
+
         .nav-inner {
-            max-width: 1100px; width: 100%; margin: 0 auto; padding: 0 1.5rem;
-            display: flex; align-items: center; justify-content: space-between;
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        .nav-back { display:flex;align-items:center;gap:.4rem;color:#94a3b8;text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s; }
-        .nav-back:hover { color: var(--c); }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: .85rem;
+            font-weight: 500;
+            transition: color .2s;
+        }
+
+        .nav-back:hover {
+            color: var(--c);
+        }
 
         /* HERO */
         .hero-bg {
             background:
-                radial-gradient(ellipse 80% 60% at 50% -5%, rgba(var(--cr),.2) 0%, transparent 65%),
+                radial-gradient(ellipse 80% 60% at 50% -5%, rgba(var(--cr), .2) 0%, transparent 65%),
                 linear-gradient(180deg, #0d1626 0%, #0b1120 100%);
         }
+
         .grid-lines {
-            background-image: linear-gradient(rgba(var(--cr),.04) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--cr),.04) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(var(--cr), .04) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--cr), .04) 1px, transparent 1px);
             background-size: 48px 48px;
         }
 
         /* STAT PILL */
-        .stat-pill { background:rgba(var(--cr),.07);border:1px solid rgba(var(--cr),.18);border-radius:.75rem;padding:.75rem 1rem;text-align:center;transition:all .2s; }
-        .stat-pill:hover { background:rgba(var(--cr),.14);border-color:var(--c);transform:translateY(-2px); }
+        .stat-pill {
+            background: rgba(var(--cr), .07);
+            border: 1px solid rgba(var(--cr), .18);
+            border-radius: .75rem;
+            padding: .75rem 1rem;
+            text-align: center;
+            transition: all .2s;
+        }
+
+        .stat-pill:hover {
+            background: rgba(var(--cr), .14);
+            border-color: var(--c);
+            transform: translateY(-2px);
+        }
 
         /* SECTION LABEL */
-        .section-label { display:flex;align-items:center;gap:.75rem;margin-bottom:1.4rem; }
-        .section-label h2 { font-family:'Bebas Neue',sans-serif;font-size:1.75rem;letter-spacing:.04em;color:#e2e8f0; }
-        .label-bar { width:3px;height:1.75rem;background:var(--c);border-radius:2px;flex-shrink:0; }
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .section-label h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.75rem;
+            letter-spacing: .04em;
+            color: #e2e8f0;
+        }
+
+        .label-bar {
+            width: 3px;
+            height: 1.75rem;
+            background: var(--c);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
 
         /* FIELD */
-        .field-wrapper { position:relative;width:100%;max-width:340px;margin:0 auto; }
+        .field-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 340px;
+            margin: 0 auto;
+        }
+
         .field-wrapper::after {
-            content:'';position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);
-            width:70%;height:36px;background:rgba(var(--cr),.18);filter:blur(20px);border-radius:50%;pointer-events:none;
+            content: '';
+            position: absolute;
+            bottom: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            height: 36px;
+            background: rgba(var(--cr), .18);
+            filter: blur(20px);
+            border-radius: 50%;
+            pointer-events: none;
         }
 
         /* PLAYER LIST */
-        .player-row { display:flex;align-items:center;gap:.75rem;padding:.65rem 1rem;border-radius:.65rem;border:1px solid rgba(148,163,184,.07);background:rgba(15,20,40,.55);transition:all .2s ease; }
-        .player-row:hover { border-color:rgba(var(--cr),.38);background:rgba(var(--cr),.06);transform:translateX(4px); }
-        .p-num { width:2rem;height:2rem;border-radius:50%;background:rgba(var(--cr),.1);border:1px solid rgba(var(--cr),.32);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.68rem;font-weight:700;color:var(--c);flex-shrink:0; }
-        .role-tag { display:inline-block;font-size:.58rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.12rem .42rem;border-radius:999px;margin-top:.18rem; }
-        .r-POR { background:rgba(239,68,68,.16);   color:#f87171; }
-        .r-DIF { background:rgba(59,130,246,.16);  color:#60a5fa; }
-        .r-CEN { background:rgba(16,185,129,.16);  color:#34d399; }
-        .r-ATT { background:rgba(var(--cr),.16);   color:var(--c); }
+        .player-row {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            padding: .65rem 1rem;
+            border-radius: .65rem;
+            border: 1px solid rgba(148, 163, 184, .07);
+            background: rgba(15, 20, 40, .55);
+            transition: all .2s ease;
+        }
+
+        .player-row:hover {
+            border-color: rgba(var(--cr), .38);
+            background: rgba(var(--cr), .06);
+            transform: translateX(4px);
+        }
+
+        .p-num {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background: rgba(var(--cr), .1);
+            border: 1px solid rgba(var(--cr), .32);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: .68rem;
+            font-weight: 700;
+            color: var(--c);
+            flex-shrink: 0;
+        }
+
+        .role-tag {
+            display: inline-block;
+            font-size: .58rem;
+            font-weight: 700;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+            padding: .12rem .42rem;
+            border-radius: 999px;
+            margin-top: .18rem;
+        }
+
+        .r-POR {
+            background: rgba(239, 68, 68, .16);
+            color: #f87171;
+        }
+
+        .r-DIF {
+            background: rgba(59, 130, 246, .16);
+            color: #60a5fa;
+        }
+
+        .r-CEN {
+            background: rgba(16, 185, 129, .16);
+            color: #34d399;
+        }
+
+        .r-ATT {
+            background: rgba(var(--cr), .16);
+            color: var(--c);
+        }
 
         /* MATCH STRIP */
-        .match-strip { background:linear-gradient(135deg,#0e1526 0%,#141d30 100%);border-left:3px solid var(--c);border-radius:.65rem;padding:.85rem 1.1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap; }
+        .match-strip {
+            background: linear-gradient(135deg, #0e1526 0%, #141d30 100%);
+            border-left: 3px solid var(--c);
+            border-radius: .65rem;
+            padding: .85rem 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
 
         /* RESULT BADGE */
-        .res-W { background:rgba(16,185,129,.16);color:#34d399;border:1px solid rgba(16,185,129,.3); }
-        .res-D { background:rgba(148,163,184,.1);color:#94a3b8;border:1px solid rgba(148,163,184,.22); }
-        .res-L { background:rgba(239,68,68,.16);color:#f87171;border:1px solid rgba(239,68,68,.3); }
+        .res-W {
+            background: rgba(16, 185, 129, .16);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, .3);
+        }
 
-        .glass { background:rgba(15,20,40,.8);border:1px solid rgba(var(--cr),.1);border-radius:1rem;backdrop-filter:blur(12px); }
+        .res-D {
+            background: rgba(148, 163, 184, .1);
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, .22);
+        }
+
+        .res-L {
+            background: rgba(239, 68, 68, .16);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, .3);
+        }
+
+        .glass {
+            background: rgba(15, 20, 40, .8);
+            border: 1px solid rgba(var(--cr), .1);
+            border-radius: 1rem;
+            backdrop-filter: blur(12px);
+        }
 
         /* ANIMATIONS */
-        @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes scaleIn{ from{opacity:0;transform:scale(.94)} to{opacity:1;transform:scale(1)} }
-        .a1{animation:fadeUp  .5s ease both .05s}
-        .a2{animation:fadeUp  .5s ease both .15s}
-        .a3{animation:fadeUp  .5s ease both .22s}
-        .a4{animation:scaleIn .55s ease both .28s}
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(.94)
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1)
+            }
+        }
+
+        .a1 {
+            animation: fadeUp .5s ease both .05s
+        }
+
+        .a2 {
+            animation: fadeUp .5s ease both .15s
+        }
+
+        .a3 {
+            animation: fadeUp .5s ease both .22s
+        }
+
+        .a4 {
+            animation: scaleIn .55s ease both .28s
+        }
 
         /* SCROLLBAR */
-        ::-webkit-scrollbar{width:5px}
-        ::-webkit-scrollbar-track{background:#0b1120}
-        ::-webkit-scrollbar-thumb{background:rgba(var(--cr),.35);border-radius:3px}
+        ::-webkit-scrollbar {
+            width: 5px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0b1120
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(var(--cr), .35);
+            border-radius: 3px
+        }
 
         /* PIN cursor */
-        .player-pin { cursor: pointer; }
+        .player-pin {
+            cursor: pointer;
+        }
+
+        @media (max-width: 680px) {
+            .hero-content {
+                justify-content: center;
+                text-align: center;
+            }
+
+            .a1 {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .a2 {
+                margin-left: 0 !important;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .a1>div {
+                justify-content: center;
+            }
+        }
     </style>
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav>
-    <div class="nav-inner">
-        <a href="index.html" class="nav-back"><i class="fas fa-arrow-left"></i> Home</a>
-        <div style="display:flex;align-items:center;gap:.45rem">
-            <i class="fas fa-futbol" style="color:var(--c);font-size:1rem"></i>
-            <span class="font-mono" style="font-size:.88rem;color:#e2e8f0;font-weight:700">PFL<span style="color:var(--c)">2026</span></span>
-        </div>
-    </div>
-</nav>
-
-<!-- HERO -->
-<header class="hero-bg grid-lines" style="padding-top:56px">
-    <div style="max-width:1100px;margin:0 auto;padding:2.5rem 1.5rem 2rem;display:flex;flex-wrap:wrap;align-items:center;gap:2rem">
-
-        <!-- Logo -->
-        <div id="hero-logo-wrap" style="position:relative;flex-shrink:0;cursor:pointer"
-             ondblclick="triggerLogoUpload(event)" title="Doppio clic per caricare il logo">
-            <div id="hero-logo-circle" class="tglow" style="width:96px;height:96px;border-radius:50%;background:#0b1120;border:2.5px solid var(--c);display:flex;align-items:center;justify-content:center;overflow:hidden;">
-                <!-- ← CAMBIA IMMAGINE LOGO: sostituisci src con il percorso della tua immagine -->
-                <img id="hero-logo-img" src="assets/squadra1.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="Logo Squadra">
+    <!-- NAV -->
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-back"><i class="fas fa-arrow-left"></i> Home</a>
+            <div style="display:flex;align-items:center;gap:.45rem">
+                <i class="fas fa-futbol" style="color:var(--c);font-size:1rem"></i>
+                <span class="font-mono" style="font-size:.88rem;color:#e2e8f0;font-weight:700">PFL<span
+                        style="color:var(--c)">2026</span></span>
             </div>
         </div>
+    </nav>
 
-        <!-- Info squadra -->
-        <div class="a1">
-            <p class="tc" style="font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;margin-bottom:.2rem">
-                Pomarance Football League 2026
-            </p>
-            <!-- ← CAMBIA NOME -->
-            <h1 class="font-display" style="font-size:clamp(2.2rem,6vw,3.8rem);line-height:1;color:#fff;margin-bottom:.35rem">pomarance fc</h1>
-            <!-- ← CAMBIA MOTTO -->
-            <p style="color:#94a3b8;font-size:.95rem;margin-bottom:.9rem">"testo opzionale"</p>
-            <div style="display:flex;flex-wrap:wrap;gap:.45rem">
-                <span style="font-size:.7rem;padding:.22rem .7rem;border-radius:999px;border:1px solid var(--c);color:var(--c);font-weight:600"><i class="fas fa-check" style="margin-right:.2rem"></i>Iscritta</span>
-                <span style="font-size:.7rem;padding:.22rem .7rem;border-radius:999px;background:rgba(148,163,184,.07);border:1px solid rgba(148,163,184,.14);color:#94a3b8">7 Giocatori</span>
-                <span style="font-size:.7rem;padding:.22rem .7rem;border-radius:999px;background:rgba(148,163,184,.07);border:1px solid rgba(148,163,184,.14);color:#94a3b8">Campo Gallerone</span>
+    <!-- HERO -->
+    <header class="hero-bg grid-lines" style="padding-top:56px">
+        <div class="hero-content"
+            style="max-width:1100px;margin:0 auto;padding:2.5rem 1.5rem 2rem;display:flex;flex-wrap:wrap;align-items:center;gap:2rem">
+
+            <!-- Logo -->
+            <div id="hero-logo-wrap" style="position:relative;flex-shrink:0;cursor:pointer"
+                ondblclick="triggerLogoUpload(event)" title="Doppio clic per caricare il logo">
+                <div id="hero-logo-circle" class="tglow"
+                    style="width:96px;height:96px;border-radius:50%;background:#0b1120;border:2.5px solid var(--c);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+                    <!-- ← CAMBIA IMMAGINE LOGO: sostituisci src con il percorso della tua immagine -->
+                    <img id="hero-logo-img" src="assets/squadra1.jpg"
+                        style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="Logo Squadra">
+                </div>
             </div>
+
+            <!-- Info squadra -->
+            <div class="a1">
+                <p class="tc"
+                    style="font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;margin-bottom:.2rem">
+                    Pomarance Football League 2026
+                </p>
+                <!-- ← CAMBIA NOME -->
+                <h1 class="font-display"
+                    style="font-size:clamp(2.2rem,6vw,3.8rem);line-height:1;color:#fff;margin-bottom:.35rem">pomarance
+                    fc</h1>
+                <!-- ← CAMBIA MOTTO -->
+                <div style="display:flex;flex-wrap:wrap;gap:.45rem">
+                    <span
+                        style="font-size:.7rem;padding:.22rem .7rem;border-radius:999px;border:1px solid var(--c);color:var(--c);font-weight:600"><i
+                            class="fas fa-check" style="margin-right:.2rem"></i>Iscritta</span>
+                    <span
+                        style="font-size:.7rem;padding:.22rem .7rem;border-radius:999px;background:rgba(148,163,184,.07);border:1px solid rgba(148,163,184,.14);color:#94a3b8">7
+                        Giocatori</span>
+                    <span
+                        style="font-size:.7rem;padding:.22rem .7rem;border-radius:999px;background:rgba(148,163,184,.07);border:1px solid rgba(148,163,184,.14);color:#94a3b8">Campo
+                        Gallerone</span>
+                </div>
+            </div>
+
+            <!-- Stat pills -->
+            <div class="a2"
+                style="margin-left:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:.45rem;min-width:210px"
+                id="hero-stats"></div>
         </div>
+    </header>
 
-        <!-- Stat pills -->
-        <div class="a2" style="margin-left:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:.45rem;min-width:210px" id="hero-stats"></div>
-    </div>
-</header>
+    <!-- FORMAZIONE + ROSA -->
+    <section style="padding:2.5rem 1.5rem 3rem;max-width:1100px;margin:0 auto">
+        <div id="formation-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start">
 
-<!-- FORMAZIONE + ROSA -->
-<section style="padding:2.5rem 1.5rem 3rem;max-width:1100px;margin:0 auto">
-    <div id="formation-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start">
+            <!-- CAMPO SVG -->
+            <div class="a4">
+                <div class="section-label">
+                    <div class="label-bar"></div>
+                    <h2>FORMAZIONE</h2>
+                    <!-- ← CAMBIA MODULO -->
+                    <span class="font-mono"
+                        style="font-size:.68rem;padding:.18rem .55rem;border-radius:999px;background:rgba(var(--cr),.1);border:1px solid rgba(var(--cr),.25);color:var(--c);font-weight:700">2-3-1</span>
+                </div>
 
-        <!-- CAMPO SVG -->
-        <div class="a4">
-            <div class="section-label">
-                <div class="label-bar"></div>
-                <h2>FORMAZIONE</h2>
-                <!-- ← CAMBIA MODULO -->
-                <span class="font-mono" style="font-size:.68rem;padding:.18rem .55rem;border-radius:999px;background:rgba(var(--cr),.1);border:1px solid rgba(var(--cr),.25);color:var(--c);font-weight:700">2-3-1</span>
-            </div>
-
-            <div class="field-wrapper">
-                <!--
+                <div class="field-wrapper">
+                    <!--
                 ╔═══════════════════════════════════════════╗
                   CAMPO SVG · viewBox="0 0 320 500"
                   x: 0=sx  160=centro  320=dx
@@ -183,45 +454,56 @@
                   Il contenuto interno è generato da JavaScript.
                 ╚═══════════════════════════════════════════╝
                 -->
-                <svg id="field-svg" viewBox="0 0 320 500" xmlns="http://www.w3.org/2000/svg"
-                     style="width:100%;display:block;filter:drop-shadow(0 10px 30px rgba(0,0,0,.7))">
-                    <defs>
-                        <clipPath id="field-clip"><rect x="0" y="0" width="320" height="500" rx="10"/></clipPath>
-                    </defs>
+                    <svg id="field-svg" viewBox="0 0 320 500" xmlns="http://www.w3.org/2000/svg"
+                        style="width:100%;display:block;filter:drop-shadow(0 10px 30px rgba(0,0,0,.7))">
+                        <defs>
+                            <clipPath id="field-clip">
+                                <rect x="0" y="0" width="320" height="500" rx="10" />
+                            </clipPath>
+                        </defs>
 
-                    <!-- ERBA strisce verticali -->
-                    <rect width="320" height="500" fill="#193628" rx="10"/>
-                    <rect x="0"   width="32" height="500" fill="#1c3f2e" clip-path="url(#field-clip)"/>
-                    <rect x="64"  width="32" height="500" fill="#1c3f2e"/>
-                    <rect x="128" width="32" height="500" fill="#1c3f2e"/>
-                    <rect x="192" width="32" height="500" fill="#1c3f2e"/>
-                    <rect x="256" width="32" height="500" fill="#1c3f2e"/>
+                        <!-- ERBA strisce verticali -->
+                        <rect width="320" height="500" fill="#193628" rx="10" />
+                        <rect x="0" width="32" height="500" fill="#1c3f2e" clip-path="url(#field-clip)" />
+                        <rect x="64" width="32" height="500" fill="#1c3f2e" />
+                        <rect x="128" width="32" height="500" fill="#1c3f2e" />
+                        <rect x="192" width="32" height="500" fill="#1c3f2e" />
+                        <rect x="256" width="32" height="500" fill="#1c3f2e" />
 
-                    <!-- LINEE -->
-                    <rect x="14" y="14" width="292" height="472" fill="none" stroke="rgba(255,255,255,.32)" stroke-width="2" rx="2"/>
-                    <line x1="14" y1="250" x2="306" y2="250" stroke="rgba(255,255,255,.28)" stroke-width="1.5"/>
-                    <circle cx="160" cy="250" r="42" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="1.5"/>
-                    <circle cx="160" cy="250" r="2.5" fill="rgba(255,255,255,.45)"/>
+                        <!-- LINEE -->
+                        <rect x="14" y="14" width="292" height="472" fill="none" stroke="rgba(255,255,255,.32)"
+                            stroke-width="2" rx="2" />
+                        <line x1="14" y1="250" x2="306" y2="250" stroke="rgba(255,255,255,.28)" stroke-width="1.5" />
+                        <circle cx="160" cy="250" r="42" fill="none" stroke="rgba(255,255,255,.28)"
+                            stroke-width="1.5" />
+                        <circle cx="160" cy="250" r="2.5" fill="rgba(255,255,255,.45)" />
 
-                    <!-- Area grande ALTA (avversario) -->
-                    <rect x="70" y="14" width="180" height="68" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.28)" stroke-width="1.5"/>
-                    <rect x="114" y="14" width="92" height="28" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
-                    <rect x="128" y="8" width="64" height="10" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.45)" stroke-width="1.5" rx="1"/>
+                        <!-- Area grande ALTA (avversario) -->
+                        <rect x="70" y="14" width="180" height="68" fill="rgba(255,255,255,.04)"
+                            stroke="rgba(255,255,255,.28)" stroke-width="1.5" />
+                        <rect x="114" y="14" width="92" height="28" fill="none" stroke="rgba(255,255,255,.2)"
+                            stroke-width="1" />
+                        <rect x="128" y="8" width="64" height="10" fill="rgba(255,255,255,.12)"
+                            stroke="rgba(255,255,255,.45)" stroke-width="1.5" rx="1" />
 
-                    <!-- Area grande BASSA (nostra) -->
-                    <rect x="70" y="418" width="180" height="68" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.28)" stroke-width="1.5"/>
-                    <rect x="114" y="458" width="92" height="28" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
-                    <rect x="128" y="482" width="64" height="10" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.45)" stroke-width="1.5" rx="1"/>
+                        <!-- Area grande BASSA (nostra) -->
+                        <rect x="70" y="418" width="180" height="68" fill="rgba(255,255,255,.04)"
+                            stroke="rgba(255,255,255,.28)" stroke-width="1.5" />
+                        <rect x="114" y="458" width="92" height="28" fill="none" stroke="rgba(255,255,255,.2)"
+                            stroke-width="1" />
+                        <rect x="128" y="482" width="64" height="10" fill="rgba(255,255,255,.12)"
+                            stroke="rgba(255,255,255,.45)" stroke-width="1.5" rx="1" />
 
-                    <!-- Dischetti + angoli -->
-                    <circle cx="160" cy="80"  r="2.5" fill="rgba(255,255,255,.38)"/>
-                    <circle cx="160" cy="420" r="2.5" fill="rgba(255,255,255,.38)"/>
-                    <path d="M14,14 Q22,14 22,22"    fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1"/>
-                    <path d="M306,14 Q298,14 298,22" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1"/>
-                    <path d="M14,486 Q22,486 22,478" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1"/>
-                    <path d="M306,486 Q298,486 298,478" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1"/>
+                        <!-- Dischetti + angoli -->
+                        <circle cx="160" cy="80" r="2.5" fill="rgba(255,255,255,.38)" />
+                        <circle cx="160" cy="420" r="2.5" fill="rgba(255,255,255,.38)" />
+                        <path d="M14,14 Q22,14 22,22" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1" />
+                        <path d="M306,14 Q298,14 298,22" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1" />
+                        <path d="M14,486 Q22,486 22,478" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1" />
+                        <path d="M306,486 Q298,486 298,478" fill="none" stroke="rgba(255,255,255,.22)"
+                            stroke-width="1" />
 
-                    <!--
+                        <!--
                     ═══════════════════════════════════════════
                     PIN GIOCATORI
                     Sposta ogni <g> cambiando translate(X, Y).
@@ -237,121 +519,129 @@
                       pin-7 ATT  → alto centro
                     ═══════════════════════════════════════════
                     -->
-                    <g class="player-pin" id="pin-1" transform="translate(160,448)"></g>
-                    <g class="player-pin" id="pin-2" transform="translate(88,368)"></g>
-                    <g class="player-pin" id="pin-3" transform="translate(232,368)"></g>
-                    <g class="player-pin" id="pin-4" transform="translate(72,268)"></g>
-                    <g class="player-pin" id="pin-5" transform="translate(160,258)"></g>
-                    <g class="player-pin" id="pin-6" transform="translate(248,268)"></g>
-                    <g class="player-pin" id="pin-7" transform="translate(160,152)"></g>
+                        <g class="player-pin" id="pin-1" transform="translate(160,448)"></g>
+                        <g class="player-pin" id="pin-2" transform="translate(88,368)"></g>
+                        <g class="player-pin" id="pin-3" transform="translate(232,368)"></g>
+                        <g class="player-pin" id="pin-4" transform="translate(72,268)"></g>
+                        <g class="player-pin" id="pin-5" transform="translate(160,258)"></g>
+                        <g class="player-pin" id="pin-6" transform="translate(248,268)"></g>
+                        <g class="player-pin" id="pin-7" transform="translate(160,152)"></g>
 
-                    <!-- Legenda -->
-                    <g transform="translate(14,490)">
-                        <circle cx="6" cy="5" r="4.5" fill="none" stroke="#f59e0b" stroke-width="1.5" id="leg-team-color"/>
-                        <text x="15" y="5" dominant-baseline="middle" font-family="DM Sans,sans-serif" font-size="7" fill="rgba(255,255,255,.42)">POR · ATT</text>
-                        <circle cx="72" cy="5" r="4.5" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
-                        <text x="81" y="5" dominant-baseline="middle" font-family="DM Sans,sans-serif" font-size="7" fill="rgba(255,255,255,.42)">DIF</text>
-                        <circle cx="108" cy="5" r="4.5" fill="none" stroke="#34d399" stroke-width="1.5"/>
-                        <text x="117" y="5" dominant-baseline="middle" font-family="DM Sans,sans-serif" font-size="7" fill="rgba(255,255,255,.42)">CEN</text>
-                    </g>
-                </svg>
+
+                    </svg>
+                </div>
+
+                <p style="text-align:center;font-size:.68rem;color:rgba(148,163,184,.32);margin-top:.55rem">
+                    <i class="fas fa-hand-pointer" style="margin-right:.25rem"></i>Passa sul pin per il nome completo
+                </p>
             </div>
 
-            <p style="text-align:center;font-size:.68rem;color:rgba(148,163,184,.32);margin-top:.55rem">
-                <i class="fas fa-hand-pointer" style="margin-right:.25rem"></i>Passa sul pin per il nome completo
-            </p>
-        </div>
-
-        <!-- LISTA ROSA -->
-        <div class="a3">
-            <div class="section-label">
-                <div class="label-bar"></div>
-                <h2>ROSA</h2>
+            <!-- LISTA ROSA -->
+            <div class="a3">
+                <div class="section-label">
+                    <div class="label-bar"></div>
+                    <h2>ROSA</h2>
+                </div>
+                <div id="roster-list" style="display:flex;flex-direction:column;gap:.45rem"></div>
             </div>
-            <div id="roster-list" style="display:flex;flex-direction:column;gap:.45rem"></div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- PROSSIME PARTITE -->
-<section style="padding:0 1.5rem 2.5rem;max-width:1100px;margin:0 auto">
-    <div class="section-label"><div class="label-bar"></div><h2>PROSSIME PARTITE</h2></div>
-    <div id="upcoming-list" style="display:flex;flex-direction:column;gap:.5rem"></div>
-</section>
+    <!-- PROSSIME PARTITE -->
+    <section style="padding:0 1.5rem 2.5rem;max-width:1100px;margin:0 auto">
+        <div class="section-label">
+            <div class="label-bar"></div>
+            <h2>PROSSIME PARTITE</h2>
+        </div>
+        <div id="upcoming-list" style="display:flex;flex-direction:column;gap:.5rem"></div>
+    </section>
 
-<!-- RISULTATI -->
-<section style="padding:0 1.5rem 4rem;max-width:1100px;margin:0 auto">
-    <div class="section-label"><div class="label-bar"></div><h2>RISULTATI</h2></div>
-    <div id="results-list" style="display:flex;flex-direction:column;gap:.5rem"></div>
-</section>
+    <!-- RISULTATI -->
+    <section style="padding:0 1.5rem 4rem;max-width:1100px;margin:0 auto">
+        <div class="section-label">
+            <div class="label-bar"></div>
+            <h2>RISULTATI</h2>
+        </div>
+        <div id="results-list" style="display:flex;flex-direction:column;gap:.5rem"></div>
+    </section>
 
-<!-- FOOTER -->
-<footer style="background:rgba(13,18,34,.9);border-top:1px solid rgba(var(--cr),.1);padding:1.5rem;text-align:center">
-    <div style="display:flex;align-items:center;justify-content:center;gap:.4rem;margin-bottom:.4rem">
-        <i class="fas fa-futbol" style="color:var(--c)"></i>
-        <span class="font-mono" style="font-size:.82rem;color:#e2e8f0;font-weight:700">PFL <span style="color:var(--c)">2026</span></span>
-    </div>
-    <p style="color:rgba(148,163,184,.45);font-size:.73rem">Pomarance Football League • Campo Gallerone</p>
-    <a href="index.html" class="nav-back" style="justify-content:center;margin-top:.6rem;font-size:.73rem;color:rgba(148,163,184,.3)">← Torna alla home</a>
-</footer>
+    <!-- FOOTER -->
+    <footer
+        style="background:rgba(13,18,34,.9);border-top:1px solid rgba(var(--cr),.1);padding:1.5rem;text-align:center">
+        <div style="display:flex;align-items:center;justify-content:center;gap:.4rem;margin-bottom:.4rem">
+            <i class="fas fa-futbol" style="color:var(--c)"></i>
+            <span class="font-mono" style="font-size:.82rem;color:#e2e8f0;font-weight:700">PFL <span
+                    style="color:var(--c)">2026</span></span>
+        </div>
+        <p style="color:rgba(148,163,184,.45);font-size:.73rem">Pomarance Football League • Campo Gallerone</p>
+        <a href="index.html" class="nav-back"
+            style="justify-content:center;margin-top:.6rem;font-size:.73rem;color:rgba(148,163,184,.3)">← Torna alla
+            home</a>
+    </footer>
 
-<input type="file" id="logo-file-input" accept="image/*" style="display:none">
+    <input type="file" id="logo-file-input" accept="image/*" style="display:none">
 
-<script>
-// ═══════════════════════════════════════════════════════════
-//   DATI SQUADRA — modifica SOLO questo blocco
-// ═══════════════════════════════════════════════════════════
-const TEAM = {
-    id:     1,               // 1 / 2 / 3 / 4 (per il logo salvato dalla home)
-    name:   "NOME SQUADRA",  // ← nome squadra
-    color:  "#f59e0b",       // ← uguale a --c nel CSS (serve per la legenda SVG)
+    <script>
+        // ═══════════════════════════════════════════════════════════
+        //   DATI SQUADRA — modifica SOLO questo blocco
+        // ═══════════════════════════════════════════════════════════
+        const TEAM = {
+            id: 1,               // 1 / 2 / 3 / 4 (per il logo salvato dalla home)
+            name: "Pomarance FC",  // ← nome squadra
+            color: "#f59e0b",       // ← uguale a --c nel CSS (serve per la legenda SVG)
 
-    stats: { points:0, won:0, drawn:0, lost:0, gf:0, ga:0 },
+            stats: { points: 3, won: 1, drawn: 0, lost: 0, gf: 5, ga: 1 },
 
-    // ⚠ ORDINE = ordine dei pin (pin-1 … pin-7)
-    // role: "POR" | "DIF" | "CEN" | "ATT"
-    roster: [
-        { n:1, name:"Nome Cognome", role:"POR", captain:false },
-        { n:2, name:"Nome Cognome", role:"DIF", captain:false },
-        { n:3, name:"Nome Cognome", role:"DIF", captain:false },
-        { n:4, name:"Nome Cognome", role:"CEN", captain:true  },
-        { n:5, name:"Nome Cognome", role:"CEN", captain:false },
-        { n:6, name:"Nome Cognome", role:"CEN", captain:false },
-        { n:7, name:"Nome Cognome", role:"ATT", captain:false },
-    ],
+            // ⚠ ORDINE = ordine dei pin (pin-1 … pin-7)
+            // role: "POR" | "DIF" | "CEN" | "ATT"
+            roster: [
+                { n: 1, name: "L. chiti", role: "", captain: true, vice: false },
+                { n: 2, name: "A. balia", role: "", captain: false, vice: true },
+                { n: 3, name: "A. cibotariu", role: "", captain: false, vice: false },
+                { n: 4, name: "G. rossi", role: "", captain: false, vice: false },
+                { n: 5, name: "S. lecis", role: "", captain: false, vice: false },
+                { n: 6, name: "N. fignani", role: "", captain: false, vice: false },
+                { n: 7, name: "L. dondoli", role: "", captain: false, vice: false },
+                { n: 8, name: "G. caruso", role: "", captain: false, vice: false },
+                { n: 9, name: "V. tedeschi", role: "", captain: false, vice: false },
+                { n: 10, name: "M. caruso", role: "", captain: false, vice: false },
+                { n: 11, name: "P. bagnai", role: "", captain: false, vice: false },
+            ],
 
-    // type: "home" | "away"
-    upcoming: [
-        { giornata:"Giornata 1", opponent:"Avversario 1", date:"Da definire", type:"home" },
-        { giornata:"Giornata 2", opponent:"Avversario 2", date:"Da definire", type:"away" },
-        { giornata:"Giornata 3", opponent:"Avversario 3", date:"Da definire", type:"home" },
-    ],
+            // type: "home" | "away"
+            upcoming: [
+                { giornata: "Giornata 2", opponent: "FC Invictus", date: "30/05/2026 16:30 - 17:30", type: "away" },
+                { giornata: "Giornata 3", opponent: "BTD King League", date: "06/06/2026 16:30 - 17:30", type: "home" },
+                { giornata: "Giornata 4", opponent: "Giaguar King", date: "13/06/2026 16:30 - 17:30", type: "away" },
+                { giornata: "Giornata 5", opponent: "FC Invictus", date: "20/06/2026 16:30 - 17:30", type: "home" },
+                { giornata: "Giornata 6", opponent: "BTD King League", date: "27/06/2026 16:30 - 17:30", type: "away" },
+            ],
 
-    // result: "W" vinta | "D" pareggio | "L" persa
-    // Aggiungi una riga dopo ogni gara:
-    results: [
-        // { giornata:"Giornata 1", opponent:"Avversario 1", for:3, against:1, result:"W" },
-    ],
-};
-// ═══════════════════════════════════════════════════════════
-//   FINE DATI — non modificare sotto
-// ═══════════════════════════════════════════════════════════
+            // result: "W" vinta | "D" pareggio | "L" persa
+            // Aggiungi una riga dopo ogni gara:
+            results: [
+                { giornata: "Giornata 1", opponent: "Giaguar King", for: 5, against: 1, result: "W" },
+            ],
+        };
+        // ═══════════════════════════════════════════════════════════
+        //   FINE DATI — non modificare sotto
+        // ═══════════════════════════════════════════════════════════
 
-// Colori per ruolo: hardcoded perché rgba(var(--cr)) non funziona negli attributi SVG
-const ROLE_STYLE = {
-    POR: { stroke:"#f59e0b", fillOpacity:"rgba(245,158,11,.15)",  numFill:"#fbbf24" },
-    DIF: { stroke:"#60a5fa", fillOpacity:"rgba(59,130,246,.15)",  numFill:"#93c5fd" },
-    CEN: { stroke:"#34d399", fillOpacity:"rgba(16,185,129,.15)",  numFill:"#6ee7b7" },
-    ATT: { stroke:"#f59e0b", fillOpacity:"rgba(245,158,11,.15)",  numFill:"#fbbf24" },
-};
+        // Colori per ruolo: hardcoded perché rgba(var(--cr)) non funziona negli attributi SVG
+        const ROLE_STYLE = {
+            POR: { stroke: "#f59e0b", fillOpacity: "rgba(245,158,11,.15)", numFill: "#fbbf24" },
+            DIF: { stroke: "#60a5fa", fillOpacity: "rgba(59,130,246,.15)", numFill: "#93c5fd" },
+            CEN: { stroke: "#34d399", fillOpacity: "rgba(16,185,129,.15)", numFill: "#6ee7b7" },
+            ATT: { stroke: "#f59e0b", fillOpacity: "rgba(245,158,11,.15)", numFill: "#fbbf24" },
+        };
 
-// Costruisce il markup SVG di un pin
-const buildPinSVG = (player) => {
-    const rs = ROLE_STYLE[player.role] || ROLE_STYLE.CEN;
-    const surname = player.name.split(' ').slice(-1)[0].toUpperCase();
-    const fullLabel = `${player.role} · ${player.name}`;
+        // Costruisce il markup SVG di un pin
+        const buildPinSVG = (player) => {
+            const rs = ROLE_STYLE.CEN;
+            const surname = player.name.split(' ').slice(-1)[0].toUpperCase();
+            const fullLabel = `${player.name}`;
 
-    return `
+            return `
         <circle class="pin-ring" r="22"
             fill="${rs.fillOpacity}" stroke="${rs.stroke}" stroke-width="2"
             style="transition:stroke-width .15s,r .15s"/>
@@ -371,111 +661,110 @@ const buildPinSVG = (player) => {
                   font-family="DM Sans,sans-serif" font-size="8.5" font-weight="500"
                   fill="rgba(255,255,255,.92)">${fullLabel}</text>
         </g>`;
-};
+        };
 
-// Aggiusta il tooltip verso il basso se il pin è vicino al bordo superiore
-const fixTooltipPosition = (pinEl) => {
-    const t  = pinEl.getAttribute('transform') || '';
-    const m  = t.match(/translate\(([^,]+),([^)]+)\)/);
-    if (!m) return;
-    const yPos = parseFloat(m[2]);
-    const tt   = pinEl.querySelector('.pin-tt');
-    if (!tt) return;
-    // Se il pin è nella parte alta del viewBox (y < 130) → tooltip sotto
-    if (yPos < 130) {
-        tt.setAttribute('transform', 'translate(0,80)');
-    }
-};
+        // Aggiusta il tooltip verso il basso se il pin è vicino al bordo superiore
+        const fixTooltipPosition = (pinEl) => {
+            const t = pinEl.getAttribute('transform') || '';
+            const m = t.match(/translate\(([^,]+),([^)]+)\)/);
+            if (!m) return;
+            const yPos = parseFloat(m[2]);
+            const tt = pinEl.querySelector('.pin-tt');
+            if (!tt) return;
+            // Se il pin è nella parte alta del viewBox (y < 130) → tooltip sotto
+            if (yPos < 130) {
+                tt.setAttribute('transform', 'translate(0,80)');
+            }
+        };
 
-// ── HOVER gestito interamente via JS mouseover/mouseout ──
-// Questo funziona su Chrome, Firefox e Safari senza problemi.
-// CSS :hover su <g> SVG può fallire silenziosamente su alcuni browser.
-const attachHover = (pinEl) => {
-    const ring = pinEl.querySelector('.pin-ring');
-    const tt   = pinEl.querySelector('.pin-tt');
+        // ── HOVER gestito interamente via JS mouseover/mouseout ──
+        // Questo funziona su Chrome, Firefox e Safari senza problemi.
+        // CSS :hover su <g> SVG può fallire silenziosamente su alcuni browser.
+        const attachHover = (pinEl) => {
+            const ring = pinEl.querySelector('.pin-ring');
+            const tt = pinEl.querySelector('.pin-tt');
 
-    // Salva il translate originale (senza eventuali scale precedenti)
-    const origTransform = pinEl.getAttribute('transform') || '';
-    const xyMatch = origTransform.match(/translate\(([^,]+),([^)]+)\)/);
-    const tx = xyMatch ? xyMatch[1] : '0';
-    const ty = xyMatch ? xyMatch[2] : '0';
+            // Salva il translate originale (senza eventuali scale precedenti)
+            const origTransform = pinEl.getAttribute('transform') || '';
+            const xyMatch = origTransform.match(/translate\(([^,]+),([^)]+)\)/);
+            const tx = xyMatch ? xyMatch[1] : '0';
+            const ty = xyMatch ? xyMatch[2] : '0';
 
-    pinEl.addEventListener('mouseenter', () => {
-        if (ring) ring.setAttribute('stroke-width', '3.5');
-        if (tt)   tt.style.opacity = '1';
-        // Scale dal centro del pin: translate → scale → (nessuna traslazione aggiuntiva)
-        pinEl.setAttribute('transform', `translate(${tx},${ty}) scale(1.1)`);
-    });
+            pinEl.addEventListener('mouseenter', () => {
+                if (ring) ring.setAttribute('stroke-width', '3.5');
+                if (tt) tt.style.opacity = '1';
+                // Scale dal centro del pin: translate → scale → (nessuna traslazione aggiuntiva)
+                pinEl.setAttribute('transform', `translate(${tx},${ty}) scale(1.1)`);
+            });
 
-    pinEl.addEventListener('mouseleave', () => {
-        if (ring) ring.setAttribute('stroke-width', '2');
-        if (tt)   tt.style.opacity = '0';
-        pinEl.setAttribute('transform', `translate(${tx},${ty})`);
-    });
-};
+            pinEl.addEventListener('mouseleave', () => {
+                if (ring) ring.setAttribute('stroke-width', '2');
+                if (tt) tt.style.opacity = '0';
+                pinEl.setAttribute('transform', `translate(${tx},${ty})`);
+            });
+        };
 
-// ── POPOLA PIN SUL CAMPO ──
-const renderPins = () => {
-    TEAM.roster.forEach((player, i) => {
-        const pin = document.getElementById(`pin-${i + 1}`);
-        if (!pin) return;
-        pin.innerHTML = buildPinSVG(player);
-        fixTooltipPosition(pin);
-        attachHover(pin);
-    });
-    // Aggiorna colore legenda POR/ATT col colore reale della squadra
-    const legEl = document.getElementById('leg-team-color');
-    if (legEl) legEl.setAttribute('stroke', TEAM.color);
-};
+        // ── POPOLA PIN SUL CAMPO ──
+        const renderPins = () => {
+            TEAM.roster.forEach((player, i) => {
+                const pin = document.getElementById(`pin-${i + 1}`);
+                if (!pin) return;
+                pin.innerHTML = buildPinSVG(player);
+                fixTooltipPosition(pin);
+                attachHover(pin);
+            });
+            // Aggiorna colore legenda POR/ATT col colore reale della squadra
+            const legEl = document.getElementById('leg-team-color');
+            if (legEl) legEl.setAttribute('stroke', TEAM.color);
+        };
 
-// ── LISTA ROSA ──
-const renderRoster = () => {
-    const el = document.getElementById('roster-list');
-    if (!el) return;
-    const rc = { POR:'r-POR', DIF:'r-DIF', CEN:'r-CEN', ATT:'r-ATT' };
-    el.innerHTML = TEAM.roster.map(p => `
+        // ── LISTA ROSA ──
+        const renderRoster = () => {
+            const el = document.getElementById('roster-list');
+            if (!el) return;
+            el.innerHTML = TEAM.roster.map(p => `
         <div class="player-row">
             <div class="p-num">${p.n}</div>
             <div style="flex:1;min-width:0">
                 <div style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap">
                     <span style="font-weight:600;color:#e2e8f0;font-size:.88rem">${p.name}</span>
                     ${p.captain ? `<span style="font-size:.56rem;padding:.1rem .38rem;border-radius:999px;background:rgba(var(--cr),.14);border:1px solid rgba(var(--cr),.32);color:var(--c);font-weight:700;letter-spacing:.05em">★ CAP</span>` : ''}
+                    ${p.vice ? `<span style="font-size:.56rem;padding:.1rem .38rem;border-radius:999px;background:rgba(148,163,184,.14);border:1px solid rgba(148,163,184,.32);color:#94a3b8;font-weight:700;letter-spacing:.05em">VICE</span>` : ''}
                 </div>
-                <span class="role-tag ${rc[p.role]||'r-CEN'}">${p.role}</span>
             </div>
             <i class="fas fa-futbol" style="color:rgba(148,163,184,.12);font-size:.75rem;flex-shrink:0"></i>
         </div>
     `).join('');
-};
+        };
 
-// ── HERO STATS ──
-const renderHeroStats = () => {
-    const s = TEAM.stats;
-    const dr = s.gf - s.ga;
-    const items = [
-        { v:s.points, l:"Punti" },
-        { v:s.won,    l:"Vinte" },
-        { v:(dr>=0?'+':'')+dr, l:"DR" },
-    ];
-    const el = document.getElementById('hero-stats');
-    if (!el) return;
-    el.innerHTML = items.map(i=>`
+        // ── HERO STATS ──
+        const renderHeroStats = () => {
+            const s = TEAM.stats;
+            const dr = s.gf - s.ga;
+            const items = [
+                { v: s.points, l: "Punti" },
+                { v: s.won, l: "Vinte" },
+                { v: (dr >= 0 ? '+' : '') + dr, l: "DR" },
+            ];
+            const el = document.getElementById('hero-stats');
+            if (!el) return;
+            el.innerHTML = items.map(i => `
         <div class="stat-pill">
             <div class="font-mono tc" style="font-size:1.5rem;font-weight:900">${i.v}</div>
             <div style="font-size:.62rem;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin-top:.1rem">${i.l}</div>
         </div>
     `).join('');
-};
+        };
 
-// ── PROSSIME PARTITE ──
-const renderUpcoming = () => {
-    const el = document.getElementById('upcoming-list');
-    if (!el) return;
-    if (!TEAM.upcoming.length) {
-        el.innerHTML = `<p style="color:rgba(148,163,184,.38);font-size:.85rem">Nessuna partita programmata.</p>`;
-        return;
-    }
-    el.innerHTML = TEAM.upcoming.map(m=>`
+        // ── PROSSIME PARTITE ──
+        const renderUpcoming = () => {
+            const el = document.getElementById('upcoming-list');
+            if (!el) return;
+            if (!TEAM.upcoming.length) {
+                el.innerHTML = `<p style="color:rgba(148,163,184,.38);font-size:.85rem">Nessuna partita programmata.</p>`;
+                return;
+            }
+            el.innerHTML = TEAM.upcoming.map(m => `
         <div class="match-strip">
             <div style="width:34px;height:34px;border-radius:50%;background:rgba(var(--cr),.1);flex-shrink:0;display:flex;align-items:center;justify-content:center">
                 <i class="fas fa-futbol" style="color:var(--c);font-size:.78rem"></i>
@@ -483,38 +772,38 @@ const renderUpcoming = () => {
             <div style="flex:1;min-width:0">
                 <p style="font-size:.65rem;color:rgba(148,163,184,.55);text-transform:uppercase;letter-spacing:.07em">${m.giornata}</p>
                 <p style="font-weight:600;color:#e2e8f0;font-size:.9rem">
-                    ${m.type==='home'
-                        ? `<span style="color:var(--c)">${TEAM.name}</span> vs ${m.opponent}`
-                        : `${m.opponent} vs <span style="color:var(--c)">${TEAM.name}</span>`}
+                    ${m.type === 'home'
+                    ? `<span style="color:var(--c)">${TEAM.name}</span> vs ${m.opponent}`
+                    : `${m.opponent} vs <span style="color:var(--c)">${TEAM.name}</span>`}
                 </p>
             </div>
             <div style="text-align:right;flex-shrink:0">
                 <span style="font-size:.65rem;padding:.18rem .5rem;border-radius:999px;background:rgba(15,20,40,.8);border:1px solid rgba(148,163,184,.14);color:#94a3b8">
-                    ${m.type==='home'?'🏠 Casa':'✈️ Trasferta'}
+                    ${m.type === 'home' ? '🏠 Casa' : '✈️ Trasferta'}
                 </span>
                 <p style="font-size:.65rem;color:rgba(148,163,184,.45);margin-top:.18rem">${m.date}</p>
             </div>
         </div>
     `).join('');
-};
+        };
 
-// ── RISULTATI ──
-const renderResults = () => {
-    const el = document.getElementById('results-list');
-    if (!el) return;
-    if (!TEAM.results.length) {
-        el.innerHTML = `
+        // ── RISULTATI ──
+        const renderResults = () => {
+            const el = document.getElementById('results-list');
+            if (!el) return;
+            if (!TEAM.results.length) {
+                el.innerHTML = `
             <div class="glass" style="padding:1.8rem;text-align:center">
                 <i class="fas fa-clock" style="font-size:1.4rem;color:rgba(148,163,184,.22);display:block;margin-bottom:.4rem"></i>
                 <p style="color:rgba(148,163,184,.38);font-size:.82rem">Nessuna partita ancora giocata.</p>
                 <p style="color:rgba(148,163,184,.22);font-size:.72rem;margin-top:.2rem">I risultati appariranno qui dopo ogni gara.</p>
             </div>`;
-        return;
-    }
-    const badge = { W:{l:'V',cls:'res-W'}, D:{l:'P',cls:'res-D'}, L:{l:'S',cls:'res-L'} };
-    el.innerHTML = TEAM.results.map(r=>{
-        const b = badge[r.result] || badge.D;
-        return `
+                return;
+            }
+            const badge = { W: { l: 'V', cls: 'res-W' }, D: { l: 'P', cls: 'res-D' }, L: { l: 'S', cls: 'res-L' } };
+            el.innerHTML = TEAM.results.map(r => {
+                const b = badge[r.result] || badge.D;
+                return `
         <div class="match-strip">
             <div class="font-mono ${b.cls}" style="width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.78rem;flex-shrink:0">${b.l}</div>
             <div style="flex:1;min-width:0">
@@ -523,76 +812,77 @@ const renderResults = () => {
             </div>
             <div class="font-mono" style="font-size:1.4rem;font-weight:900;color:var(--c)">${r.for}–${r.against}</div>
         </div>`;
-    }).join('');
-};
+            }).join('');
+        };
 
-// ── LOGO UPLOAD ──
-const logoKey = () => `pfl_logo_team_${TEAM.id}`;
+        // ── LOGO UPLOAD ──
+        const logoKey = () => `pfl_logo_team_${TEAM.id}`;
 
-const loadSavedLogo = () => {
-    try {
-        const saved = localStorage.getItem(logoKey());
-        if (!saved) return;
-        const imgEl = document.getElementById('hero-logo-img');
-        if (imgEl) {
-            imgEl.src = saved;
-        } else {
-            // fallback: replace circle content
-            const circle = document.getElementById('hero-logo-circle');
-            if (circle) {
-                circle.innerHTML = '';
-                const img = document.createElement('img');
-                img.src = saved;
-                img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%';
-                circle.appendChild(img);
-            }
-        }
-    } catch(e) {}
-};
+        const loadSavedLogo = () => {
+            try {
+                const saved = localStorage.getItem(logoKey());
+                if (!saved) return;
+                const imgEl = document.getElementById('hero-logo-img');
+                if (imgEl) {
+                    imgEl.src = saved;
+                } else {
+                    // fallback: replace circle content
+                    const circle = document.getElementById('hero-logo-circle');
+                    if (circle) {
+                        circle.innerHTML = '';
+                        const img = document.createElement('img');
+                        img.src = saved;
+                        img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%';
+                        circle.appendChild(img);
+                    }
+                }
+            } catch (e) { }
+        };
 
-const triggerLogoUpload = (e) => { e.stopPropagation(); document.getElementById('logo-file-input').click(); };
+        const triggerLogoUpload = (e) => { e.stopPropagation(); document.getElementById('logo-file-input').click(); };
 
-document.getElementById('logo-file-input').addEventListener('change', e => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => {
-        try { localStorage.setItem(logoKey(), ev.target.result); } catch(err) {}
-        const imgEl = document.getElementById('hero-logo-img');
-        if (imgEl) {
-            imgEl.src = ev.target.result;
-        } else {
-            const circle = document.getElementById('hero-logo-circle');
-            if (circle) {
-                circle.innerHTML = '';
-                const img = document.createElement('img');
-                img.src = ev.target.result;
-                img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%';
-                circle.appendChild(img);
-            }
-        }
-        e.target.value = '';
-    };
-    reader.readAsDataURL(file);
-});
+        document.getElementById('logo-file-input').addEventListener('change', e => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = ev => {
+                try { localStorage.setItem(logoKey(), ev.target.result); } catch (err) { }
+                const imgEl = document.getElementById('hero-logo-img');
+                if (imgEl) {
+                    imgEl.src = ev.target.result;
+                } else {
+                    const circle = document.getElementById('hero-logo-circle');
+                    if (circle) {
+                        circle.innerHTML = '';
+                        const img = document.createElement('img');
+                        img.src = ev.target.result;
+                        img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%';
+                        circle.appendChild(img);
+                    }
+                }
+                e.target.value = '';
+            };
+            reader.readAsDataURL(file);
+        });
 
-// ── RESPONSIVE ──
-const applyLayout = () => {
-    const grid = document.getElementById('formation-grid');
-    if (grid) grid.style.gridTemplateColumns = window.innerWidth < 680 ? '1fr' : '1fr 1fr';
-};
-window.addEventListener('resize', applyLayout);
+        // ── RESPONSIVE ──
+        const applyLayout = () => {
+            const grid = document.getElementById('formation-grid');
+            if (grid) grid.style.gridTemplateColumns = window.innerWidth < 680 ? '1fr' : '1fr 1fr';
+        };
+        window.addEventListener('resize', applyLayout);
 
-// ── INIT ──
-document.addEventListener('DOMContentLoaded', () => {
-    loadSavedLogo();
-    renderPins();
-    renderRoster();
-    renderHeroStats();
-    renderUpcoming();
-    renderResults();
-    applyLayout();
-});
-</script>
+        // ── INIT ──
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSavedLogo();
+            renderPins();
+            renderRoster();
+            renderHeroStats();
+            renderUpcoming();
+            renderResults();
+            applyLayout();
+        });
+    </script>
 </body>
+
 </html>

@@ -341,6 +341,13 @@
         .player-pin {
             cursor: pointer;
         }
+
+        @media (max-width: 680px) {
+            .hero-content { justify-content: center; text-align: center; }
+            .a1 { display: flex; flex-direction: column; align-items: center; }
+            .a2 { margin-left: 0 !important; width: 100%; justify-content: center; }
+            .a1 > div { justify-content: center; }
+        }
     </style>
 </head>
 
@@ -360,7 +367,7 @@
 
     <!-- HERO -->
     <header class="hero-bg grid-lines" style="padding-top:56px">
-        <div
+        <div class="hero-content"
             style="max-width:1100px;margin:0 auto;padding:2.5rem 1.5rem 2rem;display:flex;flex-wrap:wrap;align-items:center;gap:2rem">
 
             <!-- Logo -->
@@ -385,7 +392,6 @@
                     style="font-size:clamp(2.2rem,6vw,3.8rem);line-height:1;color:#fff;margin-bottom:.35rem">fc invictus
                 </h1>
                 <!-- ← CAMBIA MOTTO -->
-                <p style="color:#94a3b8;font-size:.95rem;margin-bottom:.9rem">"testo opzionale"</p>
                 <div style="display:flex;flex-wrap:wrap;gap:.45rem">
                     <span
                         style="font-size:.7rem;padding:.22rem .7rem;border-radius:999px;border:1px solid var(--c);color:var(--c);font-weight:600"><i
@@ -505,19 +511,7 @@
                         <g class="player-pin" id="pin-6" transform="translate(248,268)"></g>
                         <g class="player-pin" id="pin-7" transform="translate(160,152)"></g>
 
-                        <!-- Legenda -->
-                        <g transform="translate(14,490)">
-                            <circle cx="6" cy="5" r="4.5" fill="none" stroke="#f59e0b" stroke-width="1.5"
-                                id="leg-team-color" />
-                            <text x="15" y="5" dominant-baseline="middle" font-family="DM Sans,sans-serif" font-size="7"
-                                fill="rgba(255,255,255,.42)">POR · ATT</text>
-                            <circle cx="72" cy="5" r="4.5" fill="none" stroke="#60a5fa" stroke-width="1.5" />
-                            <text x="81" y="5" dominant-baseline="middle" font-family="DM Sans,sans-serif" font-size="7"
-                                fill="rgba(255,255,255,.42)">DIF</text>
-                            <circle cx="108" cy="5" r="4.5" fill="none" stroke="#34d399" stroke-width="1.5" />
-                            <text x="117" y="5" dominant-baseline="middle" font-family="DM Sans,sans-serif"
-                                font-size="7" fill="rgba(255,255,255,.42)">CEN</text>
-                        </g>
+
                     </svg>
                 </div>
 
@@ -576,35 +570,38 @@
         //   DATI SQUADRA — modifica SOLO questo blocco
         // ═══════════════════════════════════════════════════════════
         const TEAM = {
-            id: 1,               // 1 / 2 / 3 / 4 (per il logo salvato dalla home)
-            name: "NOME SQUADRA",  // ← nome squadra
-            color: "#f59e0b",       // ← uguale a --c nel CSS (serve per la legenda SVG)
+            id: 3,               // 1 / 2 / 3 / 4 (per il logo salvato dalla home)
+            name: "FC Invictus",  // ← nome squadra
+            color: "#ef4444",       // ← uguale a --c nel CSS (serve per la legenda SVG)
 
-            stats: { points: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0 },
+            stats: { points: 3, won: 1, drawn: 0, lost: 0, gf: 3, ga: 0 },
 
             // ⚠ ORDINE = ordine dei pin (pin-1 … pin-7)
             // role: "POR" | "DIF" | "CEN" | "ATT"
             roster: [
-                { n: 1, name: "Nome Cognome", role: "POR", captain: false },
-                { n: 2, name: "Nome Cognome", role: "DIF", captain: false },
-                { n: 3, name: "Nome Cognome", role: "DIF", captain: false },
-                { n: 4, name: "Nome Cognome", role: "CEN", captain: true },
-                { n: 5, name: "Nome Cognome", role: "CEN", captain: false },
-                { n: 6, name: "Nome Cognome", role: "CEN", captain: false },
-                { n: 7, name: "Nome Cognome", role: "ATT", captain: false },
+                { n: 1, name: "G. raspollini", role: "", captain: true, vice: false },
+                { n: 2, name: "M. manzo", role: "", captain: false, vice: true },
+                { n: 3, name: "F. spinelli", role: "", captain: false, vice: false },
+                { n: 4, name: "E. kurti", role: "", captain: false, vice: false },
+                { n: 5, name: "E. Molinari", role: "", captain: false, vice: false },
+                { n: 6, name: "G. drumea", role: "", captain: false, vice: false },
+                { n: 7, name: "C. fulceri", role: "", captain: false, vice: false },
+                { n: 8, name: "I. muzaqui", role: "", captain: false, vice: false },
             ],
 
             // type: "home" | "away"
             upcoming: [
-                { giornata: "Giornata 1", opponent: "Avversario 1", date: "Da definire", type: "home" },
-                { giornata: "Giornata 2", opponent: "Avversario 2", date: "Da definire", type: "away" },
-                { giornata: "Giornata 3", opponent: "Avversario 3", date: "Da definire", type: "home" },
+                { giornata: "Giornata 2", opponent: "Pomarance FC", date: "30/05/2026 16:30 - 17:30", type: "home" },
+                { giornata: "Giornata 3", opponent: "Giaguar King", date: "06/06/2026 17:30 - 18:30", type: "home" },
+                { giornata: "Giornata 4", opponent: "BTD King League", date: "13/06/2026 17:30 - 18:30", type: "home" },
+                { giornata: "Giornata 5", opponent: "Pomarance FC", date: "20/06/2026 16:30 - 17:30", type: "away" },
+                { giornata: "Giornata 6", opponent: "Giaguar King", date: "27/06/2026 17:30 - 18:30", type: "away" },
             ],
 
             // result: "W" vinta | "D" pareggio | "L" persa
             // Aggiungi una riga dopo ogni gara:
             results: [
-                // { giornata:"Giornata 1", opponent:"Avversario 1", for:3, against:1, result:"W" },
+                { giornata: "Giornata 1", opponent: "BTD King League", for: 3, against: 0, result: "W" },
             ],
         };
         // ═══════════════════════════════════════════════════════════
@@ -621,9 +618,9 @@
 
         // Costruisce il markup SVG di un pin
         const buildPinSVG = (player) => {
-            const rs = ROLE_STYLE[player.role] || ROLE_STYLE.CEN;
+            const rs = ROLE_STYLE.CEN;
             const surname = player.name.split(' ').slice(-1)[0].toUpperCase();
-            const fullLabel = `${player.role} · ${player.name}`;
+            const fullLabel = `${player.name}`;
 
             return `
         <circle class="pin-ring" r="22"
@@ -706,7 +703,6 @@
         const renderRoster = () => {
             const el = document.getElementById('roster-list');
             if (!el) return;
-            const rc = { POR: 'r-POR', DIF: 'r-DIF', CEN: 'r-CEN', ATT: 'r-ATT' };
             el.innerHTML = TEAM.roster.map(p => `
         <div class="player-row">
             <div class="p-num">${p.n}</div>
@@ -714,8 +710,8 @@
                 <div style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap">
                     <span style="font-weight:600;color:#e2e8f0;font-size:.88rem">${p.name}</span>
                     ${p.captain ? `<span style="font-size:.56rem;padding:.1rem .38rem;border-radius:999px;background:rgba(var(--cr),.14);border:1px solid rgba(var(--cr),.32);color:var(--c);font-weight:700;letter-spacing:.05em">★ CAP</span>` : ''}
+                    ${p.vice ? `<span style="font-size:.56rem;padding:.1rem .38rem;border-radius:999px;background:rgba(148,163,184,.14);border:1px solid rgba(148,163,184,.32);color:#94a3b8;font-weight:700;letter-spacing:.05em">VICE</span>` : ''}
                 </div>
-                <span class="role-tag ${rc[p.role] || 'r-CEN'}">${p.role}</span>
             </div>
             <i class="fas fa-futbol" style="color:rgba(148,163,184,.12);font-size:.75rem;flex-shrink:0"></i>
         </div>
