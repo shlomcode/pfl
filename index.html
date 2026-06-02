@@ -583,8 +583,8 @@
             },
             {
                 day: "Giornata 2", type: "Andata", matches: [
-                    { home: "FC Invictus", away: "Pomarance FC", date: "30/05/2026 16:30 - 17:30", homeScore: null, awayScore: null },
-                    { home: "Giaguar King", away: "BTD King League", date: "30/05/2026 17:30 - 18:30", homeScore: null, awayScore: null }
+                    { home: "FC Invictus", away: "Pomarance FC", date: "30/05/2026 16:30 - 17:30", homeScore: 5, awayScore: 28 },
+                    { home: "Giaguar King", away: "BTD King League", date: "30/05/2026 17:30 - 18:30", homeScore: 0, awayScore: 3 }
                 ]
             },
             {
@@ -625,9 +625,20 @@
             // Aggiungi un nuovo oggetto con le stats del giocatore qui sotto.
             // "team" corrisponde all'id della squadra impostato sopra: 
             // 1 (Pomarance FC), 2 (BTD King League), 3 (FC Invictus), 4 (Giaguar King).
-            { name: "Chiti", team: 1, goals: 3, assists: 0, yellowCards: 0, redCards: 0 },
-            { name: "Dondoli", team: 1, goals: 3, assists: 0, yellowCards: 0, redCards: 0 },
-            { name: "Taddei", team: 4, goals: 1, assists: 0, yellowCards: 0, redCards: 0 }
+            { name: "Chiti", team: 1, goals: 10, assists: 5, yellowCards: 0, redCards: 0 },
+            { name: "Dondoli", team: 1, goals: 5, assists: 3, yellowCards: 0, redCards: 0 },
+            { name: "Fignani", team: 1, goals: 5, assists: 6, yellowCards: 0, redCards: 0 },
+            { name: "Lecis", team: 1, goals: 5, assists: 0, yellowCards: 0, redCards: 0 },
+            { name: "Balia", team: 1, goals: 4, assists: 11, yellowCards: 0, redCards: 0 },
+            { name: "Rossi", team: 1, goals: 4, assists: 0, yellowCards: 0, redCards: 0 },
+            { name: "Kurti", team: 3, goals: 2, assists: 2, yellowCards: 0, redCards: 0 },
+            { name: "Karasamahan", team: 3, goals: 1, assists: 0, yellowCards: 0, redCards: 0 },
+            { name: "Ceppatelli", team: 4, goals: 1, assists: 0, yellowCards: 0, redCards: 0 },
+            { name: "Taddei", team: 4, goals: 1, assists: 0, yellowCards: 0, redCards: 0 },
+            { name: "Cibotariu", team: 1, goals: 0, assists: 1, yellowCards: 0, redCards: 0 },
+            { name: "M. Caruso", team: 1, goals: 0, assists: 1, yellowCards: 0, redCards: 0 },
+            { name: "Muzaoui", team: 3, goals: 0, assists: 1, yellowCards: 0, redCards: 0 },
+            { name: "Spinelli", team: 3, goals: 0, assists: 1, yellowCards: 0, redCards: 0 }
         ];
 
         // Ritorna il logo da usare (definito nel codice)
@@ -919,15 +930,7 @@
             document.querySelectorAll('.card-glass').forEach(el => { el.style.opacity = '0'; obs.observe(el); });
         };
 
-        function closeAnnouncement() {
-            const modal = document.getElementById('announcement-modal');
-            const modalContent = modal.querySelector('.card-glass');
-            modal.classList.remove('opacity-100', 'pointer-events-auto');
-            modal.classList.add('opacity-0', 'pointer-events-none');
-            modalContent.classList.remove('scale-100');
-            modalContent.classList.add('scale-95');
-            sessionStorage.setItem('announcementSeen', 'true');
-        }
+
 
         document.addEventListener('DOMContentLoaded', () => {
             try {
@@ -939,42 +942,11 @@
                 initMobileMenu();
                 initSmoothScroll();
                 initAnimations();
-                
-                // Show announcement popup if not seen
-                if (!sessionStorage.getItem('announcementSeen')) {
-                    setTimeout(() => {
-                        const modal = document.getElementById('announcement-modal');
-                        if(modal) {
-                            const modalContent = modal.querySelector('.card-glass');
-                            modal.classList.remove('opacity-0', 'pointer-events-none');
-                            modal.classList.add('opacity-100', 'pointer-events-auto');
-                            modalContent.classList.remove('scale-95');
-                            modalContent.classList.add('scale-100');
-                        }
-                    }, 800);
-                }
+
+
             } catch (e) { console.error('Init error:', e); }
         });
     </script>
-
-    <!-- ANNOUNCEMENT POPUP -->
-    <div id="announcement-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300" style="background: rgba(11, 17, 32, 0.85); backdrop-filter: blur(8px);">
-        <div class="card-glass rounded-2xl border border-topaz/30 max-w-md w-full p-6 text-center transform scale-95 transition-transform duration-300 relative shadow-[0_0_40px_rgba(245,158,11,0.15)]">
-            <button onclick="closeAnnouncement()" class="absolute top-4 right-4 text-avio hover:text-topaz transition-colors">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-            <div class="w-16 h-16 rounded-full bg-topaz/10 border border-topaz/30 flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-bullhorn text-topaz text-2xl animate-pulse"></i>
-            </div>
-            <h3 class="font-display text-2xl font-black text-avioLight mb-2">MATCHDAY <span class="text-topaz">2</span></h3>
-            <p class="text-avio mb-6">
-                La seconda giornata del torneo si gioca oggi! Non perderti neanche un aggiornamento e scopri chi porterà a casa i punti.
-            </p>
-            <a href="calendario.html" class="inline-block bg-topaz text-night font-bold py-2.5 px-6 rounded-lg hover:bg-topazDark transition-colors shadow-lg">
-                Vedi Calendario
-            </a>
-        </div>
-    </div>
 </body>
 
 </html>
