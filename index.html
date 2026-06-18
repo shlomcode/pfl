@@ -8,7 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script>
-        window.closePopup = function () { }; // global declaration for html onclick
         tailwind.config = {
             theme: {
                 extend: {
@@ -196,12 +195,41 @@
             object-fit: cover;
             border-radius: 50%;
         }
+
+        @keyframes floatUp {
+            from { background-position: 0 0; }
+            to { background-position: 0 -100px; }
+        }
+
+        @keyframes introReveal {
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .skip-btn {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 999px;
+            transition: all 0.3s;
+        }
+        .skip-btn:hover {
+            color: #fff;
+            border-color: #fff;
+            background: rgba(255,255,255,0.1);
+        }
     </style>
 </head>
 
 <body class="antialiased overflow-x-hidden">
-
-
 
     <!-- Navigation -->
     <nav class="fixed w-full z-50 bg-night/95 backdrop-blur-md border-b border-avio/10">
@@ -262,118 +290,42 @@
                 Il torneo definitivo a 4 squadre • 7 giocatori • Andata e Ritorno
             </p>
 
-
-
-            <!-- COUNTDOWN — punta al 24 Maggio 2026 alle 20:00 -->
-            <div class="relative max-w-3xl mx-auto mb-12">
-                <div class="grid grid-cols-4 gap-2 md:gap-4 opacity-50 pointer-events-none">
-                    <div class="card-glass rounded-lg p-3 md:p-4 border border-topaz/20">
-                        <div id="days" class="text-2xl md:text-4xl font-bold text-topaz font-display">
-                            00</div>
-                        <div class="text-xs text-avio uppercase tracking-wider">Giorni</div>
-                    </div>
-                    <div class="card-glass rounded-lg p-3 md:p-4 border border-topaz/20">
-                        <div id="hours" class="text-2xl md:text-4xl font-bold text-topaz font-display">
-                            00</div>
-                        <div class="text-xs text-avio uppercase tracking-wider">Ore</div>
-                    </div>
-                    <div class="card-glass rounded-lg p-3 md:p-4 border border-topaz/20">
-                        <div id="minutes" class="text-2xl md:text-4xl font-bold text-topaz font-display">
-                            00</div>
-                        <div class="text-xs text-avio uppercase tracking-wider">Minuti</div>
-                    </div>
-                    <div class="card-glass rounded-lg p-3 md:p-4 border border-topaz/20">
-                        <div id="seconds" class="text-2xl md:text-4xl font-bold text-topaz font-display">
-                            00</div>
-                        <div class="text-xs text-avio uppercase tracking-wider">Secondi</div>
-                    </div>
-                </div>
-                <!-- Banner Integrato -->
-                <div class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-                    <div
-                        class="card-glass border border-topaz/30 bg-night/60 backdrop-blur-sm px-8 py-5 rounded-2xl shadow-[0_15px_40px_rgba(245,158,11,0.15)] flex items-center gap-4">
-                        <i class="fas fa-trophy text-topaz text-3xl md:text-4xl animate-pulse-slow"></i>
-                        <span
-                            class="gold-gradient font-black text-2xl md:text-4xl lg:text-5xl uppercase tracking-widest font-display">
-                            Il torneo è iniziato!
-                        </span>
-                    </div>
+            <div class="max-w-5xl mx-auto mb-14">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <a href="regolamento.html"
+                        class="card-glass rounded-2xl border border-topaz/30 bg-night/75 backdrop-blur-sm px-4 py-5 text-center hover:border-topaz hover:-translate-y-1 transition-all">
+                        <div class="flex items-center justify-center h-14 w-14 mx-auto mb-3 rounded-2xl bg-topaz/10 text-topaz">
+                            <i class="fas fa-book text-2xl"></i>
+                        </div>
+                        <span class="block text-sm font-bold text-avioLight">Regolamento</span>
+                    </a>
+                    <a href="#squadre"
+                        class="card-glass rounded-2xl border border-topaz/30 bg-night/75 backdrop-blur-sm px-4 py-5 text-center hover:border-topaz hover:-translate-y-1 transition-all">
+                        <div class="flex items-center justify-center h-14 w-14 mx-auto mb-3 rounded-2xl bg-topaz/10 text-topaz">
+                            <i class="fas fa-users text-2xl"></i>
+                        </div>
+                        <span class="block text-sm font-bold text-avioLight">Squadre</span>
+                    </a>
+                    <a href="calendario.html"
+                        class="card-glass rounded-2xl border border-topaz/30 bg-night/75 backdrop-blur-sm px-4 py-5 text-center hover:border-topaz hover:-translate-y-1 transition-all">
+                        <div class="flex items-center justify-center h-14 w-14 mx-auto mb-3 rounded-2xl bg-topaz/10 text-topaz">
+                            <i class="fas fa-calendar-alt text-2xl"></i>
+                        </div>
+                        <span class="block text-sm font-bold text-avioLight">Calendario</span>
+                    </a>
+                    <a href="#classifica"
+                        class="card-glass rounded-2xl border border-topaz/30 bg-night/75 backdrop-blur-sm px-4 py-5 text-center hover:border-topaz hover:-translate-y-1 transition-all">
+                        <div class="flex items-center justify-center h-14 w-14 mx-auto mb-3 rounded-2xl bg-topaz/10 text-topaz">
+                            <i class="fas fa-list-ol text-2xl"></i>
+                        </div>
+                        <span class="block text-sm font-bold text-avioLight">Classifica</span>
+                    </a>
                 </div>
             </div>
 
         </div>
         <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
             <i class="fas fa-chevron-down text-topaz text-2xl"></i>
-        </div>
-    </section>
-
-    <!-- Accesso Rapido Section -->
-    <section id="regolamento" class="py-20 bg-nightLight">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="font-display text-4xl md:text-5xl font-bold text-avioLight mb-4">ACCESSO RAPIDO</h2>
-                <div class="w-24 h-1 bg-topaz mx-auto rounded-full"></div>
-            </div>
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
-                <a href="regolamento.html"
-                    class="card-glass rounded-xl p-6 text-center hover-gold transition-all duration-300 group text-decoration-none block">
-                    <div
-                        class="w-16 h-16 bg-topaz/20 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-topaz/30 transition-colors">
-                        <i class="fas fa-book text-2xl text-topaz"></i>
-                    </div>
-                    <h3 class="text-lg md:text-xl font-bold text-avioLight">Regolamento</h3>
-                </a>
-                <a href="#squadre"
-                    class="card-glass rounded-xl p-6 text-center hover-gold transition-all duration-300 group text-decoration-none block">
-                    <div
-                        class="w-16 h-16 bg-topaz/20 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-topaz/30 transition-colors">
-                        <i class="fas fa-users text-2xl text-topaz"></i>
-                    </div>
-                    <h3 class="text-lg md:text-xl font-bold text-avioLight">Squadre</h3>
-                </a>
-                <a href="calendario.html"
-                    class="card-glass rounded-xl p-6 text-center hover-gold transition-all duration-300 group text-decoration-none block">
-                    <div
-                        class="w-16 h-16 bg-topaz/20 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-topaz/30 transition-colors">
-                        <i class="fas fa-calendar-alt text-2xl text-topaz"></i>
-                    </div>
-                    <h3 class="text-lg md:text-xl font-bold text-avioLight">Calendario</h3>
-                </a>
-                <a href="#classifica"
-                    class="card-glass rounded-xl p-6 text-center hover-gold transition-all duration-300 group text-decoration-none block">
-                    <div
-                        class="w-16 h-16 bg-topaz/20 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-topaz/30 transition-colors">
-                        <i class="fas fa-list-ol text-2xl text-topaz"></i>
-                    </div>
-                    <h3 class="text-lg md:text-xl font-bold text-avioLight">Classifica</h3>
-                </a>
-            </div>
-            <div class="mt-16 card-glass rounded-2xl p-8 border border-topaz/20 text-center">
-                <h3 class="text-2xl font-bold text-avioLight mb-4">Copertura Media Completa</h3>
-                <p class="text-avio mb-6 max-w-2xl mx-auto">
-                    Risultati, pagelle, classifiche, episodi e gol saranno documentati sui nostri canali ufficiali
-                </p>
-                <div class="flex flex-wrap justify-center gap-4 sm:gap-6 mt-4">
-                    <!-- ↓ Modifica link Instagram qui -->
-                    <a href="https://www.instagram.com/pomarance.football.league?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-                        target="_blank"
-                        class="flex items-center gap-2 px-6 py-3 rounded-lg text-white font-bold transition-all transform hover:scale-105 shadow-lg"
-                        style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);">
-                        <i class="fab fa-instagram text-2xl"></i> Instagram
-                    </a>
-                    <!-- ↓ Modifica link TikTok qui -->
-                    <a href="https://www.tiktok.com/@pomarance.footbal?_r=1&_t=ZN-95GaQ6oF4yM" target="_blank"
-                        class="flex items-center gap-2 px-6 py-3 rounded-lg text-white font-bold transition-all transform hover:scale-105 shadow-lg bg-black border border-zinc-800 hover:border-zinc-600">
-                        <i class="fab fa-tiktok text-2xl"
-                            style="color: #fff; text-shadow: -1.5px -1.5px 0 #69C9D0, 1.5px 1.5px 0 #EE1D52;"></i>
-                        TikTok
-                    </a>
-                    <a href="#"
-                        class="flex items-center gap-2 px-6 py-3 rounded-lg text-night font-bold transition-all transform hover:scale-105 shadow-lg bg-topaz hover:bg-topazDark">
-                        <i class="fas fa-globe text-2xl"></i> Sito Web
-                    </a>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -877,33 +829,6 @@
             }).join('');
         };
 
-        // ═══════════════════════════════════════════════════════════════
-        //  COUNTDOWN — target: 24 Maggio 2026 alle 20:00
-        //  Per cambiare la data modifica la stringa qui sotto
-        // ═══════════════════════════════════════════════════════════════
-        const startCountdown = () => {
-            const target = new Date('2026-05-24T20:00:00').getTime(); // ← cambia data qui
-            const update = () => {
-                const diff = target - Date.now();
-                if (diff <= 0) {
-                    ['days', 'hours', 'minutes', 'seconds'].forEach(id => {
-                        const el = document.getElementById(id);
-                        if (el) el.textContent = '00';
-                    });
-                    const msg = document.getElementById('event-message');
-                    if (msg) { msg.textContent = '🏆 Il torneo è iniziato!'; msg.classList.remove('hidden'); }
-                    return;
-                }
-                const pad = n => String(Math.floor(n)).padStart(2, '0');
-                const el = id => document.getElementById(id);
-                if (el('days')) el('days').textContent = pad(diff / (1000 * 60 * 60 * 24));
-                if (el('hours')) el('hours').textContent = pad((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                if (el('minutes')) el('minutes').textContent = pad((diff % (1000 * 60 * 60)) / (1000 * 60));
-                if (el('seconds')) el('seconds').textContent = pad((diff % (1000 * 60)) / 1000);
-            };
-            setInterval(update, 1000);
-            update();
-        };
 
         // Mobile menu
         const initMobileMenu = () => {
@@ -942,139 +867,19 @@
 
 
 
-        // Matchday Popup Logic
-        const checkMatchdayPopup = () => {
-            const matchTime = new Date('2026-06-13T16:30:00').getTime();
-
-            // Show if it hasn't been closed in this session
-            if (!sessionStorage.getItem('matchday4_popup_closed')) {
-                const popup = document.getElementById('matchday-popup');
-                if (popup) {
-                    popup.classList.remove('hidden');
-                    popup.classList.add('flex');
-                    startPopupCountdown(matchTime);
-                }
-            }
-        };
-
-        const closePopup = () => {
-            const popup = document.getElementById('matchday-popup');
-            if (popup) {
-                popup.classList.add('hidden');
-                popup.classList.remove('flex');
-                sessionStorage.setItem('matchday4_popup_closed', 'true');
-            }
-        };
-
-        const startPopupCountdown = (target) => {
-            const updatePop = () => {
-                const diff = target - Date.now();
-                if (diff <= 0) {
-                    ['pop-h', 'pop-m', 'pop-s'].forEach(id => {
-                        const el = document.getElementById(id);
-                        if (el) el.textContent = '00';
-                    });
-                    return;
-                }
-                const pad = n => String(Math.floor(n)).padStart(2, '0');
-                const el = id => document.getElementById(id);
-
-                const hours = diff / (1000 * 60 * 60);
-                if (el('pop-h')) el('pop-h').textContent = pad(hours);
-                if (el('pop-m')) el('pop-m').textContent = pad((diff % (1000 * 60 * 60)) / (1000 * 60));
-                if (el('pop-s')) el('pop-s').textContent = pad((diff % (1000 * 60)) / 1000);
-            };
-            setInterval(updatePop, 1000);
-            updatePop();
-        };
-
         document.addEventListener('DOMContentLoaded', () => {
             try {
                 renderTeams();
                 renderCalendar();
                 renderStandings();
                 renderPlayerStandings();
-                startCountdown();
                 initMobileMenu();
                 initSmoothScroll();
                 initAnimations();
-                checkMatchdayPopup();
 
             } catch (e) { console.error('Init error:', e); }
         });
     </script>
 
-    <!-- Matchday 4 Popup -->
-    <div id="matchday-popup" class="fixed inset-0 z-[200] hidden items-center justify-center p-4">
-        <div class="absolute inset-0 bg-night/80 backdrop-blur-sm" onclick="closePopup()"></div>
-        <div
-            class="relative card-glass border border-topaz/50 max-w-md w-full rounded-2xl p-6 shadow-[0_0_40px_rgba(245,158,11,0.15)] slide-in">
-            <button onclick="closePopup()"
-                class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-nightLight text-avio hover:text-white hover:bg-topaz/20 transition-all z-10">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="text-center mb-6">
-                <span
-                    class="inline-block px-3 py-1 bg-topaz/10 border border-topaz/30 text-topaz rounded-full text-xs font-bold tracking-wider mb-3"><i
-                        class="fas fa-bell mr-1"></i> OGGI IN CAMPO</span>
-                <h2 class="font-display text-3xl text-white mb-1">4ª GIORNATA</h2>
-                <p class="text-avioLight text-sm">Sabato 13 Giugno 2026</p>
-            </div>
-
-            <div class="space-y-3 mb-6">
-                <!-- Match 1 -->
-                <div
-                    class="bg-nightLight/50 border border-avio/10 rounded-xl p-3 flex items-center justify-between relative overflow-hidden">
-                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-topaz"></div>
-                    <div class="text-right flex-1"><span class="font-bold text-sm text-white">Pomarance FC</span></div>
-                    <div class="px-4 text-center">
-                        <span class="block text-[11px] text-avio uppercase tracking-wider mb-0.5">Ore</span>
-                        <span class="block text-sm text-topaz font-bold bg-topaz/10 px-2 py-0.5 rounded">16:30</span>
-                    </div>
-                    <div class="text-left flex-1"><span class="font-bold text-sm text-white">Giaguar King</span></div>
-                </div>
-                <!-- Match 2 -->
-                <div
-                    class="bg-nightLight/50 border border-avio/10 rounded-xl p-3 flex items-center justify-between relative overflow-hidden">
-                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-[#3b82f6]"></div>
-                    <div class="text-right flex-1"><span class="font-bold text-sm text-white">BTD King League</span>
-                    </div>
-                    <div class="px-4 text-center">
-                        <span class="block text-[11px] text-avio uppercase tracking-wider mb-0.5">Ore</span>
-                        <span class="block text-sm text-topaz font-bold bg-topaz/10 px-2 py-0.5 rounded">17:30</span>
-                    </div>
-                    <div class="text-left flex-1"><span class="font-bold text-sm text-white">FC Invictus</span></div>
-                </div>
-            </div>
-
-            <!-- Mini Countdown -->
-            <div class="bg-night/60 rounded-xl p-4 border border-avio/10 text-center">
-                <p class="text-[11px] text-avio mb-3 uppercase tracking-wider font-semibold">Inizio prima partita tra:
-                </p>
-                <div class="flex justify-center gap-4" id="popup-countdown">
-                    <div class="flex flex-col items-center w-12">
-                        <span id="pop-h" class="font-mono text-2xl font-bold text-white">00</span>
-                        <span class="text-[9px] text-topaz uppercase tracking-wider mt-1">Ore</span>
-                    </div>
-                    <span class="font-mono text-xl font-bold text-avio/30 pt-1">:</span>
-                    <div class="flex flex-col items-center w-12">
-                        <span id="pop-m" class="font-mono text-2xl font-bold text-white">00</span>
-                        <span class="text-[9px] text-topaz uppercase tracking-wider mt-1">Min</span>
-                    </div>
-                    <span class="font-mono text-xl font-bold text-avio/30 pt-1">:</span>
-                    <div class="flex flex-col items-center w-12">
-                        <span id="pop-s" class="font-mono text-2xl font-bold text-topaz">00</span>
-                        <span class="text-[9px] text-topaz uppercase tracking-wider mt-1">Sec</span>
-                    </div>
-                </div>
-            </div>
-
-            <button onclick="closePopup()"
-                class="w-full mt-6 py-3.5 rounded-xl bg-topaz text-night font-bold text-sm uppercase tracking-wider hover:bg-[#fbbf24] transition-all active:scale-[0.98]">
-                Entra nel sito
-            </button>
-        </div>
-    </div>
 </body>
-
 </html>
